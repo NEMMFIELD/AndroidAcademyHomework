@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidAcademyHomework</string>
+    <string name="homework_start">Hello World! Homework has started!</string>
+</resources>
