@@ -24,4 +24,17 @@
     <dimen name="margin_top_main">-24dp</dimen>
     <dimen name="margin_start_back">7dp</dimen>
     <dimen name="margin_top_back">55dp</dimen>
+    <dimen name="margin_start_arrow">18dp</dimen>
+    <dimen name="margin_top_arrow">59dp</dimen>
+    <dimen name="margin_start">16dp</dimen>
+    <dimen name="margin_top_age">265dp</dimen>
+    <dimen name="margin_start_title">12dp</dimen>
+    <dimen name="margin_top_jenre">388dp</dimen>
+    <dimen name="margin_top_rate">5dp</dimen>
+    <dimen name="margin_top_storyline">440dp</dimen>
+    <dimen name="margin_top_description">460dp</dimen>
+    <dimen name="margin_top_cast">556dp</dimen>
+    <dimen name="margin_top">7dp</dimen>
+    <dimen name="margin_start_actor">8dp</dimen>
+    <dimen name="margin_top_name">6dp</dimen>
 </resources>
