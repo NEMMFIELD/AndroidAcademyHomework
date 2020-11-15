@@ -229,7 +229,7 @@
         android:layout_marginStart="@dimen/margin_start_actor"
         android:layout_marginTop="@dimen/margin_top_name"
         android:lines="2"
-        android:text="Chris \n Evans"
+        android:text="Chris \nEvans"
         android:textColor="#D8D8D8"
         app:layout_constraintEnd_toStartOf="@+id/nameOfHulk"
         app:layout_constraintHorizontal_bias="0.5"
