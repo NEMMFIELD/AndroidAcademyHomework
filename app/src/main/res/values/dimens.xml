@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width_of_main">530dp</dimen>
+    <dimen name="height_of_main">298dp</dimen>
+    <dimen name="widht_of_back">6dp</dimen>
+    <dimen name="height_of_back">10dp</dimen>
+    <dimen name="widht_of_age">24dp</dimen>
+    <dimen name="height_of_age">24dp</dimen>
+    <dimen name="width_title">343dp</dimen>
+    <dimen name="height_title">80dp</dimen>
+    <dimen name="width_genre">343dp</dimen>
+    <dimen name="height_genre">20dp</dimen>
+    <dimen name="widht_storyline">343dp</dimen>
+    <dimen name="height_storyline">20dp</dimen>
+    <dimen name="width_desc">376dp</dimen>
+    <dimen name="height_desc">100dp</dimen>
+    <dimen name="widht_cast">243dp</dimen>
+    <dimen name="width_cast">24dp</dimen>
+    <dimen name="width_actor">80dp</dimen>
+    <dimen name="height_actor">80dp</dimen>
+    <dimen name="width_name">80dp</dimen>
+    <dimen name="height_name">33dp</dimen>
+    <dimen name="margin_start_main">-30dp</dimen>
+    <dimen name="margin_top_main">-24dp</dimen>
+    <dimen name="margin_start_back">7dp</dimen>
+    <dimen name="margin_top_back">55dp</dimen>
+</resources>

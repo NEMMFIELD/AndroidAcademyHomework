@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="some_id_style">some_id
+    <item name="android:textSize">
+        12sp
+    </item>
+
+    <item name="android:textColor">
+        #FFFFFF
+    </item>
+</style>
+
+    <style name="tag_style">
+        <item name="android:textSize">
+            14sp
+        </item>
+        <item name="android:textColor">
+            #FF3466
+        </item>
+    </style>
+
+    <style name="storyline">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #ECECEC
+        </item>
+
+        <item name="android:shadowColor">
+            #80000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            6
+        </item>
+
+        <item name="android:shadowRadius">
+            12
+        </item>
+
+    </style>
+
+    <style name="after_the_d">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+    <style name="heading">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.01
+        </item>
+
+        <item name="android:shadowColor">
+            #80000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            6
+        </item>
+
+        <item name="android:shadowRadius">
+            12
+        </item>
+
+    </style>
+
+    <!-- strings.xml -->
+<string name="some_id">13+</string>
+</resources>
