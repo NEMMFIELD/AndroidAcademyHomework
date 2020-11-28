@@ -91,6 +91,45 @@
 
     </style>
 
+    <style name="warszawa_po">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+
+    <style name="tag">
+
+        <item name="android:textSize">
+            8sp
+        </item>
+
+        <item name="android:textColor">
+            #FF3466
+        </item>
+
+    </style>
+
+    <style name="name">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#6D6D80</item>
+    </style>
+
+    <style name="cinema_title_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ECECEC</item>
+    </style>
+
+    <style name="min">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#565665</item>
+    </style>
+
     <!-- strings.xml -->
 <string name="some_id">13+</string>
 </resources>

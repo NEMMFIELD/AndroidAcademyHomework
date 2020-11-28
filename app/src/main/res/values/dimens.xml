@@ -16,10 +16,11 @@
     <dimen name="height_desc">100dp</dimen>
     <dimen name="widht_cast">243dp</dimen>
     <dimen name="width_cast">24dp</dimen>
-    <dimen name="width_actor">80dp</dimen>
-    <dimen name="height_actor">80dp</dimen>
+    <dimen name="width_actor">0dp</dimen>
+    <dimen name="height_actor">0dp</dimen>
     <dimen name="width_name">80dp</dimen>
     <dimen name="height_name">33dp</dimen>
+
     <dimen name="margin_start_main">-30dp</dimen>
     <dimen name="margin_top_main">-24dp</dimen>
     <dimen name="margin_start_back">7dp</dimen>

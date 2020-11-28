@@ -26,4 +26,9 @@ Cast
 </string>
     <string name="robertdowneyjr">Robert Downey Jr.</string>
     <string name="chris_evans">Chris Evans</string>
+    <string name="warszawa_po">Movies List</string>
+    <string name="tag_list">Action, Adventure, Drama</string>
+    <string name="name">125 REVIEWS</string>
+    <string name="cinema_title_name">Avengers: End Game</string>
+    <string name="min">137 MIN</string>
 </resources>
