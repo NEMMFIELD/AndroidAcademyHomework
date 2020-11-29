@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 
 class FragmentMoviesList : Fragment() {
     override fun onCreateView(
@@ -17,14 +18,7 @@ class FragmentMoviesList : Fragment() {
     ): View? {
         val v: View = inflater.inflate(R.layout.fragment_movies_list, container, false)
         val nextScr: ImageView = v.findViewById(R.id.movie_img)
-        nextScr.setOnClickListener {
-            val fragment: Fragment = FragmentMoviesDetails()
-            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.main_container, fragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-        }
+        nextScr.setOnClickListener { view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.navigateToSecond) } }
         return v
     }
 
