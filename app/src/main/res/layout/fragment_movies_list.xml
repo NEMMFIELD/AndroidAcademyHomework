@@ -11,8 +11,8 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="@dimen/margin_start_icon_list"
+        android:layout_marginTop="@dimen/marg_top_icon_list"
         android:src="@drawable/ic_combined_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,11 +20,11 @@
     <TextView
         android:id="@+id/warszawa_po"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="@dimen/width_text_list"
         android:lineSpacingExtra="4sp"
         android:gravity="center_vertical"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="@dimen/marg_start_text_list"
+        android:layout_marginTop="@dimen/marg_top_text_list"
         android:textAppearance="@style/warszawa_po"
         android:text="@string/warszawa_po"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -32,10 +32,10 @@
 
     <View
         android:id="@+id/bg"
-        android:layout_width="170dp"
-        android:layout_height="296dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="102dp"
+        android:layout_width="@dimen/width_bg_list"
+        android:layout_height="@dimen/height_bg_list"
+        android:layout_marginStart="@dimen/marg_start_bg_list"
+        android:layout_marginTop="@dimen/marg_top_bg_list"
         android:background="@drawable/ic_bg"
         android:elevation="24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +43,10 @@
 
     <ImageView
         android:id="@+id/movie_img"
-        android:layout_width="166dp"
-        android:layout_height="246dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="@dimen/width_img_list"
+        android:layout_height="@dimen/height_img_list"
+        android:layout_marginStart="@dimen/marg_st_img_list"
+        android:layout_marginTop="@dimen/marg_top_img_list"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,23 +54,23 @@
 
     <View
         android:id="@+id/mask"
-        android:layout_width="166dp"
-        android:layout_height="248dp"
+        android:layout_width="@dimen/width_msk"
+        android:layout_height="@dimen/height_msk"
 
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="102dp"
+        android:layout_marginStart="@dimen/margin_st_msk"
+        android:layout_marginTop="@dimen/margin_top_msk"
         android:background="@drawable/ic_mask___movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tag"
-        android:layout_width="146dp"
-        android:layout_height="12dp"
+        android:layout_width="@dimen/widht_tag_list"
+        android:layout_height="@dimen/height_tag_list"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="214dp"
+        android:layout_marginStart="@dimen/marg_st_tag_list"
+        android:layout_marginTop="@dimen/marg_top_tag_list"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="@string/tag_list"
@@ -82,8 +82,8 @@
         android:id="@+id/redstar_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginStart="@dimen/marg_st_redstart1"
+        android:layout_marginTop="@dimen/marg_top_redstar1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_star_icon" />
@@ -92,8 +92,8 @@
         android:id="@+id/redstar_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginStart="@dimen/marg_st_redstar2"
+        android:layout_marginTop="@dimen/marg_top_redstar2"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         app:srcCompat="@drawable/ic_star_icon" />
@@ -102,8 +102,8 @@
         android:id="@+id/redstar_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginStart="@dimen/marg_st_redstar3"
+        android:layout_marginTop="@dimen/marg_top_redstar2"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         app:srcCompat="@drawable/ic_star_icon" />
@@ -112,8 +112,8 @@
         android:id="@+id/redstar_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginStart="@dimen/marg_st_redstar4"
+        android:layout_marginTop="@dimen/marg_top_redstar2"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         app:srcCompat="@drawable/ic_star_icon" />
@@ -122,18 +122,18 @@
         android:id="@+id/non_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginStart="@dimen/marg_nonstar_st"
+        android:layout_marginTop="@dimen/marg_top_redstar2"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         app:srcCompat="@drawable/ic_non_star" />
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="53dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="226dp"
+        android:layout_width="@dimen/width_reviews"
+        android:layout_height="@dimen/height_reviews"
+        android:layout_marginStart="@dimen/margin_start_reviews"
+        android:layout_marginTop="@dimen/margin_top_reviews"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="@string/name"
@@ -143,10 +143,10 @@
 
     <TextView
         android:id="@+id/cinema_title"
-        android:layout_width="132dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="256dp"
+        android:layout_width="@dimen/width_title_list"
+        android:layout_height="@dimen/height_title_list"
+        android:layout_marginStart="@dimen/margin_title_list"
+        android:layout_marginTop="@dimen/margin_top_title_list"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
         android:text="@string/cinema_title_name"
@@ -156,10 +156,10 @@
 
     <TextView
         android:id="@+id/duration"
-        android:layout_width="154dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="276dp"
+        android:layout_width="@dimen/widht_duration"
+        android:layout_height="@dimen/height_duration"
+        android:layout_marginStart="@dimen/margin_start_duration"
+        android:layout_marginTop="@dimen/margin_top_duration"
         android:textAppearance="@style/min"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
@@ -168,21 +168,21 @@
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/ageRate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_st_age_rate"
+        android:layout_marginTop="@dimen/margin_top_age_rate"
         app:layout_constraintStart_toStartOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
         app:srcCompat="@drawable/ic_pgg" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/toLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginTop="@dimen/margin_top_like"
+        android:layout_marginEnd="@dimen/margin_end_like"
         app:layout_constraintEnd_toEndOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
         app:srcCompat="@drawable/ic_like" />
