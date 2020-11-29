@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background_color"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/ic_combined_shape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/warszawa_po"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="55dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/warszawa_po"
+        android:textAppearance="@style/warszawa_po"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/bg"
+        android:layout_width="170dp"
+        android:layout_height="296dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="102dp"
+        android:background="@drawable/ic_bg"
+        android:elevation="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/movie_img"
+        android:layout_width="166dp"
+        android:layout_height="246dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="104dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heroes" />
+
+    <View
+        android:id="@+id/mask"
+        android:layout_width="166dp"
+        android:layout_height="248dp"
+
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="102dp"
+        android:background="@drawable/ic_mask___movie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="146dp"
+        android:layout_height="12dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="214dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/tag_list"
+        android:textAppearance="@style/tag"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
+    <ImageView
+        android:id="@+id/redstar_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="332dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_star_icon" />
+
+    <ImageView
+        android:id="@+id/redstar_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="228dp"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img"
+        app:srcCompat="@drawable/ic_star_icon" />
+
+    <ImageView
+        android:id="@+id/redstar_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="228dp"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img"
+        app:srcCompat="@drawable/ic_star_icon" />
+
+    <ImageView
+        android:id="@+id/redstar_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="228dp"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img"
+        app:srcCompat="@drawable/ic_star_icon" />
+
+    <ImageView
+        android:id="@+id/non_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="228dp"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img"
+        app:srcCompat="@drawable/ic_non_star" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="53dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="226dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/name"
+        android:textAppearance="@style/name"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
+    <TextView
+        android:id="@+id/cinema_title"
+        android:layout_width="132dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="256dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/cinema_title_name"
+        android:textAppearance="@style/cinema_title_style"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="154dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="276dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="3sp"
+        android:text="@string/min"
+        android:textAppearance="@style/min"
+        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/bg"
+        app:layout_constraintTop_toTopOf="@+id/bg"
+        app:srcCompat="@drawable/ic_pgg" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/bg"
+        app:layout_constraintTop_toTopOf="@+id/bg"
+        app:srcCompat="@drawable/ic_like" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
