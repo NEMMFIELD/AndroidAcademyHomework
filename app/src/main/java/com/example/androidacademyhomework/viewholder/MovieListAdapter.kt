@@ -19,6 +19,11 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
         private var age:ImageView?=null
         private var genre:TextView?=null
         private var like:ImageView?=null
+        private var firstStar:ImageView?=null
+        private var secondStar:ImageView?=null
+        private var thirdStar:ImageView?=null
+        private var fourthStar:ImageView?=null
+        private var fifthStar:ImageView?=null
 
 
         init
@@ -30,6 +35,14 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
             age=itemView.findViewById(R.id.ageRate)
             genre=itemView.findViewById(R.id.tag)
             like=itemView.findViewById(R.id.toLike)
+          firstStar=itemView.findViewById(R.id.redstar_1)
+            secondStar=itemView.findViewById(R.id.redstar_2)
+            thirdStar=itemView.findViewById(R.id.redstar_3)
+            fourthStar=itemView.findViewById(R.id.redstar_4)
+            fifthStar=itemView.findViewById(R.id.non_star)
+
+
+
         }
 
         fun bind(model:Model)
@@ -39,8 +52,13 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
             duration?.text=model.duration
             numbReviews?.text=model.number_reviews
             age?.setImageResource(model.age_rate)
-            genre?.text=model.genre
+           genre?.text=model.genre
             like?.setImageResource(model.liked)
+            firstStar?.setImageResource(model.star1)
+            secondStar?.setImageResource(model.star2)
+            thirdStar?.setImageResource(model.star3)
+            fourthStar?.setImageResource(model.star4)
+            fifthStar?.setImageResource(model.star5)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {

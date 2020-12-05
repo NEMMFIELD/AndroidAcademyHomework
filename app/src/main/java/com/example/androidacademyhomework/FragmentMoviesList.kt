@@ -17,11 +17,17 @@ import com.example.androidacademyhomework.viewholder.MovieListAdapter
 
 class FragmentMoviesList : Fragment() {
 private var movieList_recycler:RecyclerView?=null
+
 private val listMovies= listOf(
-Model(R.drawable.heroes,"Avengers","137 MIN","125 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Drama",R.drawable.ic_like),
-        Model(R.drawable.heroes,"Avengers","137 MIN","125 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Drama",R.drawable.ic_like),
-    Model(R.drawable.heroes,"Avengers","137 MIN","125 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Drama",R.drawable.ic_like),
-    Model(R.drawable.heroes,"Avengers","137 MIN","125 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Drama",R.drawable.ic_like)
+Model(R.drawable.heroes,"Avengers","137 MIN","125 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Drama",R.drawable.ic_like,
+  R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_non_star
+),
+        Model(R.drawable.tenet,"Tenet","97 MIN","98 REVIEWS",R.drawable.ic_pg16,"Action, Sci-Fi, Thriller",R.drawable.ic_liked,
+            R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_non_star),
+    Model(R.drawable.widow,"Black Widow","102 MIN","38 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Sci-Fi",R.drawable.ic_like,
+        R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon),
+    Model(R.drawable.woman,"Wonder Woman 1984","120 MIN","74 REVIEWS",R.drawable.ic_pgg,"Action, Adventure, Fantasy",R.drawable.ic_like,
+        R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon,R.drawable.ic_star_icon)
 )
     override fun onCreateView(
         inflater: LayoutInflater,

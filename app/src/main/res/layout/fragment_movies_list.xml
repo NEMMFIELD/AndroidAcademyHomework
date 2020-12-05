@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
     android:background="@color/background_color"
-    android:layout_height="match_parent">
-<ImageView
-    android:id="@+id/imageView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_start_icon_list"
-    android:layout_marginTop="@dimen/marg_top_icon_list"
-    android:src="@drawable/ic_combined_shape"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
 
-<TextView
-android:id="@+id/warszawa_po"
-android:layout_width="0dp"
-android:layout_height="@dimen/width_text_list"
-android:lineSpacingExtra="4sp"
-android:gravity="center_vertical"
-android:layout_marginStart="@dimen/marg_start_text_list"
-android:layout_marginTop="@dimen/marg_top_text_list"
-android:textAppearance="@style/warszawa_po"
-android:text="@string/warszawa_po"
-app:layout_constraintStart_toEndOf="@+id/imageView"
-app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_recycler_view"
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="27dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="108dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_combined_shape"/>
+    <TextView
+        android:paddingLeft="5dp"
+        android:textAppearance="@style/warszawa_po"
+        android:layout_marginTop="-2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Movies List"/>
+    </LinearLayout>
 
-    </androidx.recyclerview.widget.RecyclerView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.recyclerview.widget.RecyclerView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_recycler_view"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+  />
+</LinearLayout>
+
+
+
