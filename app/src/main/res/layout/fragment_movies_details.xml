@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/details"
@@ -158,113 +155,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/tonistark"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start"
-            android:layout_marginTop="@dimen/margin_top"
-            app:layout_constraintEnd_toStartOf="@+id/captainusa"
-            app:layout_constraintHorizontal_bias="0.5"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/actor_recycler_view"
+            android:layout_marginStart="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/stark" />
-
-        <ImageView
-            android:id="@+id/captainusa"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toStartOf="@+id/hulk"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tonistark"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/cap" />
-
-        <ImageView
-            android:id="@+id/hulk"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toStartOf="@+id/tor"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/captainusa"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/hulk" />
-
-        <ImageView
-            android:id="@+id/tor"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/hulk"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/tor" />
-
-        <TextView
-            android:id="@+id/nameOfStark"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:lines="2"
-            android:text="@string/robertdowneyjr"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfCap"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tonistark" />
-
-        <TextView
-            android:id="@+id/nameOfCap"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:lines="2"
-            android:text="Chris \nEvans"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfHulk"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfStark"
-            app:layout_constraintTop_toBottomOf="@+id/captainusa" />
-
-        <TextView
-            android:id="@+id/nameOfHulk"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:text="Mark \nRuffalo"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfTor"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfCap"
-            app:layout_constraintTop_toBottomOf="@+id/hulk" />
-
-        <TextView
-            android:id="@+id/nameOfTor"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:text="Chris \nHemsworth"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfHulk"
-            app:layout_constraintTop_toBottomOf="@+id/tor" />
+            app:layout_constraintTop_toBottomOf="@+id/heading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

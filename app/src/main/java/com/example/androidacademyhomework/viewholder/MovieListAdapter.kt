@@ -1,17 +1,24 @@
 package com.example.androidacademyhomework.viewholder
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidacademyhomework.FragmentMoviesDetails
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.model.Model
 
 class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
 {
     inner class MovieListViewHolder(inflater:LayoutInflater,parent:ViewGroup):RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie,parent,false))
+
     {
+
         private var imageMain:ImageView?=null
         private var titleName: TextView?=null
         private var duration:TextView?=null
@@ -26,8 +33,7 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
         private var fifthStar:ImageView?=null
 
 
-        init
-        {
+        init{
             imageMain=itemView.findViewById(R.id.movie_img)
             titleName=itemView.findViewById(R.id.cinema_title)
             duration=itemView.findViewById(R.id.duration)
@@ -40,9 +46,6 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
             thirdStar=itemView.findViewById(R.id.redstar_3)
             fourthStar=itemView.findViewById(R.id.redstar_4)
             fifthStar=itemView.findViewById(R.id.non_star)
-
-
-
         }
 
         fun bind(model:Model)
@@ -60,7 +63,9 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
             fourthStar?.setImageResource(model.star4)
             fifthStar?.setImageResource(model.star5)
         }
+
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val inflater=LayoutInflater.from(parent.context)
         return MovieListViewHolder(inflater,parent)
