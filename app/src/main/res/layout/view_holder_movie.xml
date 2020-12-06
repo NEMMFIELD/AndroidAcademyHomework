@@ -32,7 +32,6 @@
         android:id="@+id/mask"
         android:layout_width="@dimen/width_msk"
         android:layout_height="@dimen/height_msk"
-
         android:layout_marginStart="@dimen/margin_st_msk"
         android:layout_marginTop="11dp"
         android:background="@drawable/ic_mask___movie"

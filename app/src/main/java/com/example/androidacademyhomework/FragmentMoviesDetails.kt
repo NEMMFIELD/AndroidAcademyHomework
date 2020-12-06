@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,12 +29,15 @@ class FragmentMoviesDetails : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v: View = inflater.inflate(R.layout.fragment_movies_details, container, false)
-      //  val backScr: TextView = v.findViewById(R.id.back)
-        //backScr.setOnClickListener {
-          //  view?.let { it1 ->
-            //    Navigation.findNavController(it1).navigate(R.id.navigateToFirst)
-            //}
-       // }
+        val backScr: TextView = v.findViewById(R.id.back)
+        backScr.setOnClickListener {
+            val fragment: Fragment = FragmentMoviesList()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         return v
     }
 

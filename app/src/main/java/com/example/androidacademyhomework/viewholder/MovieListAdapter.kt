@@ -13,7 +13,7 @@ import com.example.androidacademyhomework.FragmentMoviesDetails
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.model.Model
 
-class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
+class MovieListAdapter(private var listMovies:List<Model>, private val cellClickListener: CellClickListener):RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
 {
     inner class MovieListViewHolder(inflater:LayoutInflater,parent:ViewGroup):RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie,parent,false))
 
@@ -74,11 +74,15 @@ class MovieListAdapter(private var listMovies:List<Model>):RecyclerView.Adapter<
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieList:Model=listMovies[position]
         holder.bind(movieList)
+        holder.itemView.setOnClickListener { cellClickListener.onCellClickListener() }
     }
 
     override fun getItemCount(): Int {
         return listMovies.size
     }
 
+}
+interface CellClickListener {
+    fun onCellClickListener()
 }
 
