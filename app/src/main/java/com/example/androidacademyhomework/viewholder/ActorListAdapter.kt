@@ -1,14 +1,12 @@
 package com.example.androidacademyhomework.viewholder
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.model.Actor
-import com.example.androidacademyhomework.model.Model
 
 class ActorListAdapter (private var listActors:List<Actor>):RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>()
 {

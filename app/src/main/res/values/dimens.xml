@@ -16,10 +16,6 @@
     <dimen name="height_desc">100dp</dimen>
     <dimen name="widht_cast">243dp</dimen>
     <dimen name="width_cast">24dp</dimen>
-    <dimen name="width_actor">0dp</dimen>
-    <dimen name="height_actor">0dp</dimen>
-    <dimen name="width_name">80dp</dimen>
-    <dimen name="height_name">33dp</dimen>
 
     <dimen name="margin_start_main">-30dp</dimen>
     <dimen name="margin_top_main">-24dp</dimen>
@@ -35,9 +31,6 @@
     <dimen name="margin_top_storyline">440dp</dimen>
     <dimen name="margin_top_description">460dp</dimen>
     <dimen name="margin_top_cast">556dp</dimen>
-    <dimen name="margin_top">7dp</dimen>
-    <dimen name="margin_start_actor">8dp</dimen>
-    <dimen name="margin_top_name">6dp</dimen>
     <dimen name="margin_start_icon_list">16dp</dimen>
     <dimen name="marg_top_icon_list">56dp</dimen>
     <dimen name="width_text_list">20dp</dimen>
@@ -82,4 +75,21 @@
     <dimen name="margin_top_age_rate">8dp</dimen>
     <dimen name="margin_top_like">13dp</dimen>
     <dimen name="margin_end_like">6dp</dimen>
+    <dimen name="linear_layout_margintop">50dp</dimen>
+    <dimen name="linear_layout_marginstart">27dp</dimen>
+    <dimen name="padd_left_movie_list_text">5dp</dimen>
+    <dimen name="margin_start_recyclerMovieList">10dp</dimen>
+    <dimen name="margin_top_recyclerMoveList">23dp</dimen>
+    <dimen name="img_actor_width">80dp</dimen>
+    <dimen name="img_actor_height">80dp</dimen>
+    <dimen name="width_actor_name">75dp</dimen>
+    <dimen name="margin_bot_image_back">229dp</dimen>
+    <dimen name="text_size_back">12sp</dimen>
+    <dimen name="margin_start_recycleractor">7dp</dimen>
+    <dimen name="margin_top_view">10dp</dimen>
+    <dimen name="margin_top_image">12dp</dimen>
+    <dimen name="marg_top_mask">11dp</dimen>
+    <dimen name="marginstart_first_star">18dp</dimen>
+    <dimen name="margin_top_first_star">228dp</dimen>
+    <dimen name="margin_top_numb_reviews">226dp</dimen>
 </resources>

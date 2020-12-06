@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.model.Actor
@@ -43,10 +42,10 @@ class FragmentMoviesDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        actorRecycler=view.findViewById(R.id.actor_recycler_view)
+        actorRecycler = view.findViewById(R.id.actor_recycler_view)
         actorRecycler?.apply {
-            layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-            adapter=ActorListAdapter(listOfActors)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = ActorListAdapter(listOfActors)
         }
     }
 

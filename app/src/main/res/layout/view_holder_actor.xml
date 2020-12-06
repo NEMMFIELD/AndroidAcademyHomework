@@ -11,15 +11,15 @@
 
     <ImageView
         android:id="@+id/actor_image"
-        android:layout_width="80dp"
+        android:layout_width="@dimen/img_actor_width"
         android:scaleType="centerCrop"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/img_actor_height"
         />
 
     <TextView
         android:id="@+id/actor_name"
         android:layout_height="wrap_content"
-        android:layout_width="75dp"
+        android:layout_width="@dimen/width_actor_name"
         android:lines="2"
         android:text="@string/robertdowneyjr"
         android:textColor="#D8D8D8"

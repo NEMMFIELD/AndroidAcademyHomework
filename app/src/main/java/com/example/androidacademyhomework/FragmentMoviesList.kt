@@ -1,15 +1,10 @@
 package com.example.androidacademyhomework
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -19,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.viewholder.CellClickListener
 import com.example.androidacademyhomework.viewholder.MovieListAdapter
-import com.google.android.material.snackbar.Snackbar
 
-class FragmentMoviesList : Fragment(),CellClickListener
-{
+class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieList_recycler: RecyclerView? = null
 
     private val listMovies = listOf(
@@ -90,8 +83,10 @@ class FragmentMoviesList : Fragment(),CellClickListener
         savedInstanceState: Bundle?
     ): View? {
         val v: View = inflater.inflate(R.layout.fragment_movies_list, container, false)
-         val nextScr: ImageView = v.findViewById(R.id.test_click)
-        nextScr.setOnClickListener { view -> Navigation.findNavController(view).navigate(R.id.navigateToSecond) }
+       // val nextScr: ImageView = v.findViewById(R.id.test_click)
+       // nextScr.setOnClickListener { view ->
+         //   Navigation.findNavController(view).navigate(R.id.navigateToSecond)
+       // }
         return v
     }
 
@@ -100,7 +95,7 @@ class FragmentMoviesList : Fragment(),CellClickListener
         movieList_recycler = view.findViewById(R.id.list_recycler_view)
         movieList_recycler?.apply {
             layoutManager = GridLayoutManager(activity, 2)
-            adapter = MovieListAdapter(listMovies,this@FragmentMoviesList)
+            adapter = MovieListAdapter(listMovies, this@FragmentMoviesList)
         }
     }
 
