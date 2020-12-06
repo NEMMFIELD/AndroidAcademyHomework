@@ -29,8 +29,6 @@ class ActorListAdapter (private var listActors:List<Actor>):RecyclerView.Adapter
 
     }
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
         val inflater=LayoutInflater.from(parent.context)
         return ActorListViewHolder(inflater,parent)
