@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/details"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color"
-       >
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color">
         <ImageView
             android:id="@+id/orig"
             android:layout_width="@dimen/width_of_main"
@@ -21,8 +18,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fon" />
-
+            app:srcCompat="@drawable/fon"/>
         <TextView
             android:id="@+id/back"
             android:layout_width="wrap_content"
@@ -37,8 +33,7 @@
             android:textSize="@dimen/text_size_back"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/path"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
         <ImageView
             android:id="@+id/path"
             android:layout_width="@dimen/widht_of_back"
@@ -54,8 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_path" />
-
+            app:srcCompat="@drawable/ic_path"/>
         <ImageView
             android:id="@+id/some_id"
             android:layout_width="@dimen/widht_of_age"
@@ -71,8 +65,7 @@
             android:textAppearance="@style/some_id_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
+            tools:ignore="MissingConstraints"/>
         <ImageView
             android:id="@+id/name"
             android:layout_width="@dimen/width_title"
@@ -81,8 +74,7 @@
             android:layout_marginTop="@dimen/margin_start_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/some_id"
-            app:srcCompat="@drawable/ic_name" />
-
+            app:srcCompat="@drawable/ic_name"/>
         <TextView
             android:id="@+id/tag"
             android:layout_width="@dimen/width_genre"
@@ -98,8 +90,7 @@
             android:textAppearance="@style/tag_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="p" />
-
+            tools:targetApi="p"/>
         <ImageView
             android:id="@+id/reviews"
             android:layout_width="wrap_content"
@@ -108,8 +99,7 @@
             android:layout_marginTop="@dimen/margin_top_rate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tag"
-            app:srcCompat="@drawable/ic_reviews" />
-
+            app:srcCompat="@drawable/ic_reviews"/>
         <TextView
             android:id="@+id/storyline"
             android:layout_width="@dimen/widht_storyline"
@@ -123,8 +113,7 @@
             android:text="@string/storyline"
             android:textAppearance="@style/storyline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
         <TextView
             android:id="@+id/after_the_d"
             android:layout_width="@dimen/width_desc"
@@ -137,9 +126,8 @@
             android:text="@string/after_the_d"
             android:textAppearance="@style/after_the_d"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
+            app:layout_constraintTop_toTopOf="parent"/>
+         <TextView
             android:id="@+id/heading"
             android:layout_width="@dimen/widht_cast"
             android:layout_height="@dimen/width_cast"
@@ -153,14 +141,12 @@
             android:textAppearance="@style/heading"
             android:textColor="@color/gradient"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/actor_recycler_view"
             android:layout_marginStart="@dimen/margin_start_recycleractor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heading" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/heading"/>
+         </androidx.constraintlayout.widget.ConstraintLayout>

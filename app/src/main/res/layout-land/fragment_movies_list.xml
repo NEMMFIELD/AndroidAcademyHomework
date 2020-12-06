@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-
-    android:background="@color/background_color"
-
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_width="match_parent">
-
+    <ScrollView
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+    <LinearLayout
+      android:background="@color/background_color"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:layout_width="match_parent">
     <LinearLayout
         android:layout_marginTop="@dimen/linear_layout_margintop"
         android:layout_marginStart="@dimen/linear_layout_marginstart"
@@ -22,25 +19,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_combined_shape"/>
-    <TextView
-        android:paddingLeft="@dimen/padd_left_movie_list_text"
-        android:textAppearance="@style/warszawa_po"
-        android:layout_marginTop="-2dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/movies_list"/>
+     <TextView
+       android:paddingLeft="@dimen/padd_left_movie_list_text"
+       android:textAppearance="@style/warszawa_po"
+       android:layout_marginTop="-2dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/movies_list"/>
     </LinearLayout>
-
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/list_recycler_view"
-    android:layout_marginStart="@dimen/margin_start_recyclerMovieList"
-    android:layout_marginTop="@dimen/margin_top_recyclerMoveList"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-  />
-</LinearLayout>
-
-</ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/list_recycler_view"
+     android:layout_marginStart="@dimen/margin_start_recyclerMovieList"
+     android:layout_marginTop="@dimen/margin_top_recyclerMoveList"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:orientation="vertical" />
+    </LinearLayout>
+    </ScrollView>
 
