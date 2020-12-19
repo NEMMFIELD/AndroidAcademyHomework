@@ -9,20 +9,10 @@ import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.Movie
 
-class MovieListAdapter(
-    private var listMovies: List<Movie>,
-    private val cellClickListener: CellClickListener
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
+class MovieListAdapter(private var listMovies: List<Movie>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
 {
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
-        inflater.inflate(
-            R.layout.view_holder_movie,
-            parent,
-            false
-        )
-    )
+    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false))
     {
-
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -35,7 +25,6 @@ class MovieListAdapter(
         private var thirdStar: ImageView? = null
         private var fourthStar: ImageView? = null
         private var fifthStar: ImageView? = null
-
 
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
@@ -55,8 +44,8 @@ class MovieListAdapter(
         fun bind(movie: Movie) {
             Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
             titleName?.text=movie.title
-            duration?.text=movie.runtime.toString()+" MIN"
-            numbReviews?.text=movie.ratings.toInt().toString()
+            (movie.runtime.toString()+" MIN").also { duration?.text = it }
+            numbReviews?.text=movie.numberOfRatings.toString() + " REVIEWS"
             val builder = StringBuilder()
             for (n in movie.genres) {
                 builder.append(n.name+", ")
