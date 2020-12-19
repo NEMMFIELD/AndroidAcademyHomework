@@ -35,13 +35,10 @@ class FragmentMoviesList : Fragment(), CellClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     { scope.launch {
         super.onViewCreated(view, savedInstanceState)
-
             movieList_recycler = view.findViewById(R.id.list_recycler_view)
             movieList_recycler?.apply {
                 layoutManager = GridLayoutManager(activity, 2)
-
                  adapter = MovieListAdapter(loadMovies(requireContext()), this@FragmentMoviesList) }
-
             }
         }
 

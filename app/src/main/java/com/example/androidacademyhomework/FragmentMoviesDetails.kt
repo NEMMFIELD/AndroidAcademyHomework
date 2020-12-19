@@ -10,17 +10,17 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidacademyhomework.data.loadMovies
 import com.example.androidacademyhomework.model.Actor
 import com.example.androidacademyhomework.viewholder.ActorListAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class FragmentMoviesDetails : Fragment() {
     private var actorRecycler: RecyclerView? = null
-    private var listOfActors = listOf(
-        Actor(R.drawable.stark, "Robert Downey Jr."),
-        Actor(R.drawable.cap, "Chris Evans"),
-        Actor(R.drawable.hulk, "Mark Ruffalo"),
-        Actor(R.drawable.tor, "Chris Hemsworth")
-    )
+    private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,12 +41,13 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        actorRecycler = view.findViewById(R.id.actor_recycler_view)
-        actorRecycler?.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ActorListAdapter(listOfActors)
+        scope.launch {
+            super.onViewCreated(view, savedInstanceState)
+            actorRecycler = view.findViewById(R.id.actor_recycler_view)
+            actorRecycler?.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = ActorListAdapter(loadMovies(requireContext()))
+            }
         }
     }
-
 }
