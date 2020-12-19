@@ -5,22 +5,30 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.data.Movie
 
 class MovieListAdapter(
-    private var listMovies: List<Model>,
+    private var listMovies: List<Movie>,
     private val cellClickListener: CellClickListener
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
+) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
+{
+    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
+        inflater.inflate(
+            R.layout.view_holder_movie,
+            parent,
+            false
+        )
+    )
+    {
 
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
         private var numbReviews: TextView? = null
         private var age: ImageView? = null
-        private var genre: TextView? = null
+        var genre: TextView? = null
         private var like: ImageView? = null
         private var firstStar: ImageView? = null
         private var secondStar: ImageView? = null
@@ -44,21 +52,18 @@ class MovieListAdapter(
             fifthStar = itemView.findViewById(R.id.non_star)
         }
 
-        fun bind(model: Model) {
-            imageMain?.setImageResource(model.image_Main)
-            titleName?.text = model.title_name
-            duration?.text = model.duration
-            numbReviews?.text = model.number_reviews
-            age?.setImageResource(model.age_rate)
-            genre?.text = model.genre
-            like?.setImageResource(model.liked)
-            firstStar?.setImageResource(model.star1)
-            secondStar?.setImageResource(model.star2)
-            thirdStar?.setImageResource(model.star3)
-            fourthStar?.setImageResource(model.star4)
-            fifthStar?.setImageResource(model.star5)
+        fun bind(movie: Movie) {
+            Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
+            titleName?.text=movie.title
+            duration?.text=movie.runtime.toString()+" MIN"
+            numbReviews?.text=movie.ratings.toInt().toString()
+            val builder = StringBuilder()
+            for (n in movie.genres) {
+                builder.append(n.name+", ")
+            }
+            builder.deleteCharAt(builder.lastIndexOf(","));
+          genre?.text= builder.toString()
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
@@ -67,7 +72,7 @@ class MovieListAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
-        val movieList: Model = listMovies[position]
+        val movieList: Movie = listMovies[position]
         holder.bind(movieList)
         holder.itemView.setOnClickListener { cellClickListener.onCellClickListener() }
     }
