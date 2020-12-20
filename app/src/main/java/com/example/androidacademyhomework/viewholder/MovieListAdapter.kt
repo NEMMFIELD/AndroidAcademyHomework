@@ -1,13 +1,11 @@
 package com.example.androidacademyhomework.viewholder
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.androidacademyhomework.FragmentMoviesDetails
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.Movie
 
@@ -15,16 +13,15 @@ import com.example.androidacademyhomework.data.Movie
 class MovieListAdapter(
     private var listMovies: List<Movie>,
     private val cellClickListener: CellClickListener
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
-{
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
-        inflater.inflate(
-            R.layout.view_holder_movie,
-            parent,
-            false
-        )
-    )
-    {
+) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+        RecyclerView.ViewHolder(
+            inflater.inflate(
+                R.layout.view_holder_movie,
+                parent,
+                false
+            )
+        ) {
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -54,16 +51,20 @@ class MovieListAdapter(
         }
 
         fun bind(movie: Movie) {
+            val builder_MIN = StringBuilder()
             Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
-            titleName?.text=movie.title
-            (movie.runtime.toString()+" MIN").also { duration?.text = it }
-            numbReviews?.text=movie.numberOfRatings.toString() + " REVIEWS"
+            titleName?.text = movie.title
+            builder_MIN.append(movie.runtime.toString() + " MIN")
+            duration?.text=builder_MIN
+            val builder_REVIEWS=StringBuilder()
+            builder_REVIEWS.append(movie.numberOfRatings.toString()+" REVIEWS")
+            numbReviews?.text = builder_REVIEWS
             val builder = StringBuilder()
             for (n in movie.genres) {
                 builder.append(n.name + ", ")
             }
             builder.deleteCharAt(builder.lastIndexOf(","));
-          genre?.text= builder.toString()
+            genre?.text = builder.toString()
         }
     }
 
@@ -72,19 +73,18 @@ class MovieListAdapter(
         return MovieListViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int)
-    {
+    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieList: Movie = listMovies[position]
         holder.bind(movieList)
-        val item=listMovies.get(holder.adapterPosition)
+        val item = listMovies.get(holder.adapterPosition)
         holder.itemView.setOnClickListener {
-                cellClickListener.onCellClickListener() }
+            cellClickListener.onCellClickListener()
+        }
     }
 
     override fun getItemCount(): Int {
         return listMovies.size
     }
-
 }
 
 interface CellClickListener {
