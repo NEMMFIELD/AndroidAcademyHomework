@@ -24,7 +24,7 @@ class ActorListAdapter(private var listActors: List<Movie>) :
         }
         fun bind(actor: Movie) {
             for (i in actor.actors){
-                Glide.with(itemView.context).load(i.picture).into(actorImage!!)
+                actorImage?.let { Glide.with(itemView.context).load(i.picture).into(it) }
                 actorName?.text=i.name
             }
         }
