@@ -1,7 +1,5 @@
 package com.example.androidacademyhomework
 
-import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,22 +15,21 @@ import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.data.Movie
 import com.example.androidacademyhomework.data.loadMovies
 import com.example.androidacademyhomework.viewholder.ActorListAdapter
-import com.example.androidacademyhomework.viewholder.MovieListAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FragmentMoviesDetails : Fragment() {
-
-
+    private lateinit var movie: Movie
     private var actorRecycler: RecyclerView? = null
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val v: View = inflater.inflate(R.layout.fragment_movies_details, container, false)
         val backScr: TextView = v.findViewById(R.id.back)
         backScr.setOnClickListener {
@@ -47,34 +44,36 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         scope.launch {
             super.onViewCreated(view, savedInstanceState)
             actorRecycler = view.findViewById(R.id.actor_recycler_view)
             actorRecycler?.apply {
-                layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 adapter = ActorListAdapter(loadMovies(requireContext()))
-                val imageBackDrop:ImageView=view.findViewById(R.id.orig)
-                Glide.with(view.context).load(loadMovies(requireContext()).get(0).backdrop).into(imageBackDrop)
-                val nameTitle:TextView=view.findViewById(R.id.name)
-                nameTitle.text= loadMovies(requireContext())[0].title
-                val genreDetail:TextView=view.findViewById(R.id.tag)
-                val movie= loadMovies(requireContext())[0].genres
+                val imageBackDrop: ImageView = view.findViewById(R.id.orig)
+                Glide.with(view.context)
+                    .load(loadMovies(requireContext()).get(0).backdrop)
+                    .into(imageBackDrop)
+                val nameTitle: TextView = view.findViewById(R.id.name)
+                nameTitle.text = loadMovies(requireContext())[0].title
+                val genreDetail: TextView = view.findViewById(R.id.tag)
+                val movie = loadMovies(requireContext())[0].genres
                 val builder = StringBuilder()
                 for (n in movie) {
                     builder.append(n.name + ", ")
                 }
                 builder.deleteCharAt(builder.lastIndexOf(","));
-                genreDetail?.text= builder.toString()
+                genreDetail.text = builder.toString()
+                val overview: TextView = view.findViewById(R.id.after_the_d)
+                overview.text = loadMovies(requireContext())[0].overview
+                val reviews: TextView = view.findViewById(R.id.reviews)
+                reviews.text = loadMovies(requireContext())[0].numberOfRatings.toString() + " REVIEWS"
             }
         }
     }
 
-}
+    }
+
 
 
 

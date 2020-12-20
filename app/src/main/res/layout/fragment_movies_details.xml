@@ -102,14 +102,64 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="p"/>
         <ImageView
-            android:id="@+id/reviews"
+            android:id="@+id/reviews_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_top_rate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tag"
-            app:srcCompat="@drawable/ic_reviews"/>
+            app:srcCompat="@drawable/ic_star_icon"/>
+        <ImageView
+            android:id="@+id/reviews_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="@dimen/margin_top_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag"
+            app:srcCompat="@drawable/ic_star_icon"/>
+        <ImageView
+            android:id="@+id/reviews_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="@dimen/margin_top_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag"
+            app:srcCompat="@drawable/ic_star_icon"/>
+
+        <ImageView
+            android:id="@+id/reviews_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="@dimen/margin_top_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag"
+            app:srcCompat="@drawable/ic_star_icon"/>
+        <ImageView
+            android:id="@+id/reviews_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="@dimen/margin_top_rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag"
+            app:srcCompat="@drawable/ic_non_star"/>
+
+        <TextView
+            android:id="@+id/reviews"
+            android:textAppearance="@style/name"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="410dp"
+            android:text="REVIEWS"
+            app:layout_constraintStart_toEndOf="@id/reviews_5"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/storyline"
             android:layout_width="@dimen/widht_storyline"

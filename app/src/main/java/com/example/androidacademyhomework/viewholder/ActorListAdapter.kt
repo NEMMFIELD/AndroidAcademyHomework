@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.Movie
-import com.example.androidacademyhomework.model.Actor
+
 
 class ActorListAdapter(private var listActors: List<Movie>) :
-    RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>()
-{
-    inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false))
-    {
+    RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
+    inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
         private var actorImage: ImageView? = null
         private var actorName: TextView? = null
 
@@ -22,11 +21,14 @@ class ActorListAdapter(private var listActors: List<Movie>) :
             actorImage = itemView.findViewById(R.id.actor_image)
             actorName = itemView.findViewById(R.id.actor_name)
         }
+
         fun bind(actor: Movie) {
-            for (i in actor.actors){
-                actorImage?.let { Glide.with(itemView.context).load(i.picture).into(it) }
-                actorName?.text=i.name
+
+            for (i in actor.actors) {
+                Glide.with(itemView.context).load(i.picture).into(actorImage!!)
+                actorName?.text = i.name
             }
+
         }
     }
 
