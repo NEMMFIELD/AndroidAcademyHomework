@@ -1,17 +1,29 @@
 package com.example.androidacademyhomework.viewholder
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.androidacademyhomework.FragmentMoviesDetails
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.Movie
 
-class MovieListAdapter(private var listMovies: List<Movie>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
+
+class MovieListAdapter(
+    private var listMovies: List<Movie>,
+    private val cellClickListener: CellClickListener
+) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>()
 {
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false))
+    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(
+        inflater.inflate(
+            R.layout.view_holder_movie,
+            parent,
+            false
+        )
+    )
     {
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
@@ -48,7 +60,7 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
             numbReviews?.text=movie.numberOfRatings.toString() + " REVIEWS"
             val builder = StringBuilder()
             for (n in movie.genres) {
-                builder.append(n.name+", ")
+                builder.append(n.name + ", ")
             }
             builder.deleteCharAt(builder.lastIndexOf(","));
           genre?.text= builder.toString()
@@ -60,10 +72,13 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
         return MovieListViewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int)
+    {
         val movieList: Movie = listMovies[position]
         holder.bind(movieList)
-        holder.itemView.setOnClickListener { cellClickListener.onCellClickListener() }
+        val item=listMovies.get(holder.adapterPosition)
+        holder.itemView.setOnClickListener {
+                cellClickListener.onCellClickListener() }
     }
 
     override fun getItemCount(): Int {

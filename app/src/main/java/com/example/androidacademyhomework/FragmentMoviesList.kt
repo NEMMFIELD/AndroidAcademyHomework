@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidacademyhomework.data.Movie
 import com.example.androidacademyhomework.data.loadMovies
 import com.example.androidacademyhomework.viewholder.CellClickListener
 import com.example.androidacademyhomework.viewholder.MovieListAdapter
