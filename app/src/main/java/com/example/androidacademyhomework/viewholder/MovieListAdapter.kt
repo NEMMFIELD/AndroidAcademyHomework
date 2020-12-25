@@ -1,6 +1,7 @@
 package com.example.androidacademyhomework.viewholder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -78,7 +79,7 @@ class MovieListAdapter(
         holder.bind(movieList)
         val item = listMovies.get(holder.adapterPosition)
         holder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener()
+            cellClickListener.onCellClickListener(holder.itemView,position)
         }
     }
 
@@ -88,6 +89,6 @@ class MovieListAdapter(
 }
 
 interface CellClickListener {
-    fun onCellClickListener()
+    fun onCellClickListener(view: View, position: Int)
 }
 
