@@ -56,9 +56,9 @@ class MovieListAdapter(
             Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
             titleName?.text = movie.title
             builder_MIN.append(movie.runtime.toString() + " MIN")
-            duration?.text=builder_MIN
-            val builder_REVIEWS=StringBuilder()
-            builder_REVIEWS.append(movie.numberOfRatings.toString()+" REVIEWS")
+            duration?.text = builder_MIN
+            val builder_REVIEWS = StringBuilder()
+            builder_REVIEWS.append(movie.numberOfRatings.toString() + " REVIEWS")
             numbReviews?.text = builder_REVIEWS
             val builder = StringBuilder()
             for (n in movie.genres) {
@@ -79,7 +79,7 @@ class MovieListAdapter(
         holder.bind(movieList)
         val item = listMovies.get(holder.adapterPosition)
         holder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(holder.itemView,position)
+            cellClickListener.onCellClickListener(holder.itemView, position)
         }
     }
 

@@ -7,28 +7,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.data.Actor
 import com.example.androidacademyhomework.data.Movie
 
 
-class ActorListAdapter(private var listActors: List<Movie>) :
+class ActorListAdapter(private var listActors: List<Actor>) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
     inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
-        private var actorImage: ImageView? = null
-        private var actorName: TextView? = null
+        var actorImage: ImageView? = null
+         var actorName: TextView? = null
 
         init {
             actorImage = itemView.findViewById(R.id.actor_image)
             actorName = itemView.findViewById(R.id.actor_name)
-        }
-
-        fun bind(actor: Movie) {
-
-            for (i in actor.actors) {
-                Glide.with(itemView.context).load(i.picture).into(actorImage!!)
-                actorName?.text = i.name
-            }
-
         }
     }
 
@@ -38,8 +30,9 @@ class ActorListAdapter(private var listActors: List<Movie>) :
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors: Movie = listActors[position]
-        holder.bind(actors)
+        val actors = listActors[position]
+        holder.actorName?.text=actors.name
+        Glide.with(holder.itemView.context).load(actors.picture).centerCrop().into(holder.actorImage!!)
     }
 
     override fun getItemCount(): Int {
