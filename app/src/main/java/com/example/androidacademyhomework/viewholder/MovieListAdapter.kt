@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -30,11 +31,8 @@ class MovieListAdapter(
         private var age: ImageView? = null
         var genre: TextView? = null
         private var like: ImageView? = null
-        private var firstStar: ImageView? = null
-        private var secondStar: ImageView? = null
-        private var thirdStar: ImageView? = null
-        private var fourthStar: ImageView? = null
-        private var fifthStar: ImageView? = null
+        private var stars: RatingBar? = null
+
 
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
@@ -44,11 +42,7 @@ class MovieListAdapter(
             age = itemView.findViewById(R.id.ageRate)
             genre = itemView.findViewById(R.id.tag)
             like = itemView.findViewById(R.id.toLike)
-            firstStar = itemView.findViewById(R.id.redstar_1)
-            secondStar = itemView.findViewById(R.id.redstar_2)
-            thirdStar = itemView.findViewById(R.id.redstar_3)
-            fourthStar = itemView.findViewById(R.id.redstar_4)
-            fifthStar = itemView.findViewById(R.id.non_star)
+            stars = itemView.findViewById(R.id.rating)
         }
 
         fun bind(movie: Movie) {
@@ -66,6 +60,7 @@ class MovieListAdapter(
             }
             builder.deleteCharAt(builder.lastIndexOf(","));
             genre?.text = builder.toString()
+            stars?.rating=movie.ratings * 0.5F
         }
     }
 

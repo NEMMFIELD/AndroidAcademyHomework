@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -59,23 +60,25 @@ class FragmentMoviesDetails : Fragment() {
     private suspend fun bindDetails(view:View,position:Int?)
     {
         val imageBackDrop: ImageView = view.findViewById(R.id.orig)
+        val nameTitle: TextView = view.findViewById(R.id.name)
+        val genreDetail: TextView = view.findViewById(R.id.tag)
+        val movie = loadMovies(requireContext())[position!!].genres
+        val overview: TextView = view.findViewById(R.id.after_the_d)
+        val reviews: TextView = view.findViewById(R.id.reviews)
+        val ratingBar:RatingBar=view.findViewById(R.id.rating_bar)
         Glide.with(view.context)
             .load(position?.let { loadMovies(requireContext()).get(it).backdrop })
             .into(imageBackDrop)
-        val nameTitle: TextView = view.findViewById(R.id.name)
         nameTitle.text = loadMovies(requireContext())[position!!].title
-        val genreDetail: TextView = view.findViewById(R.id.tag)
-        val movie = loadMovies(requireContext())[position].genres
         val builder = StringBuilder()
         for (n in movie) {
             builder.append(n.name + ", ")
         }
         builder.deleteCharAt(builder.lastIndexOf(","));
         genreDetail.text = builder.toString()
-        val overview: TextView = view.findViewById(R.id.after_the_d)
         overview.text = loadMovies(requireContext())[position].overview
-        val reviews: TextView = view.findViewById(R.id.reviews)
         reviews.text = loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
+        ratingBar.rating= (loadMovies(requireContext())[position].ratings)*0.5F
     }
 }
 

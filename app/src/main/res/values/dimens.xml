@@ -61,8 +61,8 @@
     <dimen name="marg_nonstar_st">46dp</dimen>
     <dimen name="width_reviews">64dp</dimen>
     <dimen name="height_reviews">12dp</dimen>
-    <dimen name="margin_start_reviews">58dp</dimen>
-    <dimen name="margin_top_reviews">226dp</dimen>
+    <dimen name="margin_start_reviews">48dp</dimen>
+    <dimen name="margin_top_reviews">225dp</dimen>
     <dimen name="width_title_list">132dp</dimen>
     <dimen name="height_title_list">20dp</dimen>
     <dimen name="margin_title_list">8dp</dimen>

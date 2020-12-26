@@ -48,51 +48,24 @@
         android:textAppearance="@style/tag"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
-    <ImageView
-        android:id="@+id/redstar_1"
+    <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marginstart_first_star"
-        android:layout_marginTop="@dimen/margin_top_first_star"
+        android:id="@+id/rating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        android:rating="5"
+        android:stepSize="0.5"
+        android:isIndicator="true"
+        android:progressTint="#FF3365"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar2"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar3"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar4"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/non_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_nonstar_st"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_non_star" />
+        app:layout_constraintTop_toBottomOf="@+id/tag" />
     <TextView
         android:id="@+id/name"
         android:layout_width="@dimen/width_reviews"
