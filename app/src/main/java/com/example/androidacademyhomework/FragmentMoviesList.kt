@@ -42,17 +42,15 @@ class FragmentMoviesList : Fragment(), CellClickListener {
                 layoutManager = GridLayoutManager(activity, 2)
                 movieList_recycler?.setHasFixedSize(true)
                 adapter = MovieListAdapter(loadMovies(requireContext()), this@FragmentMoviesList)
-               // adapter?.setHasStableIds(true)
-
             }
         }
     }
 
     override fun onCellClickListener(view: View, position: Int) {
         val fragment: Fragment = FragmentMoviesDetails()
-        val bundle=Bundle()
-        bundle.putInt("pos",position)
-        fragment.arguments=bundle
+        val bundle = Bundle()
+        bundle.putInt("pos", position)
+        fragment.arguments = bundle
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment, fragment)
