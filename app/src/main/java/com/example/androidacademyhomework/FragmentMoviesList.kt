@@ -18,7 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FragmentMoviesList : Fragment(), CellClickListener {
-    private var movieList_recycler: RecyclerView? = null
+    private var movieListRecycler: RecyclerView? = null
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,19 +26,15 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val v: View = inflater.inflate(R.layout.fragment_movies_list, container, false)
-        // val nextScr: ImageView = v.findViewById(R.id.test_click)
-        // nextScr.setOnClickListener { view ->
-        //   Navigation.findNavController(view).navigate(R.id.navigateToSecond)
-        // }
         return v
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         scope.launch {
             super.onViewCreated(view, savedInstanceState)
-            movieList_recycler = view.findViewById(R.id.list_recycler_view)
-            movieList_recycler?.apply {
+            movieListRecycler = view.findViewById(R.id.list_recycler_view)
+            movieListRecycler?.apply {
                 layoutManager = GridLayoutManager(activity, 2)
-                movieList_recycler?.setHasFixedSize(true)
+                movieListRecycler?.setHasFixedSize(true)
                 adapter = MovieListAdapter(loadMovies(requireContext()), this@FragmentMoviesList)
             }
         }
