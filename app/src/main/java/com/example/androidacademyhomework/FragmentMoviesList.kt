@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieList_recycler: RecyclerView? = null
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +32,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         // }
         return v
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         scope.launch {
             super.onViewCreated(view, savedInstanceState)
@@ -45,7 +43,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
             }
         }
     }
-
     override fun onCellClickListener(view: View, position: Int) {
         val fragment: Fragment = FragmentMoviesDetails()
         val bundle = Bundle()
