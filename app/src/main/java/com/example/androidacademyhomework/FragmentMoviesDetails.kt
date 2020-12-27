@@ -16,10 +16,10 @@ import com.example.androidacademyhomework.viewholder.ActorListAdapter
 class FragmentMoviesDetails : Fragment() {
     private var actorRecycler: RecyclerView? = null
     private var listOfActors:List<Actor> = listOf(
-        Actor(R.drawable.stark, "Robert Downey Jr."),
-        Actor(R.drawable.cap, "Chris Evans"),
-        Actor(R.drawable.hulk, "Mark Ruffalo"),
-        Actor(R.drawable.tor, "Chris Hemsworth")
+        Actor(imageActor = R.drawable.stark, name = "Robert Downey Jr."),
+        Actor(imageActor = R.drawable.cap, name = "Chris Evans"),
+        Actor(imageActor = R.drawable.hulk, name = "Mark Ruffalo"),
+        Actor(imageActor = R.drawable.tor, name = "Chris Hemsworth")
     )
     override fun onCreateView(
         inflater: LayoutInflater,
