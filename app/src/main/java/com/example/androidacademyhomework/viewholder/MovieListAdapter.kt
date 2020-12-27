@@ -14,7 +14,6 @@ class MovieListAdapter(
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
-
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -27,8 +26,6 @@ class MovieListAdapter(
         private var thirdStar: ImageView? = null
         private var fourthStar: ImageView? = null
         private var fifthStar: ImageView? = null
-
-
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
             titleName = itemView.findViewById(R.id.cinema_title)
@@ -43,13 +40,12 @@ class MovieListAdapter(
             fourthStar = itemView.findViewById(R.id.redstar_4)
             fifthStar = itemView.findViewById(R.id.non_star)
         }
-
         fun bind(model: Model) {
-            imageMain?.setImageResource(model.image_Main)
-            titleName?.text = model.title_name
+            imageMain?.setImageResource(model.imageMain)
+            titleName?.text = model.titleName
             duration?.text = model.duration
-            numbReviews?.text = model.number_reviews
-            age?.setImageResource(model.age_rate)
+            numbReviews?.text = model.numberReviews
+            age?.setImageResource(model.ageRate)
             genre?.text = model.genre
             like?.setImageResource(model.liked)
             firstStar?.setImageResource(model.star1)
@@ -58,26 +54,20 @@ class MovieListAdapter(
             fourthStar?.setImageResource(model.star4)
             fifthStar?.setImageResource(model.star5)
         }
-
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return MovieListViewHolder(inflater, parent)
     }
-
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieList: Model = listMovies[position]
         holder.bind(movieList)
         holder.itemView.setOnClickListener { cellClickListener.onCellClickListener() }
     }
-
     override fun getItemCount(): Int {
         return listMovies.size
     }
-
 }
-
 interface CellClickListener {
     fun onCellClickListener()
 }

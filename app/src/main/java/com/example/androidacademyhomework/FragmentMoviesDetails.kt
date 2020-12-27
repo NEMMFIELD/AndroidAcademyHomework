@@ -15,13 +15,12 @@ import com.example.androidacademyhomework.viewholder.ActorListAdapter
 
 class FragmentMoviesDetails : Fragment() {
     private var actorRecycler: RecyclerView? = null
-    private var listOfActors = listOf(
+    private var listOfActors:List<Actor> = listOf(
         Actor(R.drawable.stark, "Robert Downey Jr."),
         Actor(R.drawable.cap, "Chris Evans"),
         Actor(R.drawable.hulk, "Mark Ruffalo"),
         Actor(R.drawable.tor, "Chris Hemsworth")
     )
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +38,6 @@ class FragmentMoviesDetails : Fragment() {
         }
         return v
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         actorRecycler = view.findViewById(R.id.actor_recycler_view)
@@ -48,5 +46,4 @@ class FragmentMoviesDetails : Fragment() {
             adapter = ActorListAdapter(listOfActors)
         }
     }
-
 }
