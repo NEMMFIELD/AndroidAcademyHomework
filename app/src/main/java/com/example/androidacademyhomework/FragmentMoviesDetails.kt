@@ -25,7 +25,6 @@ class FragmentMoviesDetails : Fragment() {
     private lateinit var movie: Movie
     private var actorRecycler: RecyclerView? = null
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +42,6 @@ class FragmentMoviesDetails : Fragment() {
         }
         return v
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         scope.launch {
             val bundle = arguments
