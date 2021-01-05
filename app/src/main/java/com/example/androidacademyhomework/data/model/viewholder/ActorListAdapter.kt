@@ -1,14 +1,13 @@
-package com.example.androidacademyhomework.viewholder
+package com.example.androidacademyhomework.data.model.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.Actor
-import com.example.androidacademyhomework.data.Movie
+import com.example.androidacademyhomework.data.model.Actor
 
 class ActorListAdapter(private var listActors: List<Actor>) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
@@ -28,7 +27,8 @@ class ActorListAdapter(private var listActors: List<Actor>) :
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
         val actors = listActors[position]
         holder.actorName?.text=actors.name
-        Glide.with(holder.itemView.context).load(actors.picture).centerCrop().into(holder.actorImage!!)
+      //  Glide.with(holder.itemView.context).load(actors.picture).centerCrop().into(holder.actorImage!!)
+        holder.actorImage!!.load(actors.picture)
     }
     override fun getItemCount(): Int {
         return listActors.size

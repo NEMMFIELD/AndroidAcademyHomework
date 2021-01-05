@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.viewholder
+package com.example.androidacademyhomework.data.model.viewholder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,22 +7,17 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.Movie
+import com.example.androidacademyhomework.data.model.Movie
 
-class MovieListAdapter(
-    private var listMovies: List<Movie>,
-    private val cellClickListener: CellClickListener
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(
-            inflater.inflate(
-                R.layout.view_holder_movie,
-                parent,
-                false
-            )
-        ) {
+class MovieListAdapter(private var listMovies: List<Movie>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+    fun bindMovies(newMovies: List<Movie>) {
+        listMovies = newMovies
+        notifyDataSetChanged()
+    }
+    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false))
+    {
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -41,9 +36,13 @@ class MovieListAdapter(
             like = itemView.findViewById(R.id.toLike)
             stars = itemView.findViewById(R.id.rating)
         }
+
+
+
         fun bind(movie: Movie) {
             val builder_MIN = StringBuilder()
-            Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
+           // Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
+            imageMain!!.load(listMovies[layoutPosition].poster)
             titleName?.text = movie.title
             builder_MIN.append(movie.runtime.toString() + " MIN")
             duration?.text = builder_MIN

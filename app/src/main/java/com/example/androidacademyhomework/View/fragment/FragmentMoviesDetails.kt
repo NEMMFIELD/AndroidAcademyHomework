@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework
+package com.example.androidacademyhomework.View.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +12,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.androidacademyhomework.data.Movie
-import com.example.androidacademyhomework.data.loadMovies
-import com.example.androidacademyhomework.viewholder.ActorListAdapter
+import coil.load
+import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.data.model.Movie
+import com.example.androidacademyhomework.data.model.loadMovies
+import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -64,9 +65,10 @@ class FragmentMoviesDetails : Fragment() {
         val overview: TextView = view.findViewById(R.id.after_the_d)
         val reviews: TextView = view.findViewById(R.id.reviews)
         val ratingBar:RatingBar=view.findViewById(R.id.rating_bar)
-        Glide.with(view.context)
-            .load(position?.let { loadMovies(requireContext()).get(it).backdrop })
-            .into(imageBackDrop)
+       // Glide.with(view.context)
+       //     .load(position?.let { loadMovies(requireContext()).get(it).backdrop })
+        //    .into(imageBackDrop)
+        imageBackDrop.load(loadMovies(requireContext())[position].backdrop)
         nameTitle.text = loadMovies(requireContext())[position!!].title
         val builder = StringBuilder()
         for (n in movie) {

@@ -1,7 +1,9 @@
-package com.example.androidacademyhomework
+package com.example.androidacademyhomework.View
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.View.fragment.FragmentMoviesList
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

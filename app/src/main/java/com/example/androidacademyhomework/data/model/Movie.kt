@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.data
+package com.example.androidacademyhomework.data.model
 
 data class Movie(
     val id: Int,
