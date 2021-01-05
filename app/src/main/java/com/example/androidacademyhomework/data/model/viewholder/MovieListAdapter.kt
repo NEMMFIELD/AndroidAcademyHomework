@@ -16,6 +16,7 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
         listMovies = newMovies
         notifyDataSetChanged()
     }
+
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false))
     {
         private var imageMain: ImageView? = null
@@ -37,11 +38,8 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
             stars = itemView.findViewById(R.id.rating)
         }
 
-
-
         fun bind(movie: Movie) {
             val builder_MIN = StringBuilder()
-           // Glide.with(itemView.context).load(listMovies[layoutPosition].poster).into(imageMain!!)
             imageMain!!.load(listMovies[layoutPosition].poster)
             titleName?.text = movie.title
             builder_MIN.append(movie.runtime.toString() + " MIN")
@@ -58,10 +56,12 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
             stars?.rating=movie.ratings * 0.5F
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return MovieListViewHolder(inflater, parent)
     }
+
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieList: Movie = listMovies[position]
         holder.bind(movieList)
@@ -70,6 +70,7 @@ class MovieListAdapter(private var listMovies: List<Movie>, private val cellClic
             cellClickListener.onCellClickListener(holder.itemView, position)
         }
     }
+
     override fun getItemCount(): Int {
         return listMovies.size
     }

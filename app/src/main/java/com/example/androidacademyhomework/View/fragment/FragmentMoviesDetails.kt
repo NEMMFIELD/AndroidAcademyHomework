@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.View.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,22 +11,35 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.model.Movie
+import com.example.androidacademyhomework.data.model.Actor
 import com.example.androidacademyhomework.data.model.loadMovies
 import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
+import com.example.androidacademyhomework.viewmodel.MovieListViewModel
+import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FragmentMoviesDetails : Fragment() {
-    private lateinit var movie: Movie
     private var actorRecycler: RecyclerView? = null
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private var imageBackDrop: ImageView? = null
+    private var nameTitle: TextView? = null
+    private var genreDetail: TextView? = null
+    private var overview: TextView? = null
+    private var reviews: TextView? = null
+    private var ratingBar: RatingBar? = null
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+    private val viewModel: MovieListViewModel by viewModels {
+        MovieListViewModelFactory(
+            requireContext()
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,42 +57,64 @@ class FragmentMoviesDetails : Fragment() {
         }
         return v
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        scope.launch {
-            val bundle = arguments
-            val pos: Int? = bundle?.getInt("pos")
-            actorRecycler = view.findViewById(R.id.actor_recycler_view)
-            actorRecycler?.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                adapter = ActorListAdapter(loadMovies(requireContext())[pos!!].actors)
-            }
-           bindDetails(view,pos)
-        }
         super.onViewCreated(view, savedInstanceState)
+        val bundle = arguments
+        val pos: Int? = bundle?.getInt("pos")
+        initViews()
+        setUpMoviesDetailsAdapter()
+        bindDetails(pos)
+        viewModel.loadActors(pos!!)
+        viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
-    private suspend fun bindDetails(view:View,position:Int?)
-    {
-        val imageBackDrop: ImageView = view.findViewById(R.id.orig)
-        val nameTitle: TextView = view.findViewById(R.id.name)
-        val genreDetail: TextView = view.findViewById(R.id.tag)
-        val movie = loadMovies(requireContext())[position!!].genres
-        val overview: TextView = view.findViewById(R.id.after_the_d)
-        val reviews: TextView = view.findViewById(R.id.reviews)
-        val ratingBar:RatingBar=view.findViewById(R.id.rating_bar)
-       // Glide.with(view.context)
-       //     .load(position?.let { loadMovies(requireContext()).get(it).backdrop })
-        //    .into(imageBackDrop)
-        imageBackDrop.load(loadMovies(requireContext())[position].backdrop)
-        nameTitle.text = loadMovies(requireContext())[position!!].title
-        val builder = StringBuilder()
-        for (n in movie) {
-            builder.append(n.name + ", ")
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actorRecycler?.adapter = null
+        actorRecycler = null
+    }
+
+
+    private fun updateDetailsAdapter(actors: List<Actor>) {
+        (actorRecycler?.adapter as? ActorListAdapter)?.apply {
+            bindActors(actors)
         }
-        builder.deleteCharAt(builder.lastIndexOf(","));
-        genreDetail.text = builder.toString()
-        overview.text = loadMovies(requireContext())[position].overview
-        reviews.text = loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
-        ratingBar.rating= (loadMovies(requireContext())[position].ratings)*0.5F
+    }
+
+    private fun initViews() {
+        actorRecycler = view?.findViewById(R.id.actor_recycler_view)
+        imageBackDrop = view?.findViewById(R.id.orig)
+        nameTitle = view?.findViewById(R.id.name)
+        genreDetail = view?.findViewById(R.id.tag)
+        overview = view?.findViewById(R.id.after_the_d)
+        reviews = view?.findViewById(R.id.reviews)
+        ratingBar = view?.findViewById(R.id.rating_bar)
+    }
+
+    private fun setUpMoviesDetailsAdapter() {
+        actorRecycler?.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        actorRecycler?.adapter = ActorListAdapter(viewModel.actorList.value!!)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun bindDetails(position: Int?) {
+        scope.launch {
+            val movie = loadMovies(requireContext())[position!!].genres
+            imageBackDrop?.load(loadMovies(requireContext())[position].backdrop)
+            nameTitle?.text = loadMovies(requireContext())[position].title
+            val builder = StringBuilder()
+            for (n in movie) {
+                builder.append(n.name + ", ")
+            }
+            builder.deleteCharAt(builder.lastIndexOf(","));
+            genreDetail?.text = builder.toString()
+            overview?.text = loadMovies(requireContext())[position].overview
+            reviews?.text =
+                loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
+            ratingBar?.rating = loadMovies(requireContext())[position].ratings?.times(0.5F)
+        }
     }
 }
 

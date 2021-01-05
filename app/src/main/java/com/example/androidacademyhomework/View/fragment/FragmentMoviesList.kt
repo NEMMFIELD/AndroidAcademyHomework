@@ -19,7 +19,12 @@ import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
 
 class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieListRecycler: RecyclerView? = null
-    private  val viewModel: MovieListViewModel by viewModels {MovieListViewModelFactory(requireContext())}
+    private val viewModel: MovieListViewModel by viewModels {
+        MovieListViewModelFactory(
+            requireContext()
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +38,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setUpMoviesListAdapter()
-        viewModel.loadData()
         viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
 
@@ -41,6 +45,11 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         super.onDestroy()
         movieListRecycler?.adapter = null
         movieListRecycler = null
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadData()
     }
 
     private fun updateAdapter(movies: List<Movie>) {
@@ -57,7 +66,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
         movieListRecycler?.adapter =
             MovieListAdapter(viewModel.movieList.value!!, this@FragmentMoviesList)
-
     }
 
     override fun onCellClickListener(view: View, position: Int) {
