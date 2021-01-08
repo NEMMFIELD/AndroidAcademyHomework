@@ -7,9 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.model.Actor
 
-class ActorListAdapter(private var listActors: List<Actor>) :
+/*class ActorListAdapter(private var listActors: List<Actor>) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
     fun bindActors(newActors: List<Actor>) {
         listActors = newActors
@@ -34,11 +33,11 @@ class ActorListAdapter(private var listActors: List<Actor>) :
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
         val actors = listActors[position]
-        holder.actorName?.text = actors.name
-        holder.actorImage!!.load(actors.picture)
+      //  holder.actorName?.text = actors.name
+       // holder.actorImage!!.load(actors.picture)
     }
 
     override fun getItemCount(): Int {
         return listActors.size
     }
-}
+}*/

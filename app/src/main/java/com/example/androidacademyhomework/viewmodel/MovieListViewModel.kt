@@ -5,20 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.androidacademyhomework.data.model.Actor
-import com.example.androidacademyhomework.data.model.Movie
-import com.example.androidacademyhomework.data.model.loadMovies
+import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieListViewModel(private val context: Context) : ViewModel() {
     private var scope = CoroutineScope(Dispatchers.Main)
-    private val _mutableMovieList = MutableLiveData<List<Movie>>(emptyList())
-    val movieList: LiveData<List<Movie>> get() = _mutableMovieList
-    private val _mutableActorList = MutableLiveData<List<Actor>>(emptyList())
-    val actorList: LiveData<List<Actor>>
-        get() = _mutableActorList
+    private val _mutableMovieList = MutableLiveData<List<ResultsItem>>(emptyList())
+    val movieList: LiveData<List<ResultsItem>> get() = _mutableMovieList
+   // private val _mutableActorList = MutableLiveData<List<Actor>>(emptyList())
+    //val actorList: LiveData<List<Actor>> get() = _mutableActorList
 
     fun loadData() {
         scope.launch {
@@ -27,7 +25,7 @@ class MovieListViewModel(private val context: Context) : ViewModel() {
     }
 
     private suspend fun reloadMovies() {
-        _mutableMovieList.value = loadMovies(context)
+      //  _mutableMovieList.value = loadMovies(context)
     }
 
     fun loadActors(pos: Int) {
@@ -35,7 +33,7 @@ class MovieListViewModel(private val context: Context) : ViewModel() {
     }
 
     private suspend fun reloadActors(pos: Int) {
-        _mutableActorList.value = loadMovies(context)[pos].actors
+       // _mutableActorList.value = loadMovies(context)[pos].actors
     }
 
 }

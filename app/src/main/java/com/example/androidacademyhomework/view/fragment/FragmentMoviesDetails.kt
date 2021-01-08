@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.View.fragment
+package com.example.androidacademyhomework.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.model.Actor
-import com.example.androidacademyhomework.data.model.loadMovies
-import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
+
+
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -64,9 +63,9 @@ class FragmentMoviesDetails : Fragment() {
         val pos: Int? = bundle?.getInt("pos")
         initViews()
         setUpMoviesDetailsAdapter()
-        bindDetails(pos)
+       // bindDetails(pos)
         viewModel.loadActors(pos!!)
-        viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
+       // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
 
     override fun onDestroy() {
@@ -75,12 +74,11 @@ class FragmentMoviesDetails : Fragment() {
         actorRecycler = null
     }
 
-
-    private fun updateDetailsAdapter(actors: List<Actor>) {
+   /* private fun updateDetailsAdapter(actors: List<Actor>) {
         (actorRecycler?.adapter as? ActorListAdapter)?.apply {
             bindActors(actors)
         }
-    }
+    }*/
 
     private fun initViews() {
         actorRecycler = view?.findViewById(R.id.actor_recycler_view)
@@ -95,11 +93,11 @@ class FragmentMoviesDetails : Fragment() {
     private fun setUpMoviesDetailsAdapter() {
         actorRecycler?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        actorRecycler?.adapter = ActorListAdapter(viewModel.actorList.value!!)
+       // actorRecycler?.adapter = ActorListAdapter(viewModel.actorList.value!!)
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun bindDetails(position: Int?) {
+
+   /* private fun bindDetails(position: Int?) {
         scope.launch {
             val movie = loadMovies(requireContext())[position!!].genres
             imageBackDrop?.load(loadMovies(requireContext())[position].backdrop)
@@ -113,12 +111,10 @@ class FragmentMoviesDetails : Fragment() {
             overview?.text = loadMovies(requireContext())[position].overview
             reviews?.text =
                 loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
-            ratingBar?.rating = loadMovies(requireContext())[position].ratings?.times(0.5F)
+            ratingBar?.rating = loadMovies(requireContext())[position].ratings.times(0.5F)
         }
-    }
+    }*/
 }
-
-
 
 
 

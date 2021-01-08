@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.View.fragment
+package com.example.androidacademyhomework.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,14 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.model.Movie
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
+import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
+import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieListRecycler: RecyclerView? = null
+    private var scope= CoroutineScope(Dispatchers.Main)
     private val viewModel: MovieListViewModel by viewModels {
         MovieListViewModelFactory(
             requireContext()
@@ -29,16 +34,15 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val v: View = inflater.inflate(R.layout.fragment_movies_list, container, false)
-        return v
+    ): View {
+        return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        setUpMoviesListAdapter()
-        viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
+        scope.launch { setUpMoviesListAdapter() }
+       // viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
 
     override fun onDestroy() {
@@ -52,21 +56,21 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         viewModel.loadData()
     }
 
-    private fun updateAdapter(movies: List<Movie>) {
+   /* private fun updateAdapter(movies: List<ResultsItem>) {
         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
             bindMovies(movies)
         }
-    }
+    }*/
 
     private fun initViews() {
         movieListRecycler = view?.findViewById(R.id.list_recycler_view)
     }
 
-    private fun setUpMoviesListAdapter() {
+    private suspend fun setUpMoviesListAdapter() {
         movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
-        movieListRecycler?.adapter =
-            MovieListAdapter(viewModel.movieList.value!!, this@FragmentMoviesList)
+        movieListRecycler?.adapter = MovieListAdapter(RetrofitModule.moviesApi.getNowPlaying(1), this@FragmentMoviesList)
     }
+
 
     override fun onCellClickListener(view: View, position: Int) {
         val fragment: Fragment = FragmentMoviesDetails()
