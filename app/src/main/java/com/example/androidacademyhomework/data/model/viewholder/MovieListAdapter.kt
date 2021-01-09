@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class MovieListAdapter(
     private var listMovies: Movie,
-    private val cellClickListener: CellClickListener
+    private val cellClickListener: CellClickListener?
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
 
@@ -52,13 +52,16 @@ class MovieListAdapter(
                     )?.posterPath
                 imageMain!!.load(strUrl)
                 titleName?.text = movie.results?.get(adapterPosition)?.title
-                val movieInfoRequest =
-                    RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(adapterPosition)?.id!!)
+                val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
+                    movie.results?.get(
+                        index = adapterPosition
+                    )?.id!!
+                )
                 Log.d("duration", movieInfoRequest.toString())
                 duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
-                genre?.text =  movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
+                genre?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
                 stars?.rating = movie.results[adapterPosition]?.voteAverage!! * 0.5F
-                numbReviews?.text=movieInfoRequest.voteCount.toString().plus(" REVIEWS")
+                numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
             }
         }
     }
@@ -73,7 +76,7 @@ class MovieListAdapter(
         holder.bind(movieList)
         val item = listMovies
         holder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(holder.itemView, position)
+            cellClickListener?.onCellClickListener(holder.itemView, position)
         }
     }
 

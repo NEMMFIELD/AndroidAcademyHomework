@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,13 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.network.RetrofitModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-/*class ActorListAdapter(private var listActors: List<Actor>) :
+class ActorListAdapter(private var listActors: Actor) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
-    fun bindActors(newActors: List<Actor>) {
-        listActors = newActors
-        notifyDataSetChanged()
-    }
+    val scope = CoroutineScope(Dispatchers.Main)
 
     inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
@@ -32,12 +34,14 @@ import com.example.androidacademyhomework.R
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors = listActors[position]
-      //  holder.actorName?.text = actors.name
-       // holder.actorImage!!.load(actors.picture)
+        val actors:Actor = listActors
+        scope.launch {
+        val config = RetrofitModule.moviesApi.getConfig()
+        holder.actorName?.text = actors.cast?.get(position)?.name
+        holder.actorImage!!.load( config.images?.secureBaseUrl + config.images?.posterSizes?.get(5)+actors.cast?.get(position)?.profilePath) }
     }
 
     override fun getItemCount(): Int {
-        return listActors.size
+        return listActors.cast!!.size
     }
-}*/
+}

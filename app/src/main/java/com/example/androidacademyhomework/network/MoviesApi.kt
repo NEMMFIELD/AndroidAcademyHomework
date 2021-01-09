@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.network
 
+import com.example.androidacademyhomework.data.model.viewholder.Actor
 import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.data.model.viewholder.MovieInfo
 import com.example.androidacademyhomework.data.model.viewholder.Response
@@ -26,4 +27,7 @@ interface MoviesApi {
 
     @GET("movie/{id}?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
     suspend fun getMovieInfo(@Path("id")movieId:Int):MovieInfo
+
+    @GET("movie/{id}/credits?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
+    suspend fun getCast(@Path("id")movieId:Int): Actor
 }

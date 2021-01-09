@@ -52,7 +52,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.loadData()
+       // viewModel.loadData()
     }
 
    /* private fun updateAdapter(movies: List<ResultsItem>) {

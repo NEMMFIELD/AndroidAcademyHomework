@@ -1,6 +1,6 @@
 package com.example.androidacademyhomework.view.fragment
 
-import android.annotation.SuppressLint
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +14,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.androidacademyhomework.R
-
-
+import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
+import com.example.androidacademyhomework.data.model.viewholder.Movie
+import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
+import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +34,7 @@ class FragmentMoviesDetails : Fragment() {
     private var reviews: TextView? = null
     private var ratingBar: RatingBar? = null
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+
     private val viewModel: MovieListViewModel by viewModels {
         MovieListViewModelFactory(
             requireContext()
@@ -62,23 +64,17 @@ class FragmentMoviesDetails : Fragment() {
         val bundle = arguments
         val pos: Int? = bundle?.getInt("pos")
         initViews()
-        setUpMoviesDetailsAdapter()
-       // bindDetails(pos)
-        viewModel.loadActors(pos!!)
-       // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
+        scope.launch { setUpMoviesDetailsAdapter(pos) }
+        // bindDetails(pos)
+        // viewModel.loadActors(pos!!)
+        // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        actorRecycler?.adapter = null
-        actorRecycler = null
-    }
-
-   /* private fun updateDetailsAdapter(actors: List<Actor>) {
-        (actorRecycler?.adapter as? ActorListAdapter)?.apply {
-            bindActors(actors)
-        }
-    }*/
+    /* private fun updateDetailsAdapter(actors: List<Actor>) {
+         (actorRecycler?.adapter as? ActorListAdapter)?.apply {
+             bindActors(actors)
+         }
+     }*/
 
     private fun initViews() {
         actorRecycler = view?.findViewById(R.id.actor_recycler_view)
@@ -90,30 +86,39 @@ class FragmentMoviesDetails : Fragment() {
         ratingBar = view?.findViewById(R.id.rating_bar)
     }
 
-    private fun setUpMoviesDetailsAdapter() {
+    private suspend fun setUpMoviesDetailsAdapter(pos:Int?) {
+
         actorRecycler?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-       // actorRecycler?.adapter = ActorListAdapter(viewModel.actorList.value!!)
+        val movie:Movie=RetrofitModule.moviesApi.getNowPlaying(1)
+        val movieId:Int?= movie.results?.get(pos!!)?.id
+        actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actorRecycler?.adapter = null
+        actorRecycler = null
     }
 
 
-   /* private fun bindDetails(position: Int?) {
-        scope.launch {
-            val movie = loadMovies(requireContext())[position!!].genres
-            imageBackDrop?.load(loadMovies(requireContext())[position].backdrop)
-            nameTitle?.text = loadMovies(requireContext())[position].title
-            val builder = StringBuilder()
-            for (n in movie) {
-                builder.append(n.name + ", ")
-            }
-            builder.deleteCharAt(builder.lastIndexOf(","));
-            genreDetail?.text = builder.toString()
-            overview?.text = loadMovies(requireContext())[position].overview
-            reviews?.text =
-                loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
-            ratingBar?.rating = loadMovies(requireContext())[position].ratings.times(0.5F)
-        }
-    }*/
+    /* private fun bindDetails(position: Int?) {
+         scope.launch {
+             val movie = loadMovies(requireContext())[position!!].genres
+             imageBackDrop?.load(loadMovies(requireContext())[position].backdrop)
+             nameTitle?.text = loadMovies(requireContext())[position].title
+             val builder = StringBuilder()
+             for (n in movie) {
+                 builder.append(n.name + ", ")
+             }
+             builder.deleteCharAt(builder.lastIndexOf(","));
+             genreDetail?.text = builder.toString()
+             overview?.text = loadMovies(requireContext())[position].overview
+             reviews?.text =
+                 loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
+             ratingBar?.rating = loadMovies(requireContext())[position].ratings.times(0.5F)
+         }
+     }*/
 }
 
 
