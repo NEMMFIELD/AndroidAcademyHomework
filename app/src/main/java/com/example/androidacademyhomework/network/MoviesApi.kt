@@ -15,6 +15,15 @@ interface MoviesApi {
     @GET("movie/now_playing?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page=")
     suspend fun getNowPlaying(@Query("page") page:Int): Movie
 
+    @GET("movie/popular?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page")
+    suspend fun getPopular(@Query("page")page:Int):Movie
+
+    @GET("movie/top_rated?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page")
+    suspend fun getTopRated(@Query("page")page:Int):Movie
+
+    @GET("movie/upcoming?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page")
+    suspend fun getUpcoming(@Query("page")page:Int):Movie
+
     @GET("movie/{id}?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
-    suspend fun getMovieInfo(@Path("id")movieId:String):MovieInfo
+    suspend fun getMovieInfo(@Path("id")movieId:Int):MovieInfo
 }

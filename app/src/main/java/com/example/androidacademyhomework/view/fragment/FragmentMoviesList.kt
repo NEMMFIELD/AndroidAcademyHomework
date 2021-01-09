@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
-import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -42,7 +41,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         scope.launch { setUpMoviesListAdapter() }
-       // viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
+       //viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
 
     override fun onDestroy() {
@@ -70,7 +69,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
         movieListRecycler?.adapter = MovieListAdapter(RetrofitModule.moviesApi.getNowPlaying(1), this@FragmentMoviesList)
     }
-
 
     override fun onCellClickListener(view: View, position: Int) {
         val fragment: Fragment = FragmentMoviesDetails()

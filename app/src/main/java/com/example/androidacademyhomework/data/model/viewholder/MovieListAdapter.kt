@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,25 +44,22 @@ class MovieListAdapter(
         }
 
         fun bind(movie: Movie) {
-            val builder_MIN = StringBuilder()
             scope.launch {
                 val config = RetrofitModule.moviesApi.getConfig()
-                val str: String = config.images?.secureBaseUrl + config.images?.posterSizes?.get(6) + movie.results?.get(adapterPosition)?.posterPath
-                imageMain!!.load(str)
+                val strUrl: String =
+                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(6) + movie.results?.get(
+                        adapterPosition
+                    )?.posterPath
+                imageMain!!.load(strUrl)
+                titleName?.text = movie.results?.get(adapterPosition)?.title
+                val movieInfoRequest =
+                    RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(adapterPosition)?.id!!)
+                Log.d("duration", movieInfoRequest.toString())
+                duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
+                genre?.text =  movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
+                stars?.rating = movie.results[adapterPosition]?.voteAverage!! * 0.5F
+                numbReviews?.text=movieInfoRequest.voteCount.toString().plus(" REVIEWS")
             }
-            titleName?.text = movie.results?.get(adapterPosition)?.title
-            builder_MIN.append(MovieInfo().runtime.toString() + " MIN")
-            duration?.text = builder_MIN
-            //val builder_REVIEWS = StringBuilder()
-            //builder_REVIEWS.append(movie.numberOfRatings.toString() + " REVIEWS")
-            //numbReviews?.text = builder_REVIEWS
-            val builder = StringBuilder()
-            for (name in movie.results?.get(adapterPosition)?.genreIds!!) {
-                builder.append(name.toString() + ", ")
-            }
-            builder.deleteCharAt(builder.lastIndexOf(","));
-            genre?.text = movie.results[adapterPosition]?.genreIds.toString()
-            stars?.rating = movie.results[adapterPosition]?.voteAverage!! * 0.5F
         }
     }
 
