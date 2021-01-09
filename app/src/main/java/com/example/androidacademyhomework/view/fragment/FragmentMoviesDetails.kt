@@ -14,10 +14,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.Movie
-import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -64,8 +64,11 @@ class FragmentMoviesDetails : Fragment() {
         val bundle = arguments
         val pos: Int? = bundle?.getInt("pos")
         initViews()
-        scope.launch { setUpMoviesDetailsAdapter(pos) }
-        // bindDetails(pos)
+        scope.launch {
+            setUpMoviesDetailsAdapter(pos)
+            bindDetails(pos)
+        }
+
         // viewModel.loadActors(pos!!)
         // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
@@ -86,12 +89,12 @@ class FragmentMoviesDetails : Fragment() {
         ratingBar = view?.findViewById(R.id.rating_bar)
     }
 
-    private suspend fun setUpMoviesDetailsAdapter(pos:Int?) {
+    private suspend fun setUpMoviesDetailsAdapter(pos: Int?) {
 
         actorRecycler?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val movie:Movie=RetrofitModule.moviesApi.getNowPlaying(1)
-        val movieId:Int?= movie.results?.get(pos!!)?.id
+        val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(1)
+        val movieId: Int? = movie.results?.get(pos!!)?.id
         actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!))
     }
 
@@ -102,23 +105,22 @@ class FragmentMoviesDetails : Fragment() {
     }
 
 
-    /* private fun bindDetails(position: Int?) {
-         scope.launch {
-             val movie = loadMovies(requireContext())[position!!].genres
-             imageBackDrop?.load(loadMovies(requireContext())[position].backdrop)
-             nameTitle?.text = loadMovies(requireContext())[position].title
-             val builder = StringBuilder()
-             for (n in movie) {
-                 builder.append(n.name + ", ")
-             }
-             builder.deleteCharAt(builder.lastIndexOf(","));
-             genreDetail?.text = builder.toString()
-             overview?.text = loadMovies(requireContext())[position].overview
-             reviews?.text =
-                 loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
-             ratingBar?.rating = loadMovies(requireContext())[position].ratings.times(0.5F)
-         }
-     }*/
+    private suspend fun bindDetails(position: Int?) {
+        val movie = RetrofitModule.moviesApi.getNowPlaying(1)
+        val config = RetrofitModule.moviesApi.getConfig()
+        val movieInfoRequest =
+            RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!)
+        val backImgUrl: String =
+            config.images?.secureBaseUrl + config.images?.backdropSizes?.get(3) + movie.results.get(
+                position!!
+            )?.backdropPath
+        imageBackDrop?.load(backImgUrl)
+        nameTitle?.text = position?.let { movie.results?.get(it)?.title }
+        genreDetail?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
+        overview?.text = movieInfoRequest.overview
+        reviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
+        ratingBar?.rating = movie.results[position]?.voteAverage!! * 0.5F
+    }
 }
 
 

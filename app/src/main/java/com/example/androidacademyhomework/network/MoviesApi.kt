@@ -8,7 +8,6 @@ import com.example.androidacademyhomework.data.model.viewholder.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-//API KEY: 56b9fc3e2f7cf0c570b8d7dc71de180e
 interface MoviesApi {
     @GET("configuration?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e")
     suspend fun getConfig(): Response
