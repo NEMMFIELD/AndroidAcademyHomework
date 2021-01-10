@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +37,7 @@ class ActorListAdapter(private var listActors: Actor) :
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
         val actors:Actor = listActors
         scope.launch {
-        val config = RetrofitModule.moviesApi.getConfig()
+        val config = RetrofitModule.moviesApi.getConfig(API_KEY)
         holder.actorName?.text = actors.cast?.get(position)?.name
         holder.actorImage!!.load( config.images?.secureBaseUrl + config.images?.posterSizes?.get(5)+actors.cast?.get(position)?.profilePath) }
     }

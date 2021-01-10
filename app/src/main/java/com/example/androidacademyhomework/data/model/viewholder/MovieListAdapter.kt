@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,11 @@ class MovieListAdapter(
     private val cellClickListener: CellClickListener?
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
-
+    fun bindMovies(newMovies:Movie)
+    {
+        listMovies=newMovies
+        notifyDataSetChanged()
+    }
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
         private var imageMain: ImageView? = null
@@ -45,9 +50,9 @@ class MovieListAdapter(
 
         fun bind(movie: Movie) {
             scope.launch {
-                val config = RetrofitModule.moviesApi.getConfig()
+                val config = RetrofitModule.moviesApi.getConfig(API_KEY)
                 val strUrl: String =
-                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(6) + movie.results?.get(
+                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.results?.get(
                         adapterPosition
                     )?.posterPath
                 imageMain!!.load(strUrl)
@@ -55,7 +60,8 @@ class MovieListAdapter(
                 val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
                     movie.results?.get(
                         index = adapterPosition
-                    )?.id!!
+                    )?.id!!,
+                    API_KEY
                 )
                 Log.d("duration", movieInfoRequest.toString())
                 duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")

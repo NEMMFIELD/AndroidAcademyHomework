@@ -18,6 +18,7 @@ import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.Movie
+import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -90,12 +91,12 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     private suspend fun setUpMoviesDetailsAdapter(pos: Int?) {
-
         actorRecycler?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(1)
+        val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY,1)
         val movieId: Int? = movie.results?.get(pos!!)?.id
-        actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!))
+        actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!,
+            API_KEY))
     }
 
     override fun onDestroy() {
@@ -104,18 +105,17 @@ class FragmentMoviesDetails : Fragment() {
         actorRecycler = null
     }
 
-
     private suspend fun bindDetails(position: Int?) {
-        val movie = RetrofitModule.moviesApi.getNowPlaying(1)
-        val config = RetrofitModule.moviesApi.getConfig()
+        val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY,1)
+        val config = RetrofitModule.moviesApi.getConfig(API_KEY)
         val movieInfoRequest =
-            RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!)
+            RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!, API_KEY)
         val backImgUrl: String =
-            config.images?.secureBaseUrl + config.images?.backdropSizes?.get(3) + movie.results.get(
+            config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results.get(
                 position!!
             )?.backdropPath
         imageBackDrop?.load(backImgUrl)
-        nameTitle?.text = position?.let { movie.results?.get(it)?.title }
+        nameTitle?.text = position.let { movie.results.get(it)?.title }
         genreDetail?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
         overview?.text = movieInfoRequest.overview
         reviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")

@@ -30,7 +30,7 @@
     <dimen name="margin_top_rate">4dp</dimen>
     <dimen name="margin_top_storyline">18dp</dimen>
     <dimen name="margin_top_description">28dp</dimen>
-    <dimen name="margin_top_cast">15dp</dimen>
+    <dimen name="margin_top_cast">14dp</dimen>
     <dimen name="margin_start_icon_list">16dp</dimen>
     <dimen name="marg_top_icon_list">56dp</dimen>
     <dimen name="width_text_list">20dp</dimen>

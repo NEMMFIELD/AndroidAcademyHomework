@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:id="@+id/layout_actors"
         android:layout_width="wrap_content"
@@ -14,8 +15,10 @@
     <TextView
         android:id="@+id/actor_name"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="105dp"
+        android:paddingStart="8dp"
+        android:text="@string/actor_name"
         android:lines="2"
-        android:text="@string/robertdowneyjr"
-        android:textColor="#D8D8D8" />
+        android:textColor="#D8D8D8"
+        tools:ignore="RtlSymmetry" />
     </LinearLayout>

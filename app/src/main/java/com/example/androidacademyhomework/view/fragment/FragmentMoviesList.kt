@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
+import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
+import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
 
 class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieListRecycler: RecyclerView? = null
-    private var scope= CoroutineScope(Dispatchers.Main)
+    private var scope = CoroutineScope(Dispatchers.Main)
     private val viewModel: MovieListViewModel by viewModels {
         MovieListViewModelFactory(
             requireContext()
@@ -40,8 +42,9 @@ class FragmentMoviesList : Fragment(), CellClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        viewModel.loadData()
         scope.launch { setUpMoviesListAdapter() }
-       //viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
+        viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
 
     override fun onDestroy() {
@@ -50,24 +53,19 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler = null
     }
 
-    override fun onStart() {
-        super.onStart()
-       // viewModel.loadData()
-    }
-
-   /* private fun updateAdapter(movies: List<ResultsItem>) {
-        (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
-            bindMovies(movies)
-        }
-    }*/
+     private fun updateAdapter(movies: Movie) {
+         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
+             bindMovies(movies)
+         }
+     }
 
     private fun initViews() {
         movieListRecycler = view?.findViewById(R.id.list_recycler_view)
     }
 
-    private suspend fun setUpMoviesListAdapter() {
+    private suspend  fun setUpMoviesListAdapter() {
         movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
-        movieListRecycler?.adapter = MovieListAdapter(RetrofitModule.moviesApi.getNowPlaying(1), this@FragmentMoviesList)
+        movieListRecycler?.adapter = MovieListAdapter(RetrofitModule.moviesApi.getNowPlaying(API_KEY,1), this@FragmentMoviesList)
     }
 
     override fun onCellClickListener(view: View, position: Int) {
