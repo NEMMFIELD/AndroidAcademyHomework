@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/details"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color"
-        tools:context=".MovieDetailsActivity">
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color">
         <ImageView
             android:id="@+id/orig"
             android:layout_width="@dimen/width_of_main"
@@ -24,8 +18,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fon" />
-
+            app:srcCompat="@drawable/fon"/>
         <TextView
             android:id="@+id/back"
             android:layout_width="wrap_content"
@@ -37,18 +30,17 @@
             android:lineSpacingExtra="2sp"
             android:text="@string/back"
             android:textColor="#FFFFFF"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_back"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/path"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
         <ImageView
             android:id="@+id/path"
             android:layout_width="@dimen/widht_of_back"
             android:layout_height="@dimen/height_of_back"
             android:layout_marginStart="@dimen/margin_start_arrow"
             android:layout_marginTop="@dimen/margin_top_arrow"
-            android:layout_marginBottom="229dp"
+            android:layout_marginBottom="@dimen/margin_bot_image_back"
             app:layout_constraintBottom_toBottomOf="@+id/orig"
             app:layout_constraintEnd_toStartOf="@+id/back"
             app:layout_constraintHorizontal_bias="0.5"
@@ -57,8 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_path" />
-
+            app:srcCompat="@drawable/ic_path"/>
         <ImageView
             android:id="@+id/some_id"
             android:layout_width="@dimen/widht_of_age"
@@ -74,8 +65,7 @@
             android:textAppearance="@style/some_id_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
+            tools:ignore="MissingConstraints"/>
         <ImageView
             android:id="@+id/name"
             android:layout_width="@dimen/width_title"
@@ -84,8 +74,7 @@
             android:layout_marginTop="@dimen/margin_start_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/some_id"
-            app:srcCompat="@drawable/ic_name" />
-
+            app:srcCompat="@drawable/ic_name"/>
         <TextView
             android:id="@+id/tag"
             android:layout_width="@dimen/width_genre"
@@ -101,8 +90,7 @@
             android:textAppearance="@style/tag_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="p" />
-
+            tools:targetApi="p"/>
         <ImageView
             android:id="@+id/reviews"
             android:layout_width="wrap_content"
@@ -111,8 +99,7 @@
             android:layout_marginTop="@dimen/margin_top_rate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tag"
-            app:srcCompat="@drawable/ic_reviews" />
-
+            app:srcCompat="@drawable/ic_reviews"/>
         <TextView
             android:id="@+id/storyline"
             android:layout_width="@dimen/widht_storyline"
@@ -126,8 +113,7 @@
             android:text="@string/storyline"
             android:textAppearance="@style/storyline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
         <TextView
             android:id="@+id/after_the_d"
             android:layout_width="@dimen/width_desc"
@@ -140,9 +126,8 @@
             android:text="@string/after_the_d"
             android:textAppearance="@style/after_the_d"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
+            app:layout_constraintTop_toTopOf="parent"/>
+         <TextView
             android:id="@+id/heading"
             android:layout_width="@dimen/widht_cast"
             android:layout_height="@dimen/width_cast"
@@ -156,115 +141,12 @@
             android:textAppearance="@style/heading"
             android:textColor="@color/gradient"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/tonistark"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start"
-            android:layout_marginTop="@dimen/margin_top"
-            app:layout_constraintEnd_toStartOf="@+id/captainusa"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/actor_recycler_view"
+            android:layout_marginStart="@dimen/margin_start_recycleractor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/stark" />
-
-        <ImageView
-            android:id="@+id/captainusa"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toStartOf="@+id/hulk"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tonistark"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/cap" />
-
-        <ImageView
-            android:id="@+id/hulk"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toStartOf="@+id/tor"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/captainusa"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/hulk" />
-
-        <ImageView
-            android:id="@+id/tor"
-            android:layout_width="@dimen/width_actor"
-            android:layout_height="@dimen/height_actor"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/hulk"
-            app:layout_constraintTop_toBottomOf="@+id/heading"
-            app:srcCompat="@drawable/tor" />
-
-        <TextView
-            android:id="@+id/nameOfStark"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:lines="2"
-            android:text="@string/robertdowneyjr"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfCap"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tonistark" />
-
-        <TextView
-            android:id="@+id/nameOfCap"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:lines="2"
-            android:text="Chris \nEvans"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfHulk"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfStark"
-            app:layout_constraintTop_toBottomOf="@+id/captainusa" />
-
-        <TextView
-            android:id="@+id/nameOfHulk"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:text="Mark \nRuffalo"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toStartOf="@+id/nameOfTor"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfCap"
-            app:layout_constraintTop_toBottomOf="@+id/hulk" />
-
-        <TextView
-            android:id="@+id/nameOfTor"
-            android:layout_width="@dimen/width_name"
-            android:layout_height="@dimen/height_name"
-            android:layout_marginStart="@dimen/margin_start_actor"
-            android:layout_marginTop="@dimen/margin_top_name"
-            android:text="Chris \nHemsworth"
-            android:textColor="#D8D8D8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/nameOfHulk"
-            app:layout_constraintTop_toBottomOf="@+id/tor" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/heading"/>
+         </androidx.constraintlayout.widget.ConstraintLayout>
