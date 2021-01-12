@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-         xmlns:app="http://schemas.android.com/apk/res-auto"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
     <View
         android:id="@+id/bg"
         android:layout_width="@dimen/width_bg_list"
@@ -14,6 +14,7 @@
         android:elevation="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/movie_img"
         android:layout_width="@dimen/width_img_list"
@@ -22,8 +23,8 @@
         android:layout_marginTop="@dimen/margin_top_image"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/mask"
         android:layout_width="@dimen/width_msk"
@@ -33,6 +34,7 @@
         android:background="@drawable/ic_mask___movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tag"
         android:layout_width="wrap_content"
@@ -47,24 +49,26 @@
         android:textAppearance="@style/tag"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/rating"
         style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="1dp"
+        android:isIndicator="true"
         android:numStars="5"
+        android:progressTint="#FF3365"
+        android:rating="5"
         android:scaleX=".5"
         android:scaleY=".5"
+        android:stepSize="0.5"
         android:transformPivotX="0dp"
         android:transformPivotY="0dp"
-        android:rating="5"
-        android:stepSize="0.5"
-        android:isIndicator="true"
-        android:progressTint="#FF3365"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tag" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="@dimen/width_reviews"
@@ -77,6 +81,7 @@
         android:textAppearance="@style/name"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/cinema_title"
         android:layout_width="@dimen/width_title_list"
@@ -89,16 +94,17 @@
         android:textAppearance="@style/cinema_title_style"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/duration"
         android:layout_width="@dimen/widht_duration"
         android:layout_height="@dimen/height_duration"
         android:layout_marginStart="@dimen/margin_start_duration"
         android:layout_marginTop="@dimen/margin_top_duration"
-        android:textAppearance="@style/min"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="@string/min"
+        android:textAppearance="@style/min"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
 

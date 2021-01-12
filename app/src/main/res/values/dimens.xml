@@ -79,7 +79,7 @@
     <dimen name="linear_layout_marginstart">27dp</dimen>
     <dimen name="padd_left_movie_list_text">5dp</dimen>
     <dimen name="margin_start_recyclerMovieList">10dp</dimen>
-    <dimen name="margin_top_recyclerMoveList">23dp</dimen>
+    <dimen name="margin_top_recyclerMoveList">83dp</dimen>
     <dimen name="img_actor_width">80dp</dimen>
     <dimen name="img_actor_height">80dp</dimen>
     <dimen name="width_actor_name">75dp</dimen>
@@ -92,4 +92,6 @@
     <dimen name="marginstart_first_star">18dp</dimen>
     <dimen name="margin_top_first_star">228dp</dimen>
     <dimen name="margin_top_numb_reviews">226dp</dimen>
+    <dimen name="moviesList_marginStart">2dp</dimen>
+    <dimen name="moviesList_marginTop">48dp</dimen>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,8 +18,8 @@ class ActorListAdapter(private var listActors: Actor) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
 
-    inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
+    inner class ActorListViewHolder(view: View) :
+        RecyclerView.ViewHolder(view) {
         var actorImage: ImageView? = null
         var actorName: TextView? = null
 
@@ -30,16 +30,22 @@ class ActorListAdapter(private var listActors: Actor) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return ActorListViewHolder(inflater, parent)
+        return ActorListViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_actor, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors:Actor = listActors
+        val actors: Actor = listActors
         scope.launch {
-        val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-        holder.actorName?.text = actors.cast?.get(position)?.name
-        holder.actorImage!!.load( config.images?.secureBaseUrl + config.images?.posterSizes?.get(5)+actors.cast?.get(position)?.profilePath) }
+            val config = RetrofitModule.moviesApi.getConfig(API_KEY)
+            holder.actorName?.text = actors.cast?.get(position)?.name
+            holder.actorImage!!.load(
+                config.images?.secureBaseUrl + config.images?.posterSizes?.get(
+                    5
+                ) + actors.cast?.get(position)?.profilePath
+            )
+        }
     }
 
     override fun getItemCount(): Int {

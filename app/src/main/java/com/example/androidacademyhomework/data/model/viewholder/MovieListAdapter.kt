@@ -21,13 +21,12 @@ class MovieListAdapter(
     private val cellClickListener: CellClickListener?
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
-    fun bindMovies(newMovies:Movie)
-    {
-        listMovies=newMovies
+    fun bindMovies(newMovies: Movie) {
+        listMovies = newMovies
         notifyDataSetChanged()
     }
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
+
+    inner class MovieListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -58,9 +57,7 @@ class MovieListAdapter(
                 imageMain!!.load(strUrl)
                 titleName?.text = movie.results?.get(adapterPosition)?.title
                 val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
-                    movie.results?.get(
-                        index = adapterPosition
-                    )?.id!!,
+                    movie.results?.get(index = adapterPosition)?.id!!,
                     API_KEY
                 )
                 Log.d("duration", movieInfoRequest.toString())
@@ -73,8 +70,9 @@ class MovieListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MovieListViewHolder(inflater, parent)
+        return MovieListViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {

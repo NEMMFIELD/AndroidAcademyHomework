@@ -4,87 +4,87 @@ import com.google.gson.annotations.SerializedName
 
 data class Actor(
 
-	@field:SerializedName("cast")
+	@SerializedName("cast")
 	val cast: List<CastItem?>? = null,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int? = null,
 
-	@field:SerializedName("crew")
+	@SerializedName("crew")
 	val crew: List<CrewItem?>? = null
 )
 
 data class CrewItem(
 
-	@field:SerializedName("gender")
+	@SerializedName("gender")
 	val gender: Int? = null,
 
-	@field:SerializedName("credit_id")
+	@SerializedName("credit_id")
 	val creditId: String? = null,
 
-	@field:SerializedName("known_for_department")
+	@SerializedName("known_for_department")
 	val knownForDepartment: String? = null,
 
-	@field:SerializedName("original_name")
+	@SerializedName("original_name")
 	val originalName: String? = null,
 
-	@field:SerializedName("popularity")
+	@SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@field:SerializedName("name")
+	@SerializedName("name")
 	val name: String? = null,
 
-	@field:SerializedName("profile_path")
+	@SerializedName("profile_path")
 	val profilePath: Any? = null,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int? = null,
 
-	@field:SerializedName("adult")
+	@SerializedName("adult")
 	val adult: Boolean? = null,
 
-	@field:SerializedName("department")
+	@SerializedName("department")
 	val department: String? = null,
 
-	@field:SerializedName("job")
+	@SerializedName("job")
 	val job: String? = null
 )
 
 data class CastItem(
 
-	@field:SerializedName("cast_id")
+	@SerializedName("cast_id")
 	val castId: Int? = null,
 
-	@field:SerializedName("character")
+	@SerializedName("character")
 	val character: String? = null,
 
-	@field:SerializedName("gender")
+	@SerializedName("gender")
 	val gender: Int? = null,
 
-	@field:SerializedName("credit_id")
+	@SerializedName("credit_id")
 	val creditId: String? = null,
 
-	@field:SerializedName("known_for_department")
+	@SerializedName("known_for_department")
 	val knownForDepartment: String? = null,
 
-	@field:SerializedName("original_name")
+	@SerializedName("original_name")
 	val originalName: String? = null,
 
-	@field:SerializedName("popularity")
+	@SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@field:SerializedName("name")
+	@SerializedName("name")
 	val name: String? = null,
 
-	@field:SerializedName("profile_path")
+	@SerializedName("profile_path")
 	val profilePath: String? = null,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int? = null,
 
-	@field:SerializedName("adult")
+	@SerializedName("adult")
 	val adult: Boolean? = null,
 
-	@field:SerializedName("order")
+	@SerializedName("order")
 	val order: Int? = null
 )

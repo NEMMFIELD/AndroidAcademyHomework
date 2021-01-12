@@ -3,70 +3,70 @@ package com.example.androidacademyhomework.data.model.viewholder
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-	@field:SerializedName("dates")
+	@SerializedName("dates")
 	val dates: Dates? = null,
 
-	@field:SerializedName("page")
+	@SerializedName("page")
 	val page: Int? = null,
 
-	@field:SerializedName("total_pages")
+	@SerializedName("total_pages")
 	val totalPages: Int? = null,
 
-	@field:SerializedName("results")
+	@SerializedName("results")
 	val results: List<ResultsItem?>? = null,
 
-	@field:SerializedName("total_results")
+	@SerializedName("total_results")
 	val totalResults: Int? = null
 )
 
 data class ResultsItem(
-	@field:SerializedName("overview")
+	@SerializedName("overview")
 	val overview: String? = null,
 
-	@field:SerializedName("original_language")
+	@SerializedName("original_language")
 	val originalLanguage: String? = null,
 
-	@field:SerializedName("original_title")
+	@SerializedName("original_title")
 	val originalTitle: String? = null,
 
-	@field:SerializedName("video")
+	@SerializedName("video")
 	val video: Boolean? = null,
 
-	@field:SerializedName("title")
+	@SerializedName("title")
 	val title: String? = null,
 
-	@field:SerializedName("genre_ids")
+	@SerializedName("genre_ids")
 	val genreIds: List<Int?>? = null,
 
-	@field:SerializedName("poster_path")
+	@SerializedName("poster_path")
 	val posterPath: String? = null,
 
-	@field:SerializedName("backdrop_path")
+	@SerializedName("backdrop_path")
 	val backdropPath: String? = null,
 
-	@field:SerializedName("release_date")
+	@SerializedName("release_date")
 	val releaseDate: String? = null,
 
-	@field:SerializedName("popularity")
+	@SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@field:SerializedName("vote_average")
+	@SerializedName("vote_average")
 	val voteAverage: Float? = null,
 
-	@field:SerializedName("id")
+	@SerializedName("id")
 	val id: Int? = null,
 
-	@field:SerializedName("adult")
+	@SerializedName("adult")
 	val adult: Boolean? = null,
 
-	@field:SerializedName("vote_count")
+	@SerializedName("vote_count")
 	val voteCount: Int? = null
 )
 
 data class Dates(
-	@field:SerializedName("maximum")
+	@SerializedName("maximum")
 	val maximum: String? = null,
 
-	@field:SerializedName("minimum")
+	@SerializedName("minimum")
 	val minimum: String? = null
 )

@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        android:background="@color/background_color"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_width="match_parent">
-    <LinearLayout
-        android:layout_marginTop="@dimen/linear_layout_margintop"
-        android:layout_marginStart="@dimen/linear_layout_marginstart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
     <ImageView
         android:id="@+id/test_click"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_combined_shape"/>
+        android:layout_marginStart="@dimen/linear_layout_marginstart"
+        android:layout_marginTop="@dimen/linear_layout_margintop"
+        android:contentDescription="TODO"
+        android:src="@drawable/ic_combined_shape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:paddingLeft="@dimen/padd_left_movie_list_text"
-        android:textAppearance="@style/warszawa_po"
-        android:layout_marginTop="-2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/movies_list"/>
-    </LinearLayout>
+        android:layout_marginStart="@dimen/moviesList_marginStart"
+        android:layout_marginTop="@dimen/moviesList_marginTop"
+        android:paddingStart="@dimen/padd_left_movie_list_text"
+        android:text="@string/movies_list"
+        android:textAppearance="@style/warszawa_po"
+        app:layout_constraintStart_toEndOf="@+id/test_click"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/margin_start_recyclerMovieList"
         android:layout_marginTop="@dimen/margin_top_recyclerMoveList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
-    </LinearLayout>
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/test_click" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

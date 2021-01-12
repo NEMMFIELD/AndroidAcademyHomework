@@ -15,6 +15,7 @@ import com.example.androidacademyhomework.data.model.viewholder.CellClickListene
 import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
 import com.example.androidacademyhomework.network.API_KEY
+import com.example.androidacademyhomework.network.LANGUAGE
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -53,19 +54,24 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler = null
     }
 
-     private fun updateAdapter(movies: Movie) {
-         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
-             bindMovies(movies)
-         }
-     }
+    private fun updateAdapter(movies: Movie) {
+        (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
+            bindMovies(movies)
+        }
+    }
 
     private fun initViews() {
         movieListRecycler = view?.findViewById(R.id.list_recycler_view)
     }
 
-    private suspend  fun setUpMoviesListAdapter() {
+    private suspend fun setUpMoviesListAdapter() {
         movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
-        movieListRecycler?.adapter = MovieListAdapter(RetrofitModule.moviesApi.getNowPlaying(API_KEY,1), this@FragmentMoviesList)
+        movieListRecycler?.adapter = MovieListAdapter(
+            RetrofitModule.moviesApi.getNowPlaying(
+                API_KEY,
+                 LANGUAGE,1
+            ), this@FragmentMoviesList
+        )
     }
 
     override fun onCellClickListener(view: View, position: Int) {

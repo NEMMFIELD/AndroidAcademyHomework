@@ -18,8 +18,7 @@ import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.Movie
-import com.example.androidacademyhomework.network.API_KEY
-import com.example.androidacademyhomework.network.RetrofitModule
+import com.example.androidacademyhomework.network.*
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -69,7 +68,6 @@ class FragmentMoviesDetails : Fragment() {
             setUpMoviesDetailsAdapter(pos)
             bindDetails(pos)
         }
-
         // viewModel.loadActors(pos!!)
         // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
@@ -93,10 +91,10 @@ class FragmentMoviesDetails : Fragment() {
     private suspend fun setUpMoviesDetailsAdapter(pos: Int?) {
         actorRecycler?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY,1)
+        val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB)
         val movieId: Int? = movie.results?.get(pos!!)?.id
         actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!,
-            API_KEY))
+            API_KEY, LANGUAGE))
     }
 
     override fun onDestroy() {
@@ -106,7 +104,7 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     private suspend fun bindDetails(position: Int?) {
-        val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY,1)
+        val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE,1)
         val config = RetrofitModule.moviesApi.getConfig(API_KEY)
         val movieInfoRequest =
             RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!, API_KEY)
