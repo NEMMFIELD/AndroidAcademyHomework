@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/details"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background_color">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color">
+
         <ImageView
             android:id="@+id/orig"
             android:layout_width="@dimen/width_of_main"
@@ -17,8 +21,8 @@
             android:layout_marginTop="@dimen/margin_top_main"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fon"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/back"
             android:layout_width="wrap_content"
@@ -33,7 +37,8 @@
             android:textSize="@dimen/text_size_back"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/path"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/path"
             android:layout_width="@dimen/widht_of_back"
@@ -49,7 +54,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_path"/>
+            app:srcCompat="@drawable/ic_path" />
+
         <ImageView
             android:id="@+id/some_id"
             android:layout_width="@dimen/widht_of_age"
@@ -65,16 +71,42 @@
             android:textAppearance="@style/some_id_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"/>
-        <ImageView
+            tools:ignore="MissingConstraints" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="@dimen/width_title"
-            android:layout_height="@dimen/height_title"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_start_title"
+            android:gravity="center_vertical"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="0sp"
+            android:shadowColor="#80000000"
+            android:shadowDx="0"
+            android:shadowDy="6"
+            android:shadowRadius="12"
+            android:text="AVENGERS"
+            android:textColor="#ECECEC"
+            android:textSize="40sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/some_id"
-            app:srcCompat="@drawable/ic_name"/>
+            app:layout_constraintTop_toBottomOf="@+id/some_id" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="1dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="#FF3365"
+            android:rating="5"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag" />
+
         <TextView
             android:id="@+id/tag"
             android:layout_width="@dimen/width_genre"
@@ -89,17 +121,21 @@
             android:text="@string/tag"
             android:textAppearance="@style/tag_style"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="p"/>
-        <ImageView
+            app:layout_constraintTop_toTopOf="@+id/barrier"
+            tools:targetApi="p" />
+
+        <TextView
             android:id="@+id/reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_start"
-            android:layout_marginTop="@dimen/margin_top_rate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tag"
-            app:srcCompat="@drawable/ic_reviews"/>
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="23dp"
+            android:text="REVIEWS"
+            android:textAppearance="@style/name"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/rating_bar"
+            app:layout_constraintTop_toTopOf="@id/tag" />
+
         <TextView
             android:id="@+id/storyline"
             android:layout_width="@dimen/widht_storyline"
@@ -113,11 +149,12 @@
             android:text="@string/storyline"
             android:textAppearance="@style/storyline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@id/reviews" />
+
         <TextView
             android:id="@+id/after_the_d"
             android:layout_width="@dimen/width_desc"
-            android:layout_height="@dimen/height_desc"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_top_description"
             android:alpha="0.75"
@@ -126,8 +163,9 @@
             android:text="@string/after_the_d"
             android:textAppearance="@style/after_the_d"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-         <TextView
+            app:layout_constraintTop_toTopOf="@id/storyline" />
+
+        <TextView
             android:id="@+id/heading"
             android:layout_width="@dimen/widht_cast"
             android:layout_height="@dimen/width_cast"
@@ -141,12 +179,22 @@
             android:textAppearance="@style/heading"
             android:textColor="@color/gradient"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/after_the_d" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/actor_recycler_view"
-            android:layout_marginStart="@dimen/margin_start_recycleractor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_start_recycleractor"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/heading"/>
-         </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/heading" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -117,7 +117,7 @@
     </style>
 
     <style name="cinema_title_style">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#ECECEC</item>
     </style>
