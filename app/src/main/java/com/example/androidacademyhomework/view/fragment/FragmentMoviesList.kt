@@ -14,8 +14,10 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
 import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
+import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.LANGUAGE
+import com.example.androidacademyhomework.network.PAGE_NUMB
 import com.example.androidacademyhomework.network.RetrofitModule
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
 import com.example.androidacademyhomework.viewmodel.MovieListViewModelFactory
@@ -23,8 +25,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Suppress("UNCHECKED_CAST")
 class FragmentMoviesList : Fragment(), CellClickListener {
     private var movieListRecycler: RecyclerView? = null
+    private var isLoading: Boolean = false
+    private lateinit var layoutManager: GridLayoutManager
     private var scope = CoroutineScope(Dispatchers.Main)
     private val viewModel: MovieListViewModel by viewModels {
         MovieListViewModelFactory(
@@ -45,6 +50,25 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         initViews()
         viewModel.loadData()
         scope.launch { setUpMoviesListAdapter() }
+        movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val totalItem: Int = layoutManager.itemCount
+                val lastVisibleItem: Int = layoutManager.findLastVisibleItemPosition()
+                scope.launch {
+                    if (!isLoading && lastVisibleItem == totalItem - 1) {
+                        isLoading = true
+                        PAGE_NUMB++
+                        val existingAdapter = movieListRecycler?.adapter as? MovieListAdapter
+                        existingAdapter?.addItems(
+                          loadMovies()
+                        )
+                        isLoading = false
+                    }
+
+                }
+            }
+        })
         viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
 
@@ -54,10 +78,10 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler = null
     }
 
-    private fun updateAdapter(movies: Movie) {
+      private fun updateAdapter(movies: List<ResultsItem>) {
         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
-            bindMovies(movies)
-        }
+          addItems(movies)
+    }
     }
 
     private fun initViews() {
@@ -65,13 +89,17 @@ class FragmentMoviesList : Fragment(), CellClickListener {
     }
 
     private suspend fun setUpMoviesListAdapter() {
-        movieListRecycler?.layoutManager = GridLayoutManager(activity, 2)
+        layoutManager = GridLayoutManager(activity, 2)
+        movieListRecycler?.layoutManager = layoutManager
         movieListRecycler?.adapter = MovieListAdapter(
-            RetrofitModule.moviesApi.getNowPlaying(
-                API_KEY,
-                 LANGUAGE,1
-            ), this@FragmentMoviesList
+            loadMovies(), this@FragmentMoviesList
         )
+    }
+
+    private suspend fun loadMovies():MutableList<ResultsItem>
+    {
+        val result = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB).results as MutableList<ResultsItem>
+        return result
     }
 
     override fun onCellClickListener(view: View, position: Int) {
@@ -86,7 +114,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         fragmentTransaction.commit()
     }
 }
-
 
 
 

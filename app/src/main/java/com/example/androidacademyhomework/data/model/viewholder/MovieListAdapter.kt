@@ -17,13 +17,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieListAdapter(
-    private var listMovies: Movie,
+    private var listMovies: MutableList<ResultsItem>,
     private val cellClickListener: CellClickListener?
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
-    fun bindMovies(newMovies: Movie) {
-        listMovies = newMovies
-        notifyDataSetChanged()
+    fun addItems(newMovies: List<ResultsItem>) {
+        this.listMovies.addAll(newMovies)
+        notifyItemRangeInserted(
+            this.listMovies.size,
+            newMovies.size - 1
+        )
     }
 
     inner class MovieListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -47,23 +50,21 @@ class MovieListAdapter(
             stars = itemView.findViewById(R.id.rating)
         }
 
-        fun bind(movie: Movie) {
+        fun bind(movie: ResultsItem) {
             scope.launch {
                 val config = RetrofitModule.moviesApi.getConfig(API_KEY)
                 val strUrl: String =
-                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.results?.get(
-                        adapterPosition
-                    )?.posterPath
+                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.posterPath
                 imageMain!!.load(strUrl)
-                titleName?.text = movie.results?.get(adapterPosition)?.title
+                titleName?.text = movie.title
                 val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
-                    movie.results?.get(index = adapterPosition)?.id!!,
+                    movie.id,
                     API_KEY
                 )
                 Log.d("duration", movieInfoRequest.toString())
                 duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
                 genre?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
-                stars?.rating = movie.results[adapterPosition]?.voteAverage!! * 0.5F
+                stars?.rating = movie.voteAverage!! * 0.5F
                 numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
             }
         }
@@ -76,8 +77,8 @@ class MovieListAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
-        val movieList: Movie = listMovies
-        holder.bind(movieList)
+        val movieList: List<ResultsItem> = listMovies
+        holder.bind(movieList[position])
         val item = listMovies
         holder.itemView.setOnClickListener {
             cellClickListener?.onCellClickListener(holder.itemView, position)
@@ -85,11 +86,10 @@ class MovieListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return listMovies.results!!.size
+        return listMovies.size
     }
 }
 
 interface CellClickListener {
     fun onCellClickListener(view: View, position: Int)
 }
-

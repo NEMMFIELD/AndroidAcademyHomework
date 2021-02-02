@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.androidacademyhomework.data.model.viewholder.Movie
+import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.LANGUAGE
 import com.example.androidacademyhomework.network.PAGE_NUMB
@@ -16,8 +17,8 @@ import kotlinx.coroutines.launch
 
 class MovieListViewModel(private val context: Context) : ViewModel() {
     private var scope = CoroutineScope(Dispatchers.Main)
-    private val _mutableMovieList = MutableLiveData<Movie>()
-    val movieList: LiveData<Movie> get() = _mutableMovieList
+    private val _mutableMovieList = MutableLiveData<List<ResultsItem>>(emptyList())
+    val movieList: LiveData<List<ResultsItem>> get() = _mutableMovieList
     // private val _mutableActorList = MutableLiveData<List<Actor>>(emptyList())
     //val actorList: LiveData<List<Actor>> get() = _mutableActorList
 
@@ -28,17 +29,18 @@ class MovieListViewModel(private val context: Context) : ViewModel() {
     }
 
     private suspend fun loadMoviesList() {
-        _mutableMovieList.value = RetrofitModule.moviesApi.getNowPlaying(
+        val updatedMovieList = _mutableMovieList.value?.plus(RetrofitModule.moviesApi.getNowPlaying(
             API_KEY, LANGUAGE,
             PAGE_NUMB
-        )
+        )).orEmpty()
+        _mutableMovieList.value = updatedMovieList as List<ResultsItem>
     }
 
     fun loadActors(pos: Int) {
         scope.launch { reloadActors(pos) }
     }
 
-    private suspend fun reloadActors(pos: Int) {
+    private fun reloadActors(pos: Int) {
         // _mutableActorList.value = loadMovies(context)[pos].actors
     }
 }

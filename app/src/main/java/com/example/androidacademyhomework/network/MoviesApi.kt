@@ -1,9 +1,6 @@
 package com.example.androidacademyhomework.network
 
-import com.example.androidacademyhomework.data.model.viewholder.Actor
-import com.example.androidacademyhomework.data.model.viewholder.Movie
-import com.example.androidacademyhomework.data.model.viewholder.MovieInfo
-import com.example.androidacademyhomework.data.model.viewholder.Response
+import com.example.androidacademyhomework.data.model.viewholder.*
 
 
 import retrofit2.http.GET
@@ -43,7 +40,7 @@ interface MoviesApi {
     ): Movie
 
     @GET("movie/{id}?&")
-    suspend fun getMovieInfo(@Path("id") movieId: Int, @Query("api_key") apiKey: String): MovieInfo
+    suspend fun getMovieInfo(@Path("id") movieId: Int?, @Query("api_key") apiKey: String): MovieInfo
 
     @GET("movie/{id}/credits?")
     suspend fun getCast(@Path("id") movieId: Int, @Query("api_key") apiKey: String, @Query("language")language:String,): Actor
