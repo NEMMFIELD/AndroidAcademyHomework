@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.data.model.viewholder.Actor
 import com.example.androidacademyhomework.data.model.viewholder.ActorListAdapter
+import com.example.androidacademyhomework.data.model.viewholder.CastItem
 import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.network.*
 import com.example.androidacademyhomework.viewmodel.MovieListViewModel
@@ -25,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Suppress("UNCHECKED_CAST")
 class FragmentMoviesDetails : Fragment() {
     private var actorRecycler: RecyclerView? = null
     private var imageBackDrop: ImageView? = null
@@ -68,15 +71,15 @@ class FragmentMoviesDetails : Fragment() {
             setUpMoviesDetailsAdapter(pos)
             bindDetails(pos)
         }
-        // viewModel.loadActors(pos!!)
-        // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
+        viewModel.loadActors(pos!!)
+        viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
 
-    /* private fun updateDetailsAdapter(actors: List<Actor>) {
+     private fun updateDetailsAdapter(actors: List<CastItem?>?) {
          (actorRecycler?.adapter as? ActorListAdapter)?.apply {
              bindActors(actors)
          }
-     }*/
+     }
 
     private fun initViews() {
         actorRecycler = view?.findViewById(R.id.actor_recycler_view)
@@ -89,12 +92,10 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     private suspend fun setUpMoviesDetailsAdapter(pos: Int?) {
-        actorRecycler?.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        actorRecycler?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB)
         val movieId: Int? = movie.results?.get(pos!!)?.id
-        actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!,
-            API_KEY, LANGUAGE))
+        actorRecycler?.adapter = ActorListAdapter(RetrofitModule.moviesApi.getCast(movieId!!, API_KEY, LANGUAGE).cast)
     }
 
     override fun onDestroy() {
@@ -106,14 +107,10 @@ class FragmentMoviesDetails : Fragment() {
     private suspend fun bindDetails(position: Int?) {
         val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE,1)
         val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-        val movieInfoRequest =
-            RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!, API_KEY)
-        val backImgUrl: String =
-            config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results.get(
-                position!!
-            )?.backdropPath
+        val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!, API_KEY)
+        val backImgUrl: String = config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results[position!!]?.backdropPath
         imageBackDrop?.load(backImgUrl)
-        nameTitle?.text = position.let { movie.results.get(it)?.title }
+        nameTitle?.text = position.let { movie.results[it]?.title }
         genreDetail?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
         overview?.text = movieInfoRequest.overview
         reviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")

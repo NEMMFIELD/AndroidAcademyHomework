@@ -14,9 +14,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ActorListAdapter(private var listActors: Actor) :
+class ActorListAdapter(private var listActors: List<CastItem?>?) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
     val scope = CoroutineScope(Dispatchers.Main)
+    fun bindActors(newActors: List<CastItem?>?) {
+        listActors = newActors
+       notifyDataSetChanged()
+    }
 
     inner class ActorListViewHolder(view: View) :
         RecyclerView.ViewHolder(view) {
@@ -36,19 +40,19 @@ class ActorListAdapter(private var listActors: Actor) :
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors: Actor = listActors
+        val actors: List<CastItem?>? = listActors
         scope.launch {
             val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-            holder.actorName?.text = actors.cast?.get(position)?.name
+            holder.actorName?.text = actors?.get(position)?.name
             holder.actorImage!!.load(
                 config.images?.secureBaseUrl + config.images?.posterSizes?.get(
                     5
-                ) + actors.cast?.get(position)?.profilePath
+                ) + actors!![position]?.profilePath
             )
         }
     }
 
     override fun getItemCount(): Int {
-        return listActors.cast!!.size
+        return listActors!!.size
     }
 }
