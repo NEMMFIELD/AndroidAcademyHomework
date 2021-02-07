@@ -53,8 +53,7 @@ class MovieListAdapter(
         fun bind(movie: ResultsItem) {
             scope.launch {
                 val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-                val strUrl: String =
-                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.posterPath
+                val strUrl: String = config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.posterPath
                 imageMain!!.load(strUrl)
                 titleName?.text = movie.title
                 val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
@@ -83,12 +82,10 @@ class MovieListAdapter(
             cellClickListener?.onCellClickListener(holder.itemView, position)
         }
     }
-
     override fun getItemCount(): Int {
         return listMovies.size
     }
 }
-
 interface CellClickListener {
     fun onCellClickListener(view: View, position: Int)
 }

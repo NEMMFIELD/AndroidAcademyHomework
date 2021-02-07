@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
-import com.example.androidacademyhomework.data.model.viewholder.Movie
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
 import com.example.androidacademyhomework.network.API_KEY
@@ -65,7 +64,6 @@ class FragmentMoviesList : Fragment(), CellClickListener {
                         )
                         isLoading = false
                     }
-
                 }
             }
         })
@@ -80,8 +78,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
 
       private fun updateAdapter(movies: List<ResultsItem>) {
         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
-          addItems(movies)
-    }
+          addItems(movies) }
     }
 
     private fun initViews() {
@@ -98,8 +95,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
 
     private suspend fun loadMovies():MutableList<ResultsItem>
     {
-        val result = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB).results as MutableList<ResultsItem>
-        return result
+        return RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB).results as MutableList<ResultsItem>
     }
 
     override fun onCellClickListener(view: View, position: Int) {

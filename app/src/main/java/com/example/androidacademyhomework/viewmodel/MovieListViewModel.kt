@@ -16,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MovieListViewModel(private val context: Context) : ViewModel() {
+class MovieListViewModel : ViewModel() {
     private var scope = CoroutineScope(Dispatchers.Main)
     private val _mutableMovieList = MutableLiveData<List<ResultsItem>>(emptyList())
     val movieList: LiveData<List<ResultsItem>> get() = _mutableMovieList
@@ -52,7 +52,7 @@ class MovieListViewModel(private val context: Context) : ViewModel() {
 @Suppress("UNCHECKED_CAST")
 class MovieListViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {
-        MovieListViewModel::class.java -> MovieListViewModel(context)
+        MovieListViewModel::class.java -> MovieListViewModel()
         else -> throw IllegalArgumentException("$modelClass is not registered ViewModel")
     } as T
 }
