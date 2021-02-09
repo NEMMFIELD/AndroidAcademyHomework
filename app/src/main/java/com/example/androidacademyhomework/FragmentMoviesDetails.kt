@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,29 +46,30 @@ class FragmentMoviesDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         scope.launch {
             val bundle = arguments
-            val pos: Int? = bundle?.getInt("pos")
+            val pos: Int= bundle!!.getInt("pos")
             actorRecycler = view.findViewById(R.id.actor_recycler_view)
             actorRecycler?.apply {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                adapter = ActorListAdapter(loadMovies(requireContext())[pos!!].actors)
+                adapter = ActorListAdapter(loadMovies(requireContext())[pos].actors)
             }
-           bindDetails(view,pos)
+            bindDetails(view,pos)
         }
         super.onViewCreated(view, savedInstanceState)
     }
-    private suspend fun bindDetails(view:View,position:Int?)
+    @SuppressLint("SetTextI18n")
+    private suspend fun bindDetails(view:View, position:Int)
     {
         val imageBackDrop: ImageView = view.findViewById(R.id.orig)
         val nameTitle: TextView = view.findViewById(R.id.name)
         val genreDetail: TextView = view.findViewById(R.id.tag)
-        val movie = loadMovies(requireContext())[position!!].genres
+        val movie = loadMovies(requireContext())[position].genres
         val overview: TextView = view.findViewById(R.id.after_the_d)
         val reviews: TextView = view.findViewById(R.id.reviews)
-        val ratingBar:RatingBar=view.findViewById(R.id.rating_bar)
+        val ratingBar:RatingBar = view.findViewById(R.id.rating_bar)
         Glide.with(view.context)
-            .load(position?.let { loadMovies(requireContext()).get(it).backdrop })
+            .load(position.let { loadMovies(requireContext())[it].backdrop })
             .into(imageBackDrop)
-        nameTitle.text = loadMovies(requireContext())[position!!].title
+        nameTitle.text = loadMovies(requireContext())[position].title
         val builder = StringBuilder()
         for (n in movie) {
             builder.append(n.name + ", ")
@@ -76,7 +78,7 @@ class FragmentMoviesDetails : Fragment() {
         genreDetail.text = builder.toString()
         overview.text = loadMovies(requireContext())[position].overview
         reviews.text = loadMovies(requireContext())[position].numberOfRatings.toString() + " REVIEWS"
-        ratingBar.rating= (loadMovies(requireContext())[position].ratings)*0.5F
+        ratingBar.rating= (loadMovies(requireContext())[position].ratings) * 0.5F
     }
 }
 

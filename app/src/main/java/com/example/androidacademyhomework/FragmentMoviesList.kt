@@ -24,7 +24,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val v: View = inflater.inflate(R.layout.fragment_movies_list, container, false)
         return v
     }

@@ -66,7 +66,7 @@ class MovieListAdapter(
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movieList: Movie = listMovies[position]
         holder.bind(movieList)
-        val item = listMovies.get(holder.adapterPosition)
+        val item = listMovies[holder.adapterPosition]
         holder.itemView.setOnClickListener {
             cellClickListener.onCellClickListener(holder.itemView, position)
         }

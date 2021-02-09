@@ -27,7 +27,7 @@ class ActorListAdapter(private var listActors: List<Actor>) :
     }
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
         val actors = listActors[position]
-        holder.actorName?.text=actors.name
+        holder.actorName?.text = actors.name
         Glide.with(holder.itemView.context).load(actors.picture).centerCrop().into(holder.actorImage!!)
     }
     override fun getItemCount(): Int {
