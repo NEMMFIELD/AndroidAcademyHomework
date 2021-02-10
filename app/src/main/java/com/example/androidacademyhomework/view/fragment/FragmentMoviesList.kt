@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
+import com.example.androidacademyhomework.database.DbViewModel
+import com.example.androidacademyhomework.database.MovieDb
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.LANGUAGE
 import com.example.androidacademyhomework.network.PAGE_NUMB
@@ -26,6 +30,7 @@ import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
 class FragmentMoviesList : Fragment(), CellClickListener {
+    private lateinit var dbViewModel: DbViewModel
     private var movieListRecycler: RecyclerView? = null
     private var isLoading: Boolean = false
     private lateinit var layoutManager: GridLayoutManager
@@ -41,6 +46,8 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dbViewModel = ViewModelProvider(this).get(DbViewModel::class.java)
+        scope.launch { insertDataToDatabase(position = 0)  }
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
@@ -60,7 +67,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
                         PAGE_NUMB++
                         val existingAdapter = movieListRecycler?.adapter as? MovieListAdapter
                         existingAdapter?.addItems(
-                          loadMovies()
+                            loadMovies()
                         )
                         isLoading = false
                     }
@@ -76,9 +83,10 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         movieListRecycler = null
     }
 
-      private fun updateAdapter(movies: List<ResultsItem>) {
+    private fun updateAdapter(movies: List<ResultsItem>) {
         (movieListRecycler?.adapter as? MovieListAdapter)?.apply {
-          addItems(movies) }
+            addItems(movies)
+        }
     }
 
     private fun initViews() {
@@ -93,9 +101,26 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         )
     }
 
-    private suspend fun loadMovies():MutableList<ResultsItem>
-    {
-        return RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB).results as MutableList<ResultsItem>
+    private suspend fun loadMovies(): MutableList<ResultsItem> {
+        return RetrofitModule.moviesApi.getNowPlaying(
+            API_KEY,
+            LANGUAGE,
+            PAGE_NUMB
+        ).results as MutableList<ResultsItem>
+    }
+
+    private suspend fun insertDataToDatabase(position: Int) {
+        var movieDb = MovieDb(
+            loadMovies()[position].title,
+            loadMovies()[position].posterPath,
+            loadMovies()[position].voteAverage,
+            loadMovies()[position].id,
+            RetrofitModule.moviesApi.getConfig(
+                API_KEY
+            ).images?.secureBaseUrl
+        )
+        dbViewModel.addMovie(movieDb)
+        Toast.makeText(requireContext(),"Successfully added!",Toast.LENGTH_SHORT).show()
     }
 
     override fun onCellClickListener(view: View, position: Int) {

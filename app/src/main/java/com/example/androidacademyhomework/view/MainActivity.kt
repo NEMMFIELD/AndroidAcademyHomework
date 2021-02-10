@@ -18,10 +18,6 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private var db: AppDatabase? = null
-    private var movieDao: MovieDao? = null
-    private var scope= CoroutineScope(Dispatchers.Main)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -32,16 +28,5 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.fragment, FragmentMoviesList())
                 .commit()
         }
-        db = AppDatabase.getAppDataBase(context = this)
-        movieDao = db?.movieDao()
-        scope.launch { val movieList1 = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE,1)
-            val movieList2 = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE,2)
-            with(movieDao)
-            {
-                movieList1.results?.get(0)?.let { this?.insert(it) }
-                movieList2.results?.get(1)?.let { this?.insert(it) }
-            }
-        }
-        db?.movieDao()?.getAll()
     }
 }

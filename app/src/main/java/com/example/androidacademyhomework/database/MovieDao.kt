@@ -1,18 +1,25 @@
 package com.example.androidacademyhomework.database
 
-import androidx.room.*
-import androidx.room.OnConflictStrategy.REPLACE
-import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.Query
+
 
 @Dao
-interface MovieDao
-{
-   @Query("SELECT * FROM movieslist")
-    fun getAll(): List<ResultsItem>
+interface MovieDao {
+    @Query("SELECT * FROM movieslist")
+    fun getAll(): LiveData<List<MovieDb>>
 
-    @Insert(onConflict = REPLACE)
-    fun insert(insertedMovie: ResultsItem)
+    @Insert(onConflict = IGNORE)
+    fun addMovie(movie: MovieDb)
+
+    @Insert
+    fun insertAll(films: List<MovieDb>)
+
 
     @Delete
-    fun delete(deletedMovie: ResultsItem)
+    fun delete(deletedMovie: MovieDb)
 }

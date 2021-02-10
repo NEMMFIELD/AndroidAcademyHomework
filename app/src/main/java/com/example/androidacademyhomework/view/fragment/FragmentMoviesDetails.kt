@@ -69,9 +69,13 @@ class FragmentMoviesDetails : Fragment() {
         initViews()
         scope.launch {
             setUpMoviesDetailsAdapter(pos)
-            bindDetails(pos)
+            if (pos != null) {
+                bindDetails(pos)
+            }
         }
-        viewModel.loadActors(pos!!)
+        if (pos != null) {
+            viewModel.loadActors(pos)
+        }
         viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
     }
 
@@ -104,11 +108,11 @@ class FragmentMoviesDetails : Fragment() {
         actorRecycler = null
     }
 
-    private suspend fun bindDetails(position: Int?) {
+    private suspend fun bindDetails(position: Int) {
         val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE,1)
         val config = RetrofitModule.moviesApi.getConfig(API_KEY)
         val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(movie.results?.get(position!!)?.id!!, API_KEY)
-        val backImgUrl: String = config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results[position!!]?.backdropPath
+        val backImgUrl: String = config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results[position]?.backdropPath
         imageBackDrop?.load(backImgUrl)
         nameTitle?.text = position.let { movie.results[it]?.title }
         genreDetail?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()

@@ -22,7 +22,6 @@ data class Movie(
 	val totalResults: Int? = null
 )
 
-@Entity(tableName = "movieslist")
 data class ResultsItem(
 	@SerializedName("overview")
 	val overview: String? = null,
@@ -36,14 +35,13 @@ data class ResultsItem(
 	@SerializedName("video")
 	val video: Boolean? = null,
 
-	@ColumnInfo(name = "title")
+
 	@SerializedName("title")
 	val title: String? = null,
 
 	@SerializedName("genre_ids")
 	val genreIds: List<Int?>? = null,
 
-	@ColumnInfo(name = "poster_path")
 	@SerializedName("poster_path")
 	val posterPath: String? = null,
 
@@ -56,12 +54,9 @@ data class ResultsItem(
 	@SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@ColumnInfo(name = "vote_average")
 	@SerializedName("vote_average")
 	val voteAverage: Float? = null,
 
-	@PrimaryKey(autoGenerate = true)
-	@ColumnInfo(name = "id")
 	@SerializedName("id")
 	val id: Int? = null,
 
