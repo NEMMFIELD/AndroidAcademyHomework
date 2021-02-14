@@ -58,7 +58,7 @@ data class ResultsItem(
 	val voteAverage: Float? = null,
 
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@SerializedName("adult")
 	val adult: Boolean? = null,

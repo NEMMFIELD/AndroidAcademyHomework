@@ -80,7 +80,7 @@ data class CastItem(
 	val profilePath: String? = null,
 
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@SerializedName("adult")
 	val adult: Boolean? = null,

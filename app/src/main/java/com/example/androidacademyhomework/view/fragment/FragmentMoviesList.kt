@@ -16,8 +16,9 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
 import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
+import com.example.androidacademyhomework.database.AppDatabase
 import com.example.androidacademyhomework.database.DbViewModel
-import com.example.androidacademyhomework.database.MovieDb
+import com.example.androidacademyhomework.database.movie.MovieDb
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.LANGUAGE
 import com.example.androidacademyhomework.network.PAGE_NUMB
@@ -32,6 +33,7 @@ import kotlinx.coroutines.launch
 class FragmentMoviesList : Fragment(), CellClickListener {
     private lateinit var dbViewModel: DbViewModel
     private var movieListRecycler: RecyclerView? = null
+    private lateinit var adapter: MovieListAdapter
     private var isLoading: Boolean = false
     private lateinit var layoutManager: GridLayoutManager
     private var scope = CoroutineScope(Dispatchers.Main)
@@ -47,7 +49,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View {
         dbViewModel = ViewModelProvider(this).get(DbViewModel::class.java)
-        scope.launch { insertDataToDatabase(position = 0)  }
+        scope.launch { insertDataToDatabase() }
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
@@ -79,6 +81,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        AppDatabase.destroyDataBase()
         movieListRecycler?.adapter = null
         movieListRecycler = null
     }
@@ -96,9 +99,10 @@ class FragmentMoviesList : Fragment(), CellClickListener {
     private suspend fun setUpMoviesListAdapter() {
         layoutManager = GridLayoutManager(activity, 2)
         movieListRecycler?.layoutManager = layoutManager
-        movieListRecycler?.adapter = MovieListAdapter(
+        adapter = MovieListAdapter(
             loadMovies(), this@FragmentMoviesList
         )
+        movieListRecycler?.adapter = adapter
     }
 
     private suspend fun loadMovies(): MutableList<ResultsItem> {
@@ -109,18 +113,26 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         ).results as MutableList<ResultsItem>
     }
 
-    private suspend fun insertDataToDatabase(position: Int) {
-        var movieDb = MovieDb(
-            loadMovies()[position].title,
-            loadMovies()[position].posterPath,
-            loadMovies()[position].voteAverage,
-            loadMovies()[position].id,
-            RetrofitModule.moviesApi.getConfig(
-                API_KEY
-            ).images?.secureBaseUrl
-        )
-        dbViewModel.addMovie(movieDb)
-        Toast.makeText(requireContext(),"Successfully added!",Toast.LENGTH_SHORT).show()
+    private suspend fun insertDataToDatabase() {
+        for (i in loadMovies().indices) {
+            val movieDb = MovieDb(
+                loadMovies()[i].id,
+                RetrofitModule.moviesApi.getConfig(
+                    API_KEY
+                ).images?.secureBaseUrl,
+                loadMovies()[i].posterPath,
+                loadMovies()[i].title,
+                loadMovies()[i].voteAverage,
+                listOf(
+                    RetrofitModule.moviesApi.getMovieInfo(
+                        loadMovies()[i].id,
+                        API_KEY
+                    ).genres!!.map { it!!.name }.joinToString()
+                )
+            )
+            dbViewModel.addMovie(movieDb)
+        }
+        Toast.makeText(requireContext(), "Db successfully added!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCellClickListener(view: View, position: Int) {

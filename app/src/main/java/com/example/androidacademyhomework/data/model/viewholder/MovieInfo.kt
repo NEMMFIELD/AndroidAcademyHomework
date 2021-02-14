@@ -31,7 +31,7 @@ data class MovieInfo(
 	val productionCountries: List<ProductionCountriesItem?>? = null,
 
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@SerializedName("vote_count")
 	val voteCount: Int? = null,

@@ -42,7 +42,7 @@ class MovieListViewModel : ViewModel() {
 
     private suspend fun reloadActors(pos: Int) {
         val movie: Movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB)
-        val movieId: Int? = movie.results?.get(pos)?.id
+        val movieId: Long? = movie.results?.get(pos)?.id
         val updatedActorList:List<CastItem?>? = _mutableActorList.value?.plus(RetrofitModule.moviesApi.getCast(movieId!!,
             API_KEY, LANGUAGE).cast as List<CastItem?>)
         _mutableActorList.value = updatedActorList

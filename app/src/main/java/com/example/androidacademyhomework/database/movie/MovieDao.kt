@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.database
+package com.example.androidacademyhomework.database.movie
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -18,7 +18,6 @@ interface MovieDao {
 
     @Insert
     fun insertAll(films: List<MovieDb>)
-
 
     @Delete
     fun delete(deletedMovie: MovieDb)
