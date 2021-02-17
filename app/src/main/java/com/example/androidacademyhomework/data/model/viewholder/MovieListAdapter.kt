@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.database.AppDatabase
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +21,8 @@ class MovieListAdapter(
     private var listMovies: MutableList<ResultsItem>,
     private val cellClickListener: CellClickListener?
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+
+
     val scope = CoroutineScope(Dispatchers.Main)
     fun addItems(newMovies: List<ResultsItem>) {
         this.listMovies.addAll(newMovies)
@@ -50,6 +54,7 @@ class MovieListAdapter(
         }
 
         fun bind(movie: ResultsItem) {
+
             scope.launch {
                 val config = RetrofitModule.moviesApi.getConfig(API_KEY)
                 val strUrl: String =

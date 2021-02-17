@@ -49,7 +49,7 @@ class FragmentMoviesList : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View {
         dbViewModel = ViewModelProvider(this).get(DbViewModel::class.java)
-        scope.launch { insertDataToDatabase() }
+      //  scope.launch { insertDataToDatabase() }
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
@@ -71,10 +71,13 @@ class FragmentMoviesList : Fragment(), CellClickListener {
                         existingAdapter?.addItems(
                             loadMovies()
                         )
+                        insertDataToDatabase()
                         isLoading = false
                     }
+
                 }
             }
+
         })
         viewModel.movieList.observe(this.viewLifecycleOwner, this::updateAdapter)
     }
