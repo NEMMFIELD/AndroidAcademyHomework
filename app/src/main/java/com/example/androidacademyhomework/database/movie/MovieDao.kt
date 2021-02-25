@@ -7,7 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 
-
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM movieslist")

@@ -187,6 +187,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_start_recycleractor"
             android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/heading" />
 

@@ -1,46 +1,50 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.database.AppDatabase
 import com.example.androidacademyhomework.network.API_KEY
 import com.example.androidacademyhomework.network.RetrofitModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MovieListAdapter(
-    private var listMovies: MutableList<ResultsItem>,
-    private val cellClickListener: CellClickListener?
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
-
-
+class MovieListAdapter :
+    PagingDataAdapter<ResultsItem, MovieListAdapter.MovieViewHolder>(MovieComparator) {
     val scope = CoroutineScope(Dispatchers.Main)
-    fun addItems(newMovies: List<ResultsItem>) {
-        this.listMovies.addAll(newMovies)
-        notifyItemRangeInserted(
-            this.listMovies.size,
-            newMovies.size - 1
-        )
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.titleName?.text = getItem(position)?.title
+        scope.launch {
+            val config = RetrofitModule.moviesApi.getConfig(API_KEY)
+            val strUrl: String =
+                config.images?.secureBaseUrl + config.images?.posterSizes?.get(5) + getItem(position)?.posterPath
+            holder.imageMain?.load(strUrl)
+            val movieInfoRequest =
+                RetrofitModule.moviesApi.getMovieInfo(getItem(position)?.id, API_KEY)
+            holder.duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
+            holder.genre?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
+            holder.stars?.rating = getItem(position)?.voteAverage!! * 0.5F
+            holder.numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
+        }
     }
-
-    inner class MovieListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var imageMain: ImageView? = null
-        private var titleName: TextView? = null
-        private var duration: TextView? = null
-        private var numbReviews: TextView? = null
-        private var age: ImageView? = null
+   inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var imageMain: ImageView? = null
+        var titleName: TextView? = null
+        var duration: TextView? = null
+        var numbReviews: TextView? = null
+        var age: ImageView? = null
         var genre: TextView? = null
-        private var like: ImageView? = null
-        private var stars: RatingBar? = null
+        var like: ImageView? = null
+        var stars: RatingBar? = null
 
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
@@ -52,46 +56,25 @@ class MovieListAdapter(
             like = itemView.findViewById(R.id.toLike)
             stars = itemView.findViewById(R.id.rating)
         }
-
-        fun bind(movie: ResultsItem) {
-
-            scope.launch {
-                val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-                val strUrl: String =
-                    config.images?.secureBaseUrl + config.images?.posterSizes?.get(4) + movie.posterPath
-                imageMain!!.load(strUrl)
-                titleName?.text = movie.title
-                val movieInfoRequest = RetrofitModule.moviesApi.getMovieInfo(
-                    movie.id,
-                    API_KEY
-                )
-                duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
-                genre?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
-                stars?.rating = movie.voteAverage!! * 0.5F
-                numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
-            }
-        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        return MovieListViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+        return MovieViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_holder_movie, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
-        val movieList: List<ResultsItem> = listMovies
-        holder.bind(movieList[position])
-        holder.itemView.setOnClickListener {
-            cellClickListener?.onCellClickListener(holder.itemView, position)
+
+    object MovieComparator : DiffUtil.ItemCallback<ResultsItem>() {
+        override fun areItemsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean {
+            //Id is unique.
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean {
+            return oldItem == newItem
         }
     }
 
-    override fun getItemCount(): Int {
-        return listMovies.size
-    }
-}
-
-interface CellClickListener {
-    fun onCellClickListener(view: View, position: Int)
 }

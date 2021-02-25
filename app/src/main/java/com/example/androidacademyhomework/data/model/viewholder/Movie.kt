@@ -1,9 +1,7 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
 data class Movie(
 	@SerializedName("dates")
@@ -21,7 +19,7 @@ data class Movie(
 	@SerializedName("total_results")
 	val totalResults: Int? = null
 )
-
+@Serializable
 data class ResultsItem(
 	@SerializedName("overview")
 	val overview: String? = null,

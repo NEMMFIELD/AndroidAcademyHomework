@@ -1,8 +1,6 @@
 package com.example.androidacademyhomework.network
 
 import com.example.androidacademyhomework.data.model.viewholder.*
-
-
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

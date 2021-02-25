@@ -31,7 +31,7 @@ data class MovieInfo(
 	val productionCountries: List<ProductionCountriesItem?>? = null,
 
 	@SerializedName("id")
-	val id: Long? = null,
+	val id: Long,
 
 	@SerializedName("vote_count")
 	val voteCount: Int? = null,
@@ -87,7 +87,7 @@ data class BelongsToCollection(
 	val name: String? = null,
 
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Int,
 
 	@SerializedName("poster_path")
 	val posterPath: String? = null
@@ -99,7 +99,7 @@ data class GenresItem(
 	val name: String? = null,
 
 	@SerializedName("id")
-	val id: Int? = null
+	val id: Int
 )
 
 data class SpokenLanguagesItem(
@@ -124,7 +124,7 @@ data class ProductionCompaniesItem(
 	@SerializedName("name")
 	val name: String? = null,
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Int,
 	@SerializedName("origin_country")
 	val originCountry: String? = null
 )
