@@ -18,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MovieListAdapter :
+class MovieListAdapter( private val cellClickListener: CellClickListener?) :
     PagingDataAdapter<ResultsItem, MovieListAdapter.MovieViewHolder>(MovieComparator) {
     val scope = CoroutineScope(Dispatchers.Main)
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -35,8 +35,12 @@ class MovieListAdapter :
             holder.stars?.rating = getItem(position)?.voteAverage!! * 0.5F
             holder.numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
         }
+        holder.itemView.setOnClickListener {
+            cellClickListener?.onCellClickListener(holder.itemView, position)
+        }
     }
-   inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+    inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imageMain: ImageView? = null
         var titleName: TextView? = null
         var duration: TextView? = null
@@ -56,6 +60,11 @@ class MovieListAdapter :
             like = itemView.findViewById(R.id.toLike)
             stars = itemView.findViewById(R.id.rating)
         }
+
+      //  fun bind(data: ResultsItem, clickListener: (ResultsItem) -> Unit) {
+      //      itemView.setOnClickListener { clickListener(data) }
+      //  }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -64,7 +73,6 @@ class MovieListAdapter :
                 .inflate(R.layout.view_holder_movie, parent, false)
         )
     }
-
 
     object MovieComparator : DiffUtil.ItemCallback<ResultsItem>() {
         override fun areItemsTheSame(oldItem: ResultsItem, newItem: ResultsItem): Boolean {
@@ -76,5 +84,8 @@ class MovieListAdapter :
             return oldItem == newItem
         }
     }
+}
 
+interface CellClickListener {
+    fun onCellClickListener(view: View, position: Int)
 }

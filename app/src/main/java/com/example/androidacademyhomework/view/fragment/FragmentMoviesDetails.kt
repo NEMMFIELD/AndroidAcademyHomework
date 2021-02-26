@@ -77,16 +77,14 @@ class FragmentMoviesDetails : Fragment() {
         scope.launch {
             if (pos != null) {
                 bindDetails(pos)
+                viewModel.loadActors(pos)
             }
         }
-        if (pos != null) {
-          //  viewModel.loadActors(pos)
-        }
-       // viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
+        viewModel.actorList.observe(this.viewLifecycleOwner, this::updateDetailsAdapter)
         dbViewModel = ViewModelProvider(this).get(DbViewModel::class.java)
         scope.launch {
             if (pos != null) {
-                insertActorsDb(pos)
+             // insertActorsDb(pos)
             }
         }
         super.onViewCreated(view, savedInstanceState)
@@ -110,7 +108,7 @@ class FragmentMoviesDetails : Fragment() {
 
     private fun setUpMoviesDetailsAdapter(pos: Int?) {
         actorRecycler?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-       // adapter = ActorListAdapter((viewModel.actorList.value))
+        adapter = ActorListAdapter((viewModel.actorList.value))
         actorRecycler?.adapter = adapter
     }
 
@@ -120,7 +118,7 @@ class FragmentMoviesDetails : Fragment() {
         actorRecycler = null
     }
 
-    private suspend fun insertActorsDb(pos: Int) {
+   /* private suspend fun insertActorsDb(pos: Int) {
         val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB)
         val movieId: Long? = pos.let { movie.results?.get(it)?.id }
         for (i in RetrofitModule.moviesApi.getCast(movieId!!, API_KEY, LANGUAGE).cast!!.indices) {
@@ -142,11 +140,9 @@ class FragmentMoviesDetails : Fragment() {
             )
             dbViewModel.addActor(actorDb)
         }
-
         Toast.makeText(requireContext(), "ActorDb successfully added!", Toast.LENGTH_SHORT)
             .show()
-    }
-
+    }*/
     private suspend fun bindDetails(position: Int) {
         val movie = RetrofitModule.moviesApi.getNowPlaying(API_KEY, LANGUAGE, PAGE_NUMB)
         val config = RetrofitModule.moviesApi.getConfig(API_KEY)
@@ -155,7 +151,7 @@ class FragmentMoviesDetails : Fragment() {
         val backImgUrl: String =
             config.images?.secureBaseUrl + config.images?.backdropSizes?.get(2) + movie.results[position]?.backdropPath
         imageBackDrop?.load(backImgUrl)
-        nameTitle?.text = movie?.results[position]?.title
+        nameTitle?.text = movie.results[position]?.title
         genreDetail?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
         overview?.text = movieInfoRequest.overview
         reviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")

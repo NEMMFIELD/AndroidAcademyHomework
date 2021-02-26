@@ -20,31 +20,9 @@ class MovieListViewModel(private val movieApi:MoviesApi) : ViewModel() {
     {
         MoviePagingSource(movieApi)
     }.flow.cachedIn(viewModelScope)
-  /*
-    private val _mutableMovieList = MutableLiveData<List<ResultsItem>>(emptyList())
-    val movieList: LiveData<List<ResultsItem>> get() = _mutableMovieList
+
     private val _mutableActorList = MutableLiveData<List<CastItem?>?>(emptyList())
-    val actorList: LiveData<List<CastItem?>?> get() = _mutableActorList*/
-
-   /* init {
-        loadData()
-    }
-
-    fun loadData() {
-        scope.launch {
-            loadMoviesList()
-        }
-    }
-
-    private suspend fun loadMoviesList() {
-        val updatedMovieList = _mutableMovieList.value?.plus(
-            RetrofitModule.moviesApi.getNowPlaying(
-                API_KEY, LANGUAGE,
-                PAGE_NUMB
-            ).results as List<ResultsItem>
-        ).orEmpty()
-        _mutableMovieList.value = updatedMovieList
-    }
+    val actorList: LiveData<List<CastItem?>?> get() = _mutableActorList
 
     fun loadActors(pos: Int) {
         scope.launch { reloadActors(pos) }
@@ -60,7 +38,7 @@ class MovieListViewModel(private val movieApi:MoviesApi) : ViewModel() {
             ).cast as List<CastItem?>
         )
         _mutableActorList.value = updatedActorList
-    }*/
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
