@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.network.API_KEY
-import com.example.androidacademyhomework.network.RetrofitModule
+import com.example.androidacademyhomework.network.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ActorListAdapter(private var listActors: List<CastItem?>?) :
+class ActorListAdapter() :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
+    private var listActors: List<CastItem?>? = listOf()
     val scope = CoroutineScope(Dispatchers.Main)
     fun bindActors(newActors: List<CastItem?>?) {
         listActors = newActors
@@ -26,10 +27,16 @@ class ActorListAdapter(private var listActors: List<CastItem?>?) :
         RecyclerView.ViewHolder(view) {
         var actorImage: ImageView? = null
         var actorName: TextView? = null
-
         init {
             actorImage = itemView.findViewById(R.id.actor_image)
             actorName = itemView.findViewById(R.id.actor_name)
+        }
+        fun onBind(actor:CastItem)
+        {
+                val urlStr = baseURlBackdrop + actor.profilePath
+                actorName?.text = actor.name
+                actorImage?.load(urlStr)
+                Log.d("Actor",urlStr)
         }
     }
 
@@ -40,16 +47,7 @@ class ActorListAdapter(private var listActors: List<CastItem?>?) :
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors: List<CastItem?>? = listActors
-        scope.launch {
-            val config = RetrofitModule.moviesApi.getConfig(API_KEY)
-            holder.actorName?.text = actors?.get(position)?.name
-            holder.actorImage!!.load(
-                config.images?.secureBaseUrl + config.images?.posterSizes?.get(
-                    5
-                ) + actors!![position]?.profilePath
-            )
-        }
+        listActors?.get(position)?.let { holder.onBind(it) }
     }
 
     override fun getItemCount(): Int {

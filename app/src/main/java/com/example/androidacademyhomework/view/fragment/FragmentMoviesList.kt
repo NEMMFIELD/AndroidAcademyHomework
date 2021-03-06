@@ -1,20 +1,19 @@
 package com.example.androidacademyhomework.view.fragment
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.data.model.viewholder.CellClickListener
+import com.example.androidacademyhomework.data.model.viewholder.ClickListener
 import com.example.androidacademyhomework.data.model.viewholder.MovieListAdapter
+import com.example.androidacademyhomework.data.model.viewholder.ResultsItem
 import com.example.androidacademyhomework.database.AppDatabase
 import com.example.androidacademyhomework.database.DbViewModel
 import com.example.androidacademyhomework.network.RetrofitModule
@@ -25,14 +24,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@Suppress("UNCHECKED_CAST")
-class FragmentMoviesList : Fragment(), CellClickListener {
+
+@Suppress("DEPRECATION")
+class FragmentMoviesList : Fragment() {
+    private var listener: ClickListener? = null
     private lateinit var dbViewModel: DbViewModel
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
     private lateinit var layoutManager: GridLayoutManager
     private var scope = CoroutineScope(Dispatchers.Main)
     private lateinit var viewModel: MovieListViewModel
+    private var currentVisiblePosition = 0
+
+    companion object {
+        fun newInstance() = FragmentMoviesList()
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,27 +55,43 @@ class FragmentMoviesList : Fragment(), CellClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, MovieListViewModelFactory(RetrofitModule.moviesApi))[MovieListViewModel::class.java]
         initViews()
-        scope.launch {
-            setUpMoviesListAdapter()
-            setupViewModel()
-            lifecycleScope.launch { viewModel.listData.collectLatest { adapter.submitData(it) } }
-        }
+        setUpMoviesListAdapter()
+     //   setupViewModel()
+
+     //   lifecycleScope.launch { viewModel.listData.collectLatest { adapter.submitData(it) } }
+        listener = activity as ClickListener
+    }
+    override fun onStart() {
+        super.onStart()
+      lifecycleScope.launch{viewModel.listData.collectLatest { adapter.submitData(it) }}
     }
 
-    private fun setupViewModel() {
-        viewModel =
-            ViewModelProvider(
-                this,
-                MovieListViewModelFactory(RetrofitModule.moviesApi)
-            )[MovieListViewModel::class.java]
+   // private fun setupViewModel() {
+     //   viewModel =
+       //     ViewModelProvider(
+         //       this,
+           //     MovieListViewModelFactory(RetrofitModule.moviesApi)
+            //)[MovieListViewModel::class.java]
+    //}
+
+    override fun onPause() {
+        super.onPause()
+        currentVisiblePosition = (movieListRecycler?.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (movieListRecycler?.layoutManager as GridLayoutManager).scrollToPosition(currentVisiblePosition)
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        AppDatabase.destroyDataBase()
+      //  AppDatabase.destroyDataBase()
         movieListRecycler?.adapter = null
         movieListRecycler = null
+        currentVisiblePosition = 0
+        super.onDestroy()
     }
 
     private fun initViews() {
@@ -75,24 +101,20 @@ class FragmentMoviesList : Fragment(), CellClickListener {
     private fun setUpMoviesListAdapter() {
         layoutManager = GridLayoutManager(activity, 2)
         movieListRecycler?.layoutManager = layoutManager
-        adapter = MovieListAdapter(this@FragmentMoviesList)
-        movieListRecycler?.setHasFixedSize(true)
+        adapter = MovieListAdapter(movieClickListener)
         movieListRecycler?.adapter = adapter
     }
 
-    override fun onCellClickListener(view: View, position: Int) {
-        val fragment: Fragment = FragmentMoviesDetails()
-        val bundle = Bundle()
-        bundle.putInt("pos", position)
-        fragment.arguments = bundle
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+    private fun doOnClick(movie: ResultsItem) {
+        listener?.changeFragment(this, movie)
     }
 
-    /*  private suspend fun insertDataToDatabase() {
+    private val movieClickListener = object : CellClickListener {
+        override fun onCellClickListener(movie: ResultsItem) {
+            doOnClick(movie)
+        }
+    }
+        /*  private suspend fun insertDataToDatabase() {
           for (i in loadMovies().indices) {
               val movieDb = MovieDb(
                   loadMovies()[i].id,

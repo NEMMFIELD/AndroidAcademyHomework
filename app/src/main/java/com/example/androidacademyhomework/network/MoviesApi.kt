@@ -38,8 +38,8 @@ interface MoviesApi {
     ): Movie
 
     @GET("movie/{id}?&")
-    suspend fun getMovieInfo(@Path("id") movieId: Long?, @Query("api_key") apiKey: String): MovieInfo
+    suspend fun getMovieInfo(@Path("id") movieId: Int, @Query("api_key") apiKey: String): MovieInfo
 
     @GET("movie/{id}/credits?")
-    suspend fun getCast(@Path("id") movieId: Long, @Query("api_key") apiKey: String, @Query("language") language:String,): Actor
+    suspend fun getCast(@Path("id") movieId: Int, @Query("api_key") apiKey: String, @Query("language") language:String,): Actor
 }

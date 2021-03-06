@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.paging.PagedListAdapter
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,10 @@ import kotlinx.coroutines.launch
 
 class MovieListAdapter( private val cellClickListener: CellClickListener?) :
     PagingDataAdapter<ResultsItem, MovieListAdapter.MovieViewHolder>(MovieComparator) {
+
     val scope = CoroutineScope(Dispatchers.Main)
+
+
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.titleName?.text = getItem(position)?.title
         scope.launch {
@@ -29,14 +31,15 @@ class MovieListAdapter( private val cellClickListener: CellClickListener?) :
                 config.images?.secureBaseUrl + config.images?.posterSizes?.get(5) + getItem(position)?.posterPath
             holder.imageMain?.load(strUrl)
             val movieInfoRequest =
-                RetrofitModule.moviesApi.getMovieInfo(getItem(position)?.id, API_KEY)
-            holder.duration?.text = movieInfoRequest.runtime.toString().plus(" MIN")
-            holder.genre?.text = movieInfoRequest.genres?.map { it!!.name }!!.joinToString()
+                getItem(position)?.id?.let { RetrofitModule.moviesApi.getMovieInfo(it, API_KEY) }
+            holder.duration?.text = movieInfoRequest?.runtime.toString().plus(" MIN")
+            holder.genre?.text = movieInfoRequest?.genres?.map { it!!.name }!!.joinToString()
             holder.stars?.rating = getItem(position)?.voteAverage!! * 0.5F
             holder.numbReviews?.text = movieInfoRequest.voteCount.toString().plus(" REVIEWS")
         }
+
         holder.itemView.setOnClickListener {
-            cellClickListener?.onCellClickListener(holder.itemView, position)
+           cellClickListener?.onCellClickListener(getItem(position)!!)
         }
     }
 
@@ -61,9 +64,9 @@ class MovieListAdapter( private val cellClickListener: CellClickListener?) :
             stars = itemView.findViewById(R.id.rating)
         }
 
-      //  fun bind(data: ResultsItem, clickListener: (ResultsItem) -> Unit) {
-      //      itemView.setOnClickListener { clickListener(data) }
-      //  }
+        //  fun bind(data: ResultsItem, clickListener: (ResultsItem) -> Unit) {
+        //      itemView.setOnClickListener { clickListener(data) }
+        //  }
 
     }
 
@@ -87,5 +90,5 @@ class MovieListAdapter( private val cellClickListener: CellClickListener?) :
 }
 
 interface CellClickListener {
-    fun onCellClickListener(view: View, position: Int)
+    fun onCellClickListener(movie:ResultsItem)
 }

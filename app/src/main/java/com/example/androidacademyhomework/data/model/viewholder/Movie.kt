@@ -1,7 +1,9 @@
 package com.example.androidacademyhomework.data.model.viewholder
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
+import kotlinx.parcelize.Parcelize
 
 data class Movie(
 	@SerializedName("dates")
@@ -19,7 +21,7 @@ data class Movie(
 	@SerializedName("total_results")
 	val totalResults: Int? = null
 )
-@Serializable
+@Parcelize
 data class ResultsItem(
 	@SerializedName("overview")
 	val overview: String? = null,
@@ -56,14 +58,14 @@ data class ResultsItem(
 	val voteAverage: Float? = null,
 
 	@SerializedName("id")
-	val id: Long? = null,
+	val id: Int? = null,
 
 	@SerializedName("adult")
 	val adult: Boolean? = null,
 
 	@SerializedName("vote_count")
 	val voteCount: Int? = null
-)
+) : Parcelable, java.io.Serializable
 
 data class Dates(
 	@SerializedName("maximum")
