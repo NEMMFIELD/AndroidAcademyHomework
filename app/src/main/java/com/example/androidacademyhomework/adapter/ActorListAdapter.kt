@@ -1,12 +1,17 @@
-package com.example.androidacademyhomework.viewholder
+package com.example.androidacademyhomework.adapter
 
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.bumptech.glide.Glide
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.model.Actor
+import com.example.androidacademyhomework.model.Model
+import kotlin.coroutines.coroutineContext
 
 class ActorListAdapter(private var listActors: List<Actor>) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
@@ -19,7 +24,7 @@ class ActorListAdapter(private var listActors: List<Actor>) :
             actorName = itemView.findViewById(R.id.actor_name)
         }
         fun bind(actor: Actor) {
-            actorImage?.setImageResource(actor.imageActor)
+            actorImage?.load(actor.imageActor)
             actorName?.text = actor.name
         }
     }

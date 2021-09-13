@@ -60,21 +60,39 @@
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_top_age"
             android:gravity="center_horizontal|center_vertical"
-            android:src="@drawable/ic_pg"
+            android:src="@drawable/ic_phone"
             android:text="@string/some_id"
             android:textAppearance="@style/some_id_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"/>
-        <ImageView
+
+        <TextView
+            android:id="@+id/some_id2"
+            android:layout_width="24dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="270dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="13+"
+            android:textAppearance="@style/some_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="@dimen/width_title"
             android:layout_height="@dimen/height_title"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_start_title"
+            android:textStyle="bold"
+            android:textSize="32sp"
+            android:text="FFF\n"
+            android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/some_id"
-            app:srcCompat="@drawable/ic_name"/>
+            />
         <TextView
             android:id="@+id/tag"
             android:layout_width="@dimen/width_genre"

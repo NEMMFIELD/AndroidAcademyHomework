@@ -75,7 +75,7 @@
     <dimen name="margin_top_age_rate">8dp</dimen>
     <dimen name="margin_top_like">13dp</dimen>
     <dimen name="margin_end_like">6dp</dimen>
-    <dimen name="linear_layout_margintop">50dp</dimen>
+    <dimen name="linear_layout_margintop">40dp</dimen>
     <dimen name="linear_layout_marginstart">27dp</dimen>
     <dimen name="padd_left_movie_list_text">5dp</dimen>
     <dimen name="margin_start_recyclerMovieList">10dp</dimen>

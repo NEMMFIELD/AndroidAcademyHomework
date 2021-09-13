@@ -1,25 +1,12 @@
 <resources>
-    <string name="app_name">AndroidAcademyHomework
-    </string>
-
-    <string name="back">
-        Back
-    </string>
-
-    <string name="tag">
-    Action, Adventure, Fantasy
-</string>
-
-    <string name="storyline">
-Storyline
-</string>
+    <string name="app_name">AndroidAcademyHomework</string>
+    <string name="back">Back</string>
+    <string name="tag">Action, Adventure, Fantasy</string>
+    <string name="storyline">Storyline</string>
     <string name="after_the_d">
         After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.
-</string>
-    <string name="heading">
-
-Cast
-</string>
+    </string>
+    <string name="heading">Cast:</string>
     <string name="robertdowneyjr">Robert Downey Jr.</string>
     <string name="warszawa_po">Movies List</string>
     <string name="tag_list">Action, Adventure, Drama</string>

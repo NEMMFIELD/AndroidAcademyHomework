@@ -102,9 +102,9 @@
     <style name="tag">
 
         <item name="android:textSize">
-            8sp
+            10sp
         </item>
-
+        <item name="android:textStyle">normal</item>
         <item name="android:textColor">
             #FF3466
         </item>
@@ -112,8 +112,9 @@
     </style>
 
     <style name="name">
-        <item name="android:textSize">8sp</item>
+        <item name="android:textSize">9sp</item>
         <item name="android:textColor">#6D6D80</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="cinema_title_style">
@@ -123,8 +124,22 @@
     </style>
 
     <style name="min">
-        <item name="android:textSize">8sp</item>
-        <item name="android:textColor">#565665</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="some_id">
+        <item name="android:textSize">
+            12sp
+        </item>
+        <item name ="android:textStyle">
+            bold
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
     </style>
 
     <!-- strings.xml -->

@@ -4,10 +4,11 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+    android:padding="8dp">
     <LinearLayout
-        android:layout_marginTop="@dimen/linear_layout_margintop"
-        android:layout_marginStart="@dimen/linear_layout_marginstart"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -26,10 +27,8 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_recycler_view"
-        android:layout_marginStart="@dimen/margin_start_recyclerMovieList"
-        android:layout_marginTop="@dimen/margin_top_recyclerMoveList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"/>
     </LinearLayout>
 

@@ -1,3 +1,5 @@
 package com.example.androidacademyhomework.model
 
-data class Actor (val imageActor:Int,val name:String)
+import java.io.Serializable
+
+data class Actor (val id:Int,val name:String,val imageActor:String):Serializable

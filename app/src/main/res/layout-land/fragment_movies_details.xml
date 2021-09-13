@@ -67,7 +67,7 @@
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_top_age"
             android:gravity="center_horizontal|center_vertical"
-            android:src="@drawable/ic_pg"
+            android:src="@drawable/ic_phone"
             android:text="@string/some_id"
             android:textAppearance="@style/some_id_style"
             app:layout_constraintStart_toStartOf="parent"
