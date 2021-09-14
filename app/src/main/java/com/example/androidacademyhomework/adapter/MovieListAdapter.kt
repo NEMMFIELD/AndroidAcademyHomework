@@ -3,6 +3,7 @@ package com.example.androidacademyhomework.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -26,11 +27,7 @@ class MovieListAdapter(
         private var age: TextView? = null
         private var genre: TextView? = null
         private var like: ImageView? = null
-        private var firstStar: ImageView? = null
-        private var secondStar: ImageView? = null
-        private var thirdStar: ImageView? = null
-        private var fourthStar: ImageView? = null
-        private var fifthStar: ImageView? = null
+        private var rating: RatingBar? = null
 
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
@@ -40,29 +37,19 @@ class MovieListAdapter(
             age = itemView.findViewById(R.id.some_id)
             genre = itemView.findViewById(R.id.tag)
             like = itemView.findViewById(R.id.toLike)
-            firstStar = itemView.findViewById(R.id.redstar_1)
-            secondStar = itemView.findViewById(R.id.redstar_2)
-            thirdStar = itemView.findViewById(R.id.redstar_3)
-            fourthStar = itemView.findViewById(R.id.redstar_4)
-            fifthStar = itemView.findViewById(R.id.non_star)
+            rating = itemView.findViewById(R.id.redstar_rating)
         }
 
         fun bind(model: Model) {
             imageMain?.load(model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
-            numbReviews?.text = model.reviewCount.toString()
+            numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
             age?.text = model.pgAge.toString()
             genre?.text = model.genres.joinToString { it.name }
             if (model.isLiked) like?.setImageResource(R.drawable.ic_liked)
             else like?.setImageResource(R.drawable.ic_like)
-
-            // like?.setImageResource(model.isLiked)
-            // firstStar?.setImageResource(model.star1)
-            // secondStar?.setImageResource(model.star2)
-            // thirdStar?.setImageResource(model.star3)
-            // fourthStar?.setImageResource(model.star4)
-            // fifthStar?.setImageResource(model.star5)
+            rating?.rating = model.rating.toFloat()
         }
     }
 

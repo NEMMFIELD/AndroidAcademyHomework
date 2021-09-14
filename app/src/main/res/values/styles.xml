@@ -54,6 +54,7 @@
             14sp
         </item>
 
+        <item name="android:gravity">center</item>
         <item name="android:textColor">
             #FFFFFF
         </item>
@@ -140,6 +141,10 @@
         <item name="android:textColor">
             #FFFFFF
         </item>
+    </style>
+
+    <style name="RatingBar">
+
     </style>
 
     <!-- strings.xml -->
