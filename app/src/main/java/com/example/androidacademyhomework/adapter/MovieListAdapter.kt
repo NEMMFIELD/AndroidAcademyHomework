@@ -55,6 +55,7 @@ class MovieListAdapter(
 
     fun bindMovies(newMovies: List<Model>) {
         movies = newMovies
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {

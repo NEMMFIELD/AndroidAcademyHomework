@@ -1,28 +1,37 @@
 package com.example.androidacademyhomework.ui
 
-import android.annotation.SuppressLint
+
 import android.os.Bundle
-import android.os.Parcel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
-import com.example.androidacademyhomework.data.JsonMovieRepository
-import com.example.androidacademyhomework.data.MovieRepository
 import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.viewmodel.MovieViewModel
+import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.*
-import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 
 class FragmentMoviesList : Fragment() {
-    private val scope:CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
+   // private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
+
+    private val viewModel: MovieViewModel by viewModels {
+        MovieViewModelFactory(
+            requireContext()
+        )
+    }
+
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
     override fun onCreateView(
@@ -33,14 +42,9 @@ class FragmentMoviesList : Fragment() {
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        scope.launch {updateData()}
-    }
-
     override fun onDetach() {
         movieListRecycler = null
-        scope.cancel()
+       // scope.cancel()
         super.onDetach()
     }
 
@@ -50,13 +54,11 @@ class FragmentMoviesList : Fragment() {
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
+        viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
     }
 
-    @ExperimentalSerializationApi
-    @SuppressLint("NotifyDataSetChanged")
-    private suspend fun updateData() {
-        adapter.bindMovies(JsonMovieRepository(requireContext()).loadMovies())
-        adapter.notifyDataSetChanged()
+    private fun updateData(movies: List<Model>) {
+        adapter.bindMovies(movies)
     }
 
     private fun doOnClick(movie: Model) {
@@ -75,7 +77,7 @@ class FragmentMoviesList : Fragment() {
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             val args = Bundle()
-            args.putParcelable("key",movie)
+            args.putParcelable("key", movie)
             fragment.arguments = args
             fragmentTransaction.replace(R.id.fragment, fragment)
             fragmentTransaction.addToBackStack(null)
