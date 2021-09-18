@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidacademyhomework.MainActivity
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
@@ -24,13 +26,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 
 class FragmentMoviesList : Fragment() {
-   // private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
+    // private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
 
-    private val viewModel: MovieViewModel by viewModels {
-        MovieViewModelFactory(
-            requireContext()
-        )
-    }
+    private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
 
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
@@ -44,12 +42,16 @@ class FragmentMoviesList : Fragment() {
 
     override fun onDetach() {
         movieListRecycler = null
-       // scope.cancel()
+        // scope.cancel()
         super.onDetach()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // viewModel = ViewModelProvider(
+        //    this,
+        //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
+        // ).get(MovieViewModel::class.java)
         movieListRecycler = view.findViewById(R.id.list_recycler_view)
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
