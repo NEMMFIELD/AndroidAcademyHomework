@@ -46,7 +46,7 @@ class MovieListAdapter(
             duration?.text = model.runningTime.toString().plus(" MIN")
             numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
             age?.text = model.pgAge.toString()
-            genre?.text = model.genres.joinToString { it.name }
+            genre?.text = model.genres?.joinToString { it.name }
             if (model.isLiked) like?.setImageResource(R.drawable.ic_liked)
             else like?.setImageResource(R.drawable.ic_like)
             rating?.rating = model.rating.toFloat()

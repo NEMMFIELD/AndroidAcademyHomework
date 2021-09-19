@@ -7,18 +7,16 @@ import com.example.androidacademyhomework.model.Model
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     //val repository: JsonMovieRepository = JsonMovieRepository(context)
     // private val _loading = MutableLiveData<Boolean>(false)
     private val _moviesList = MutableLiveData<List<Model>>(emptyList())
-
     //val loading:LiveData<Boolean> get() = _loading
     val moviesList: LiveData<List<Model>> get() = _moviesList
-
     init {
         fetchMoviesList()
     }
-
     @ExperimentalSerializationApi
     fun fetchMoviesList() {
         viewModelScope.launch {
@@ -33,6 +31,7 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
 }
 
 class MovieViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {
+    @ExperimentalSerializationApi
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

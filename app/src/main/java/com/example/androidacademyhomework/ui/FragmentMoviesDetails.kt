@@ -65,7 +65,7 @@ class FragmentMoviesDetails : Fragment() {
         description?.text = movie.storyLine
         name?.text = movie.title
         ageRate?.text = movie.pgAge.toString().plus("+")
-        jenres?.text = movie.genres.joinToString { it.name }
+        jenres?.text = movie.genres?.joinToString { it.name }
         rating?.stepSize = 0.5F
         rating?.rating = movie.rating.toFloat()
         numReviews?.text = movie.reviewCount.toString().plus(" REVIEWS")
