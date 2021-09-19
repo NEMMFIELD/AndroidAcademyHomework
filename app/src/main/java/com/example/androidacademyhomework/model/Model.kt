@@ -14,7 +14,7 @@ data class Model(
     val reviewCount: Int,
     val isLiked: Boolean,
     val rating: Int,
-    val imageUrl: String,
+    val imageUrl: String?,
     val detailImageUrl: String,
     val storyLine: String,
     val actors: List<Actor>,):Parcelable

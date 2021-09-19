@@ -8,10 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.data.JsonMovieRepository
 import com.example.androidacademyhomework.model.Model
-import kotlinx.coroutines.joinAll
-import kotlin.time.nanoseconds
+import com.example.androidacademyhomework.network.ResultsItem
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
@@ -41,7 +39,7 @@ class MovieListAdapter(
         }
 
         fun bind(model: Model) {
-            imageMain?.load(model.imageUrl)
+            imageMain?.load("https://image.tmdb.org/t/p/original"+model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
             numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")

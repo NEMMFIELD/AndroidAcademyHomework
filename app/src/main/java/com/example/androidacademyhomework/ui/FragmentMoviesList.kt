@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MainActivity
@@ -17,13 +16,11 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.network.ResultsItem
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import kotlinx.serialization.ExperimentalSerializationApi
 
 class FragmentMoviesList : Fragment() {
     // private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
@@ -46,6 +43,7 @@ class FragmentMoviesList : Fragment() {
         super.onDetach()
     }
 
+    @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // viewModel = ViewModelProvider(
