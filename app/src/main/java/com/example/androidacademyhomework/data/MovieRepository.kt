@@ -10,12 +10,12 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-interface MovieRepository {
+/*interface MovieRepository {
     suspend fun loadMovies(): List<Model>
     suspend fun loadMovie(movieId: Int): Model?
-}
+}*/
 
-class JsonMovieRepository(private val context: Context) : MovieRepository {
+/*class JsonMovieRepository(private val context: Context) : MovieRepository {
     private val jsonFormat = Json { ignoreUnknownKeys = true }
     private var movies: List<Model>? = null
 
@@ -84,9 +84,9 @@ class JsonMovieRepository(private val context: Context) : MovieRepository {
                 storyLine = jsonMovie.overview,
                 imageUrl = jsonMovie.posterPicture,
                 detailImageUrl = jsonMovie.backdropPicture,
-                rating = (jsonMovie.ratings / 2).toInt(),
+                rating = (jsonMovie.ratings / 2)*1.0F,
                 reviewCount = jsonMovie.votesCount,
-                pgAge = if (jsonMovie.adult) 16 else 13,
+                pgAge = false,
                 runningTime = jsonMovie.runtime,
                 genres = jsonMovie.genreIds.map { id ->
                     genresMap[id].orThrow { IllegalArgumentException("Genre not found") }
@@ -108,4 +108,4 @@ class JsonMovieRepository(private val context: Context) : MovieRepository {
     private fun <T : Any> T?.orThrow(createThrowable: () -> Throwable): T {
         return this ?: throw createThrowable()
     }
-}
+}*/

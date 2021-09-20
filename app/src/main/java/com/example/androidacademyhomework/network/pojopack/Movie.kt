@@ -1,80 +1,80 @@
-package com.example.androidacademyhomework.network
+package com.example.androidacademyhomework.network.pojopack
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import kotlinx.serialization.SerialName
 
 @Parcelize
 data class Movie(
 
-	@SerialName("dates")
+	@SerializedName("dates")
 	val dates: Dates? = null,
 
-	@SerialName("page")
+	@SerializedName("page")
 	val page: Int? = null,
 
-	@SerialName("total_pages")
+	@SerializedName("total_pages")
 	val totalPages: Int? = null,
 
-	@SerialName("results")
+	@SerializedName("results")
 	val results: List<ResultsItem?>? = null,
 
-	@SerialName("total_results")
+	@SerializedName("total_results")
 	val totalResults: Int? = null
 ) : Parcelable
 
 @Parcelize
 data class ResultsItem(
 
-	@SerialName("overview")
+	@SerializedName("overview")
 	val overview: String? = null,
 
-	@SerialName("original_language")
+	@SerializedName("original_language")
 	val originalLanguage: String? = null,
 
-	@SerialName("original_title")
+	@SerializedName("original_title")
 	val originalTitle: String? = null,
 
-	@SerialName("video")
+	@SerializedName("video")
 	val video: Boolean? = null,
 
-	@SerialName("title")
+	@SerializedName("title")
 	val title: String? = null,
 
-	@SerialName("genre_ids")
+	@SerializedName("genre_ids")
 	val genreIds: List<Int?>? = null,
 
-	@SerialName("poster_path")
+	@SerializedName("poster_path")
 	val posterPath: String? = null,
 
-	@SerialName("backdrop_path")
+	@SerializedName("backdrop_path")
 	val backdropPath: String? = null,
 
-	@SerialName("release_date")
+	@SerializedName("release_date")
 	val releaseDate: String? = null,
 
-	@SerialName("popularity")
+	@SerializedName("popularity")
 	val popularity: Double? = null,
 
-	@SerialName("vote_average")
+	@SerializedName("vote_average")
 	val voteAverage: Double? = null,
 
-	@SerialName("id")
+	@SerializedName("id")
 	val id: Int? = null,
 
-	@SerialName("adult")
+	@SerializedName("adult")
 	val adult: Boolean? = null,
 
-	@SerialName("vote_count")
+	@SerializedName("vote_count")
 	val voteCount: Int? = null
 ) : Parcelable
 
 @Parcelize
 data class Dates(
 
-	@SerialName("maximum")
+	@SerializedName("maximum")
 	val maximum: String? = null,
 
-	@SerialName("minimum")
+	@SerializedName("minimum")
 	val minimum: String? = null
 ) : Parcelable

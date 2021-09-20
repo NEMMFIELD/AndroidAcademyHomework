@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.model.Model
-import com.example.androidacademyhomework.network.ResultsItem
+
+const val imgUrl = "https://image.tmdb.org/t/p/original"
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
@@ -38,16 +40,21 @@ class MovieListAdapter(
             rating = itemView.findViewById(R.id.redstar_rating)
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(model: Model) {
-            imageMain?.load("https://image.tmdb.org/t/p/original"+model.imageUrl)
+            imageMain?.load(imgUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
             numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
-            age?.text = model.pgAge.toString()
-            genre?.text = model.genres?.joinToString { it.name }
+            if (model.pgAge) {
+                age?.text = "16"
+            } else {
+                age?.text = "13"
+            }
+            genre?.text = model.genres?.joinToString { it }
             if (model.isLiked) like?.setImageResource(R.drawable.ic_liked)
             else like?.setImageResource(R.drawable.ic_like)
-            rating?.rating = model.rating.toFloat()
+            rating?.rating = model.rating * 0.5F
         }
     }
 

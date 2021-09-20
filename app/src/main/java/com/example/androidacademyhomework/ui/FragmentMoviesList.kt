@@ -16,7 +16,6 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.model.Model
-import com.example.androidacademyhomework.network.ResultsItem
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar

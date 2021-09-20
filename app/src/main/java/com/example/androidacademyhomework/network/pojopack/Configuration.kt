@@ -1,4 +1,4 @@
-package com.example.androidacademyhomework.network
+package com.example.androidacademyhomework.network.pojopack
 
 import com.google.gson.annotations.SerializedName
 

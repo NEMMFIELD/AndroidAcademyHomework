@@ -2,10 +2,9 @@ package com.example.androidacademyhomework.viewmodel
 
 
 import androidx.lifecycle.*
-import com.example.androidacademyhomework.data.MovieRepository
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.MovieRepo
-import com.example.androidacademyhomework.network.ResultsItem
+import com.example.androidacademyhomework.network.pojopack.ResultsItem
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.ActorListAdapter
+import com.example.androidacademyhomework.adapter.imgUrl
 import com.example.androidacademyhomework.model.Actor
 import com.example.androidacademyhomework.model.Model
 
@@ -53,21 +54,22 @@ class FragmentMoviesDetails : Fragment() {
         }
     }
 
-   private fun fetchMovie(movie: Model) {
+    private fun fetchMovie(movie: Model) {
         val backgroundImage = view?.findViewById<ImageView>(R.id.orig)
         val description = view?.findViewById<TextView>(R.id.after_the_d)
         val name = view?.findViewById<TextView>(R.id.name)
         val ageRate = view?.findViewById<TextView>(R.id.some_id2)
         val jenres = view?.findViewById<TextView>(R.id.tag)
-        val rating =view?.findViewById<RatingBar>(R.id.rating)
+        val rating = view?.findViewById<RatingBar>(R.id.rating)
         val numReviews = view?.findViewById<TextView>(R.id.reviewsNumb)
-        backgroundImage?.load(movie.detailImageUrl)
+        backgroundImage?.load(imgUrl + movie.detailImageUrl)
         description?.text = movie.storyLine
         name?.text = movie.title
-        ageRate?.text = movie.pgAge.toString().plus("+")
-        jenres?.text = movie.genres?.joinToString { it.name }
+        if (movie.pgAge) ageRate?.text = "16".plus("+")
+        else ageRate?.text = "13".plus("+")
+        jenres?.text = movie.genres?.joinToString { it }
         rating?.stepSize = 0.5F
-        rating?.rating = movie.rating.toFloat()
+        rating?.rating = movie.rating * 0.5F
         numReviews?.text = movie.reviewCount.toString().plus(" REVIEWS")
     }
 }
