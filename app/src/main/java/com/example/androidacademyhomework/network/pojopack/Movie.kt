@@ -25,7 +25,6 @@ data class Movie(
 
 @Parcelize
 data class ResultsItem(
-
 	@SerializedName("overview")
 	val overview: String? = null,
 
@@ -71,7 +70,6 @@ data class ResultsItem(
 
 @Parcelize
 data class Dates(
-
 	@SerializedName("maximum")
 	val maximum: String? = null,
 

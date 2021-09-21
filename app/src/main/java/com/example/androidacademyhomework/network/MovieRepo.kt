@@ -1,7 +1,9 @@
 package com.example.androidacademyhomework.network
 
 import android.content.Context
+import com.example.androidacademyhomework.model.Actor
 import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -16,12 +18,13 @@ class MovieRepo(private val context: Context) : MovieRepository {
     }
 
     suspend fun convertToModel(film: ResultsItem): Model {
-        val movieInfo = RetrofitModule.moviesApi.getMoviesInfo(film.id!!)
+        val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }
+        val actors = film.id?.let { RetrofitModule.moviesApi.getCast(it) }
         return Model(
             id = film.id,
             pgAge = film.adult!!,
             title = film.title,
-            genres = listOf(movieInfo.genres?.map{it!!.name}!!.joinToString()),
+            genres = listOf(movieInfo?.genres?.map{it!!.name}!!.joinToString()),
             runningTime = movieInfo.runtime!!,
             reviewCount = film.voteCount!!,
             isLiked = false,
@@ -29,9 +32,18 @@ class MovieRepo(private val context: Context) : MovieRepository {
             imageUrl = film.posterPath,
             detailImageUrl = film.backdropPath!!,
             storyLine = film.overview!!,
-            actors = emptyList()
+            actors = actors?.cast!! as List<CastItem>
         )
     }
+
+   /* suspend fun convertToActor(actors: List<CastItem?>?, film:ResultsItem): Actor {
+
+        val actors = film.id?.let { RetrofitModule.moviesApi.getCast(it) }
+        return Actor(
+            name = actors?.cast?.map{it!!.name},
+            imageActor = actors?.cast?.map{it?.profilePath}
+        )
+    }*/
 
     suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
         var listMovies: MutableList<Model> = mutableListOf()

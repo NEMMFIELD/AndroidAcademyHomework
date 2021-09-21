@@ -1,6 +1,8 @@
 package com.example.androidacademyhomework.model
 
 import android.os.Parcelable
+import com.example.androidacademyhomework.network.pojopack.ActorsResponse
+import com.example.androidacademyhomework.network.pojopack.CastItem
 import kotlinx.parcelize.Parcelize
 
 
@@ -17,4 +19,4 @@ data class Model(
     val imageUrl: String?,
     val detailImageUrl: String,
     val storyLine: String,
-    val actors: List<Actor>,):Parcelable
+    val actors: List<CastItem>):Parcelable

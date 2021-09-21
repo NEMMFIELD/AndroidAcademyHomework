@@ -18,10 +18,11 @@ import com.example.androidacademyhomework.adapter.ActorListAdapter
 import com.example.androidacademyhomework.adapter.imgUrl
 import com.example.androidacademyhomework.model.Actor
 import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.network.pojopack.CastItem
 
 class FragmentMoviesDetails : Fragment() {
     private var actorRecycler: RecyclerView? = null
-    private var listOfActors: List<Actor>? = listOf()
+    private var listOfActors: List<CastItem>? = listOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
