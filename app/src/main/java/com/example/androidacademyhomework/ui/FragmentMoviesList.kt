@@ -2,6 +2,7 @@ package com.example.androidacademyhomework.ui
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +21,15 @@ import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.serialization.ExperimentalSerializationApi
+import androidx.annotation.NonNull
+import androidx.core.view.size
+
+
+//global var:
+var page = 1
 
 class FragmentMoviesList : Fragment() {
-    // private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
-
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
-
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
     override fun onCreateView(
@@ -53,7 +57,16 @@ class FragmentMoviesList : Fragment() {
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
+        movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) { //1 for down
+                    viewModel.loadMore()
+                }
+            }
+        })
         viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
+        Log.d("Page",page.toString())
     }
 
     private fun updateData(movies: List<Model>) {

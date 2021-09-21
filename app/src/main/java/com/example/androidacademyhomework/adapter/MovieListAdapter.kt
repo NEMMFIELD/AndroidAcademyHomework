@@ -16,7 +16,7 @@ const val imgUrl = "https://image.tmdb.org/t/p/original"
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
-    private var movies: List<Model> = listOf()
+    private var movies: MutableList<Model> = mutableListOf()
 
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
@@ -59,7 +59,7 @@ class MovieListAdapter(
     }
 
     fun bindMovies(newMovies: List<Model>) {
-        movies = newMovies
+        movies.addAll(newMovies)
         notifyDataSetChanged()
     }
 
