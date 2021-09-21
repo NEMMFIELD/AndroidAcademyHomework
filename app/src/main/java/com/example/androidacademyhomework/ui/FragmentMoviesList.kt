@@ -2,6 +2,7 @@ package com.example.androidacademyhomework.ui
 
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,12 +22,6 @@ import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.serialization.ExperimentalSerializationApi
-import androidx.annotation.NonNull
-import androidx.core.view.size
-
-
-//global var:
-var page = 1
 
 class FragmentMoviesList : Fragment() {
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
@@ -41,7 +36,7 @@ class FragmentMoviesList : Fragment() {
     }
 
     override fun onDetach() {
-        movieListRecycler = null
+       // movieListRecycler = null
         // scope.cancel()
         super.onDetach()
     }
@@ -66,7 +61,7 @@ class FragmentMoviesList : Fragment() {
             }
         })
         viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
-        Log.d("Page",page.toString())
+      // Log.d("Page", page.toString())
     }
 
     private fun updateData(movies: List<Model>) {
@@ -90,8 +85,9 @@ class FragmentMoviesList : Fragment() {
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             val args = Bundle()
             args.putParcelable("key", movie)
+
             fragment.arguments = args
-            fragmentTransaction.replace(R.id.fragment, fragment)
+            fragmentTransaction.add(R.id.fragment, fragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
             doOnClick(movie)

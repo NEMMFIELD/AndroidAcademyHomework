@@ -1,10 +1,10 @@
 package com.example.androidacademyhomework.network
 
 import android.content.Context
+import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
-import com.example.androidacademyhomework.ui.page
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {

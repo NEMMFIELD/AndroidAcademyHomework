@@ -9,9 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.Utils.Companion.posterUrl
 import com.example.androidacademyhomework.model.Model
-
-const val imgUrl = "https://image.tmdb.org/t/p/original"
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
@@ -42,7 +41,7 @@ class MovieListAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bind(model: Model) {
-            imageMain?.load(imgUrl + model.imageUrl)
+            imageMain?.load(posterUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
             numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")

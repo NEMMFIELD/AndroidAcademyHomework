@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val apiKey = "56b9fc3e2f7cf0c570b8d7dc71de180e"
+
 
 interface MoviesApi {
         @GET("configuration?")

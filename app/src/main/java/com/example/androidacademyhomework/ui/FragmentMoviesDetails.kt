@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
-import com.example.androidacademyhomework.adapter.imgUrl
-import com.example.androidacademyhomework.model.Actor
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 
@@ -31,12 +30,13 @@ class FragmentMoviesDetails : Fragment() {
         val v: View = inflater.inflate(R.layout.fragment_movies_details, container, false)
         val backScr: TextView = v.findViewById(R.id.back)
         backScr.setOnClickListener {
-            val fragment: Fragment = FragmentMoviesList()
-            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment, fragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+           // val fragment: Fragment = FragmentMoviesList()
+           // val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+           // val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+           // fragmentTransaction.replace(R.id.fragment, fragment)
+            //fragmentTransaction.addToBackStack(null)
+            //fragmentTransaction.commit()
+            parentFragmentManager.popBackStack()
         }
         return v
     }
@@ -63,7 +63,7 @@ class FragmentMoviesDetails : Fragment() {
         val jenres = view?.findViewById<TextView>(R.id.tag)
         val rating = view?.findViewById<RatingBar>(R.id.rating)
         val numReviews = view?.findViewById<TextView>(R.id.reviewsNumb)
-        backgroundImage?.load(imgUrl + movie.detailImageUrl)
+        backgroundImage?.load(Utils.backdropUrl + movie.detailImageUrl)
         description?.text = movie.storyLine
         name?.text = movie.title
         if (movie.pgAge) ageRate?.text = "16".plus("+")

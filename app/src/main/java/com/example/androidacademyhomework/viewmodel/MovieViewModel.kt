@@ -2,10 +2,10 @@ package com.example.androidacademyhomework.viewmodel
 
 
 import androidx.lifecycle.*
+import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.MovieRepo
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
-import com.example.androidacademyhomework.ui.page
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -22,12 +22,12 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     @ExperimentalSerializationApi
     fun fetchMoviesList() {
         viewModelScope.launch {
-            //  _loading.value = true
-             val cinemas =repository.parseMovie(repository.loadMoviesNet() as List<ResultsItem>)
-            val updatedCinemas= _moviesList.value?.plus(cinemas).orEmpty()
-             _moviesList.value = updatedCinemas
-           // _moviesList.value = repository.parseMovie(repository.loadMoviesNet() as List<ResultsItem>)
-            //   _loading.value = false
+           //_loading.value = true
+          // val cinemas =repository.parseMovie(repository.loadMoviesNet() as List<ResultsItem>)
+          // val updatedCinemas= _moviesList.value?.plus(cinemas).orEmpty()
+          // _moviesList.value = updatedCinemas
+           _moviesList.value = repository.parseMovie(repository.loadMoviesNet() as List<ResultsItem>)
+           //_loading.value = false
         }
     }
     fun loadMore()
