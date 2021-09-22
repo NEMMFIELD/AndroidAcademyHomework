@@ -57,6 +57,7 @@ class MovieListAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun bindMovies(newMovies: List<Model>) {
         movies.addAll(newMovies)
         notifyDataSetChanged()

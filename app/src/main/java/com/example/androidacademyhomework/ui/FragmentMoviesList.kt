@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MainActivity
@@ -21,6 +22,8 @@ import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class FragmentMoviesList : Fragment() {
@@ -60,7 +63,13 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-        viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
+
+       lifecycleScope.launchWhenStarted{
+            viewModel.moviesList.collect {result ->
+                updateData(result)
+            }
+        }
+       // viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
       // Log.d("Page", page.toString())
     }
 

@@ -6,6 +6,8 @@ import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.MovieRepo
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -13,9 +15,9 @@ import kotlinx.serialization.ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     //val repository: JsonMovieRepository = JsonMovieRepository(context)
     // private val _loading = MutableLiveData<Boolean>(false)
-    private val _moviesList = MutableLiveData<List<Model>>(emptyList())
+    private val _moviesList = MutableStateFlow<List<Model>>(emptyList())
     //val loading:LiveData<Boolean> get() = _loading
-    val moviesList: LiveData<List<Model>> get() = _moviesList
+    val moviesList: StateFlow<List<Model>> get() = _moviesList
     init {
         fetchMoviesList()
     }
