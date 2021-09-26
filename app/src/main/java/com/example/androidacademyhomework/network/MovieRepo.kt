@@ -2,19 +2,42 @@ package com.example.androidacademyhomework.network
 
 import android.content.Context
 import com.example.androidacademyhomework.Utils.Companion.page
+import com.example.androidacademyhomework.database.MovieDataBase
+import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
+    suspend fun getAllMovies(): List<MovieEntity>
+    suspend fun addNewAndGetUpdated(): List<MovieEntity>
 }
 
 class MovieRepo(private val context: Context) : MovieRepository {
+    val db: MovieDataBase = MovieDataBase.create(context)
+
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
+    }
+
+    override suspend fun getAllMovies(): List<MovieEntity> =
+        db.moviesDao.getAllMovies()
+
+    override suspend fun addNewAndGetUpdated(): List<MovieEntity>
+    {
+        val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
+        val newList = mutableListOf<MovieEntity>()
+        for (i in list.indices)
+        {
+            convertToMovieEntity(list[i]).let { newList.add(it) }
+        }
+        getAllMovies()
+        return newList
     }
 
     suspend fun convertToModel(film: ResultsItem): Model? {
@@ -37,6 +60,21 @@ class MovieRepo(private val context: Context) : MovieRepository {
             )
         }
     }
+
+    fun convertToMovieEntity(movie:Model):MovieEntity = MovieEntity(
+        id = movie.id,
+        pgAge = movie.pgAge,
+        title = movie.title,
+        genres = movie.genres,
+        runningTime = movie.runningTime,
+        reviewCount = movie.reviewCount,
+        isLiked = movie.isLiked,
+        rating = movie.rating,
+        imageUrl = movie.imageUrl,
+        detailImageUrl = movie.detailImageUrl,
+        storyLine = movie.storyLine
+    )
+
 
     suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
         val listMovies: MutableList<Model> = mutableListOf()
