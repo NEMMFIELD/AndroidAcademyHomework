@@ -1,10 +1,13 @@
 package com.example.androidacademyhomework.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.androidacademyhomework.network.pojopack.CastItem
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "Movies")
 class MovieEntity(
     @PrimaryKey(autoGenerate = true)
@@ -41,4 +44,4 @@ class MovieEntity(
 
    // @ColumnInfo(name = "actors")
    // val actors: List<CastItem>
-)
+):Parcelable

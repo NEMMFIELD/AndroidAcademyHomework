@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.posterUrl
-import com.example.androidacademyhomework.model.Model
+import com.example.androidacademyhomework.database.MovieEntity
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
-    private var movies: MutableList<Model> = mutableListOf()
+    private var movies: MutableList<MovieEntity> = mutableListOf()
 
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
@@ -40,7 +40,7 @@ class MovieListAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(model: Model) {
+        fun bind(model: MovieEntity) {
             imageMain?.load(posterUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
@@ -58,7 +58,7 @@ class MovieListAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun bindMovies(newMovies: List<Model>) {
+    fun bindMovies(newMovies: List<MovieEntity>) {
         movies.addAll(newMovies)
         notifyDataSetChanged()
     }
@@ -82,6 +82,6 @@ private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
 
 interface OnRecyclerItemClicked {
-    fun onClick(movie: Model)
+    fun onClick(movie: MovieEntity)
 }
 

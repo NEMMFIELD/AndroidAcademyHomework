@@ -17,27 +17,26 @@ interface MovieRepository {
     suspend fun addNewAndGetUpdated(): List<MovieEntity>
 }
 
-class MovieRepo(private val context: Context) : MovieRepository {
-    val db: MovieDataBase = MovieDataBase.create(context)
+class MovieRepo(context: Context) : MovieRepository {
+    private val db: MovieDataBase = MovieDataBase.create(context)
 
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
     }
 
-    override suspend fun getAllMovies(): List<MovieEntity> =
-        db.moviesDao.getAllMovies()
+    override suspend fun getAllMovies(): List<MovieEntity> = db.moviesDao.getAllMovies()
 
-    override suspend fun addNewAndGetUpdated(): List<MovieEntity>
+    @ExperimentalSerializationApi
+    override suspend fun addNewAndGetUpdated(): List<MovieEntity> = withContext(Dispatchers.IO)
     {
         val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
-        for (i in list.indices)
-        {
+        for (i in list.indices) {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
+        if (newList.isEmpty()) db.moviesDao.insertMovie(newList)
         getAllMovies()
-        return newList
     }
 
     suspend fun convertToModel(film: ResultsItem): Model? {
@@ -61,7 +60,7 @@ class MovieRepo(private val context: Context) : MovieRepository {
         }
     }
 
-    fun convertToMovieEntity(movie:Model):MovieEntity = MovieEntity(
+    fun convertToMovieEntity(movie: Model): MovieEntity = MovieEntity(
         id = movie.id,
         pgAge = movie.pgAge,
         title = movie.title,
@@ -74,7 +73,6 @@ class MovieRepo(private val context: Context) : MovieRepository {
         detailImageUrl = movie.detailImageUrl,
         storyLine = movie.storyLine
     )
-
 
     suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
         val listMovies: MutableList<Model> = mutableListOf()

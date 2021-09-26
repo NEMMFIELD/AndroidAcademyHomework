@@ -18,6 +18,7 @@ import com.example.androidacademyhomework.MainActivity
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
+import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
@@ -58,13 +59,15 @@ class FragmentMoviesList : Fragment() {
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) { //1 for down
-                    viewModel.loadMore()
+                when {
+                    !recyclerView.canScrollVertically(1) -> { //1 for down
+                        // viewModel.loadMore()
+                    }
                 }
             }
         })
 
-       lifecycleScope.launchWhenStarted{
+       lifecycleScope.launch{
             viewModel.moviesList.collect {result ->
                 updateData(result)
             }
@@ -73,11 +76,11 @@ class FragmentMoviesList : Fragment() {
       // Log.d("Page", page.toString())
     }
 
-    private fun updateData(movies: List<Model>) {
+    private fun updateData(movies: List<MovieEntity>) {
         adapter.bindMovies(movies)
     }
 
-    private fun doOnClick(movie: Model) {
+    private fun doOnClick(movie: MovieEntity) {
         movieListRecycler?.let { rv ->
             Snackbar.make(
                 rv,
@@ -88,7 +91,7 @@ class FragmentMoviesList : Fragment() {
     }
 
     private val listener = object : OnRecyclerItemClicked {
-        override fun onClick(movie: Model) {
+        override fun onClick(movie: MovieEntity) {
             val fragment: Fragment = FragmentMoviesDetails()
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()

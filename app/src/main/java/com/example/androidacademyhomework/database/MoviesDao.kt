@@ -11,7 +11,7 @@ interface MoviesDao {
     suspend fun getAllMovies():List<MovieEntity>
 
     @Insert
-    suspend fun insertMovie(movie:MovieEntity)
+    suspend fun insertMovie(movies:List<MovieEntity>)
 
     @Query("DELETE FROM Movies WHERE Id == :id")
     suspend fun deleteMovie(id:Long)
