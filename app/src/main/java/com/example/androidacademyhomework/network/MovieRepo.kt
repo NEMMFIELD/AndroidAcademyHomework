@@ -35,7 +35,7 @@ class MovieRepo(context: Context) : MovieRepository {
         for (i in list.indices) {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
-        if (newList.isEmpty()) db.moviesDao.insertMovie(newList)
+        db.moviesDao.insertMovie(newList)
         getAllMovies()
     }
 

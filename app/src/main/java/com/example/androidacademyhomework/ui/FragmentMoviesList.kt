@@ -61,7 +61,7 @@ class FragmentMoviesList : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        // viewModel.loadMore()
+                         viewModel.loadMore()
                     }
                 }
             }

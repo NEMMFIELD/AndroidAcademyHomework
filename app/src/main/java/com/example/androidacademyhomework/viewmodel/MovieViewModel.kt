@@ -19,9 +19,12 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     //val loading:LiveData<Boolean> get() = _loading
     val moviesList: StateFlow<List<MovieEntity>> get() = _moviesList
     init {
-        fetchMoviesList()
+        //fetchMoviesList()
+        viewModelScope.launch {
+            if (!repository.getAllMovies().isEmpty()) _moviesList.value = repository.getAllMovies()
+            else fetchMoviesList()
+        }
     }
-
 
   fun fetchMoviesList() {
         viewModelScope.launch {
@@ -33,13 +36,15 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
            //_loading.value = false
         }
     }
-   /* fun loadMore()
+    fun loadMore()
     {
         viewModelScope.launch {
             page++
-            _moviesList.value = repository.addNewAndGetUpdated()
+            val newValue = repository.addNewAndGetUpdated()
+            val updatedValue =_moviesList.value.plus(newValue).orEmpty()
+            _moviesList.value = updatedValue
         }
-    }*/
+    }
 }
 
 class MovieViewModelFactory(private val repository: MovieRepo) : ViewModelProvider.Factory {

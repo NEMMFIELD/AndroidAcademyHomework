@@ -16,6 +16,7 @@ import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
+import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 
@@ -44,8 +45,8 @@ class FragmentMoviesDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         actorRecycler = view.findViewById(R.id.actor_recycler_view)
-        val list = arguments?.getParcelable<Model>("key")
-        listOfActors = list?.actors
+        val list = arguments?.getParcelable<MovieEntity>("key")
+        //listOfActors = list?.actors
         if (list != null) {
             fetchMovie(list)
         }
@@ -55,7 +56,7 @@ class FragmentMoviesDetails : Fragment() {
         }
     }
 
-    private fun fetchMovie(movie: Model) {
+    private fun fetchMovie(movie: MovieEntity) {
         val backgroundImage = view?.findViewById<ImageView>(R.id.orig)
         val description = view?.findViewById<TextView>(R.id.after_the_d)
         val name = view?.findViewById<TextView>(R.id.name)
