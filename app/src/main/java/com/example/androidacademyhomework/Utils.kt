@@ -1,6 +1,8 @@
 package com.example.androidacademyhomework
 
-class Utils {
+import android.app.Application
+
+class Utils:Application() {
     companion object
     {
         //global var:
@@ -10,4 +12,5 @@ class Utils {
         const val actorUrl = "https://image.tmdb.org/t/p/h632"
         const val apiKey = "56b9fc3e2f7cf0c570b8d7dc71de180e"
     }
+
 }

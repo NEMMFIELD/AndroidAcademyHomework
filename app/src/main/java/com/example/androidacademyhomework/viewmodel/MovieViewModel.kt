@@ -5,9 +5,10 @@ import androidx.lifecycle.*
 import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.network.MovieRepo
-import com.example.androidacademyhomework.network.pojopack.ResultsItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -21,8 +22,8 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     init {
         //fetchMoviesList()
         viewModelScope.launch {
-            if (!repository.getAllMovies().isEmpty()) _moviesList.value = repository.getAllMovies()
-            else fetchMoviesList()
+            if (repository.loadMoviesNet().isNotEmpty()) _moviesList.value = repository.getAllMovies().stateIn(viewModelScope).value
+             fetchMoviesList()
         }
     }
 
@@ -32,7 +33,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
           // val cinemas =repository.parseMovie(repository.loadMoviesNet() as List<ResultsItem>)
           // val updatedCinemas= _moviesList.value?.plus(cinemas).orEmpty()
           // _moviesList.value = updatedCinemas
-           _moviesList.value = repository.addNewAndGetUpdated()
+           _moviesList.value = repository.addNewAndGetUpdated().stateIn(viewModelScope).value
            //_loading.value = false
         }
     }
@@ -42,7 +43,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
             page++
             val newValue = repository.addNewAndGetUpdated()
             val updatedValue =_moviesList.value.plus(newValue).orEmpty()
-            _moviesList.value = updatedValue
+            _moviesList.value = updatedValue as List<MovieEntity>
         }
     }
 }

@@ -2,8 +2,6 @@ package com.example.androidacademyhomework.ui
 
 
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +17,6 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
 class FragmentMoviesList : Fragment() {
+    @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
@@ -39,10 +37,10 @@ class FragmentMoviesList : Fragment() {
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 
-    override fun onDetach() {
-       // movieListRecycler = null
+    override fun onDestroy() {
+       movieListRecycler = null
         // scope.cancel()
-        super.onDetach()
+        super.onDestroy()
     }
 
     @ExperimentalSerializationApi
@@ -66,14 +64,12 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-
        lifecycleScope.launch{
             viewModel.moviesList.collect {result ->
                 updateData(result)
             }
         }
        // viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
-      // Log.d("Page", page.toString())
     }
 
     private fun updateData(movies: List<MovieEntity>) {

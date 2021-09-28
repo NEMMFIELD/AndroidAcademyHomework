@@ -8,13 +8,14 @@ import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
-    suspend fun getAllMovies(): List<MovieEntity>
-    suspend fun addNewAndGetUpdated(): List<MovieEntity>
+    fun getAllMovies(): Flow<List<MovieEntity>>
+    suspend fun addNewAndGetUpdated(): Flow<List<MovieEntity>>
 }
 
 class MovieRepo(context: Context) : MovieRepository {
@@ -25,10 +26,11 @@ class MovieRepo(context: Context) : MovieRepository {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
     }
 
-    override suspend fun getAllMovies(): List<MovieEntity> = db.moviesDao.getAllMovies()
+    override fun getAllMovies(): Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
+
 
     @ExperimentalSerializationApi
-    override suspend fun addNewAndGetUpdated(): List<MovieEntity> = withContext(Dispatchers.IO)
+    override suspend fun addNewAndGetUpdated(): Flow<List<MovieEntity>> = withContext(Dispatchers.IO)
     {
         val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
