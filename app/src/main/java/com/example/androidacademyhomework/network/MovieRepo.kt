@@ -22,16 +22,16 @@ interface MovieRepository {
     suspend fun addNewAndGetUpdated()
 }
 
-class MovieRepo(context: Context):MovieRepository {
+class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
+
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
     }
 
-    override suspend fun addNewAndGetUpdated()
-    {
+    override suspend fun addNewAndGetUpdated() {
         val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
         for (i in list.indices) {

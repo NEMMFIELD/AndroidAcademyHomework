@@ -64,11 +64,6 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-      /* viewLifecycleOwner.lifecycleScope.launch{
-            viewModel.moviesList.collect {result ->
-                updateData(result)
-            }
-        }*/
         viewModel.allMovies.observe(this.viewLifecycleOwner, this::updateData)
         viewModel.insert()
     }
