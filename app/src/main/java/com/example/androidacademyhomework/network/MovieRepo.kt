@@ -1,36 +1,36 @@
 package com.example.androidacademyhomework.network
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.database.MovieDataBase
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
-    fun getAllMovies(): Flow<List<MovieEntity>>
-    suspend fun addNewAndGetUpdated(): Flow<List<MovieEntity>>
+    suspend fun addNewAndGetUpdated()
 }
 
-class MovieRepo(context: Context) : MovieRepository {
+class MovieRepo(context: Context):MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
-
+    val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
     }
 
-    override fun getAllMovies(): Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-
-
-    @ExperimentalSerializationApi
-    override suspend fun addNewAndGetUpdated(): Flow<List<MovieEntity>> = withContext(Dispatchers.IO)
+    override suspend fun addNewAndGetUpdated()
     {
         val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
@@ -38,7 +38,6 @@ class MovieRepo(context: Context) : MovieRepository {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
-        getAllMovies()
     }
 
     suspend fun convertToModel(film: ResultsItem): Model? {

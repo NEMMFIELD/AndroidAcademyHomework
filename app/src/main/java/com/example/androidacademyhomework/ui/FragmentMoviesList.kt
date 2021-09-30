@@ -64,12 +64,13 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-       lifecycleScope.launch{
+      /* viewLifecycleOwner.lifecycleScope.launch{
             viewModel.moviesList.collect {result ->
                 updateData(result)
             }
-        }
-       // viewModel.moviesList.observe(this.viewLifecycleOwner, this::updateData)
+        }*/
+        viewModel.allMovies.observe(this.viewLifecycleOwner, this::updateData)
+        viewModel.insert()
     }
 
     private fun updateData(movies: List<MovieEntity>) {
