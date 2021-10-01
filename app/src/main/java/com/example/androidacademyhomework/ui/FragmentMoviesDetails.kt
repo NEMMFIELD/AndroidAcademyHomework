@@ -17,10 +17,14 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.FragmentMoviesDetailsBinding
 import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
 
 class FragmentMoviesDetails : Fragment() {
+    private var _binding: FragmentMoviesDetailsBinding? = null
+    private val binding get() = _binding!!
+
     private var actorRecycler: RecyclerView? = null
     private var listOfActors: List<CastItem>? = listOf()
     override fun onCreateView(
@@ -28,23 +32,17 @@ class FragmentMoviesDetails : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val v: View = inflater.inflate(R.layout.fragment_movies_details, container, false)
-        val backScr: TextView = v.findViewById(R.id.back)
-        backScr.setOnClickListener {
-           // val fragment: Fragment = FragmentMoviesList()
-           // val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-           // val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-           // fragmentTransaction.replace(R.id.fragment, fragment)
-            //fragmentTransaction.addToBackStack(null)
-            //fragmentTransaction.commit()
+        _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        binding.back.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        return v
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        actorRecycler = view.findViewById(R.id.actor_recycler_view)
+        actorRecycler = binding.actorRecyclerView
         val list = arguments?.getParcelable<MovieEntity>("key")
         //listOfActors = list?.actors
         if (list != null) {

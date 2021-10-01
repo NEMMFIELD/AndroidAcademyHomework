@@ -15,9 +15,11 @@ import androidx.lifecycle.viewModelScope
 @ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     val allMovies: LiveData<List<MovieEntity>> = repository.allMovies.asLiveData()
+
     fun insert() = viewModelScope.launch {
         repository.addNewAndGetUpdated()
     }
+
 
     fun loadMore() {
         viewModelScope.launch {

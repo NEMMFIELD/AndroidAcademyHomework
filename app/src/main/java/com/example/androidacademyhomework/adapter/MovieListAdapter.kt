@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.posterUrl
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.model.MovieDiffUtil
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
-) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+) : ListAdapter<MovieEntity, MovieListAdapter.MovieListViewHolder>(MovieDiffUtil()) {
     private var movies: MutableList<MovieEntity> = mutableListOf()
 
     inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -61,6 +64,10 @@ class MovieListAdapter(
     fun bindMovies(newMovies: List<MovieEntity>) {
         movies.addAll(newMovies)
         notifyDataSetChanged()
+    }
+    override fun submitList(list: List<MovieEntity>?) {
+        super.submitList(list?.let { ArrayList(it) })
+       movies= list?.toMutableList() ?: ArrayList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {

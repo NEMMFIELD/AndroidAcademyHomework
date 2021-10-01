@@ -1,24 +1,16 @@
 package com.example.androidacademyhomework.model
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import com.example.androidacademyhomework.database.MovieEntity
 
-class MovieDiffUtil(private val oldList:List<MovieEntity>,private val newList:List<MovieEntity>):DiffUtil.Callback() {
-    override fun getOldListSize(): Int = oldList.size
+class MovieDiffUtil():DiffUtil.ItemCallback<MovieEntity>() {
+
+    override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
+        oldItem.id == newItem.id
 
 
-    override fun getNewListSize(): Int =  newList.size
-
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem= oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-return oldItem.title == newItem.title
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem= oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-        return oldItem == newItem
-    }
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
+        oldItem == newItem
 }

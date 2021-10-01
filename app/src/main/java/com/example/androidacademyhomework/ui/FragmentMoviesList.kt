@@ -17,14 +17,18 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
+import okhttp3.internal.notifyAll
 
 class FragmentMoviesList : Fragment() {
+    private var _binding: FragmentMoviesListBinding? = null
+    private val binding get() = _binding!!
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var movieListRecycler: RecyclerView? = null
@@ -34,7 +38,9 @@ class FragmentMoviesList : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_movies_list, container, false)
+        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onDestroy() {
@@ -50,7 +56,7 @@ class FragmentMoviesList : Fragment() {
         //    this,
         //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
         // ).get(MovieViewModel::class.java)
-        movieListRecycler = view.findViewById(R.id.list_recycler_view)
+        movieListRecycler = binding.listRecyclerView
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
@@ -64,13 +70,17 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-        viewModel.allMovies.observe(this.viewLifecycleOwner, this::updateData)
+        viewModel.allMovies.observe(this.viewLifecycleOwner){films ->
+            films.let { adapter.submitList(it) }
+
+        }
         viewModel.insert()
     }
 
-    private fun updateData(movies: List<MovieEntity>) {
-        adapter.bindMovies(movies)
-    }
+  //  private fun updateData(movies: List<MovieEntity>) {
+      // adapter.bindMovies(movies)
+   //     adapter.submitList(movies)
+   // }
 
     private fun doOnClick(movie: MovieEntity) {
         movieListRecycler?.let { rv ->
