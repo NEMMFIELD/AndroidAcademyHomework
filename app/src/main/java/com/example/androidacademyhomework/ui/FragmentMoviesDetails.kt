@@ -1,32 +1,34 @@
 package com.example.androidacademyhomework.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.androidacademyhomework.R
+import com.example.androidacademyhomework.MainActivity
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
+import com.example.androidacademyhomework.adapter.MovieListAdapter
+import com.example.androidacademyhomework.database.ActorsEntity
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentMoviesDetailsBinding
-import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.pojopack.CastItem
+import com.example.androidacademyhomework.viewmodel.MovieViewModel
+import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 
 class FragmentMoviesDetails : Fragment() {
     private var _binding: FragmentMoviesDetailsBinding? = null
     private val binding get() = _binding!!
-
+    @ExperimentalSerializationApi
+    private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var actorRecycler: RecyclerView? = null
-    private var listOfActors: List<CastItem>? = listOf()
+    private lateinit var adapter: ActorListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,36 +42,38 @@ class FragmentMoviesDetails : Fragment() {
         return view
     }
 
+    @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         actorRecycler = binding.actorRecyclerView
         val list = arguments?.getParcelable<MovieEntity>("key")
-        //listOfActors = list?.actors
         if (list != null) {
             fetchMovie(list)
         }
+        adapter = ActorListAdapter(viewModel.actorList.value!!)
+        Log.d("Adapter=",viewModel.actorList.value.toString())
         actorRecycler?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = listOfActors?.let { ActorListAdapter(it) }
+           // adapter = viewModel.actorList.value!!.let { ActorListAdapter(it) }
         }
+
     }
 
+    @ExperimentalSerializationApi
     private fun fetchMovie(movie: MovieEntity) {
-        val backgroundImage = view?.findViewById<ImageView>(R.id.orig)
-        val description = view?.findViewById<TextView>(R.id.after_the_d)
-        val name = view?.findViewById<TextView>(R.id.name)
-        val ageRate = view?.findViewById<TextView>(R.id.some_id2)
-        val jenres = view?.findViewById<TextView>(R.id.tag)
-        val rating = view?.findViewById<RatingBar>(R.id.rating)
-        val numReviews = view?.findViewById<TextView>(R.id.reviewsNumb)
-        backgroundImage?.load(Utils.backdropUrl + movie.detailImageUrl)
-        description?.text = movie.storyLine
-        name?.text = movie.title
-        if (movie.pgAge) ageRate?.text = "16".plus("+")
-        else ageRate?.text = "13".plus("+")
-        jenres?.text = movie.genres?.joinToString { it }
-        rating?.stepSize = 0.5F
-        rating?.rating = movie.rating * 0.5F
-        numReviews?.text = movie.reviewCount.toString().plus(" REVIEWS")
+        binding.orig.load(Utils.backdropUrl + movie.detailImageUrl)
+        binding.afterTheD.text = movie.storyLine
+        binding.name.text = movie.title
+        if (movie.pgAge) binding.someId2.text = "16".plus("+")
+        else binding.someId2.text = "13".plus("+")
+        binding.tag.text = movie.genres?.joinToString { it }
+        binding.rating.stepSize = 0.5F
+        binding.rating.rating = movie.rating * 0.5F
+        binding.reviewsNumb.text = movie.reviewCount.toString().plus(" REVIEWS")
+
+        movie.id?.let { viewModel.insertActor(it) }
+        viewModel.actorList.observe(this.viewLifecycleOwner){actors->
+            actors.let { adapter.bindActors(it!!) }
+        }
     }
 }

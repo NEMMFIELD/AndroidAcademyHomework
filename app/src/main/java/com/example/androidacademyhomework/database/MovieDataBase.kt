@@ -6,10 +6,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [MovieEntity::class], version = 1,exportSchema = false)
+@Database(entities = [MovieEntity::class,ActorsEntity::class], version = 1,exportSchema = false)
 @TypeConverters(GenresConverter::class)
 abstract class MovieDataBase : RoomDatabase() {
     abstract val moviesDao: MoviesDao
+    abstract val actorsDao:ActorsDao
     companion object {
         fun create(applicationContext: Context) =
             Room.databaseBuilder(

@@ -72,7 +72,6 @@ class FragmentMoviesList : Fragment() {
         })
         viewModel.allMovies.observe(this.viewLifecycleOwner){films ->
             films.let { adapter.submitList(it) }
-
         }
         viewModel.insert()
     }

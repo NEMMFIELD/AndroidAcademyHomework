@@ -68,7 +68,7 @@ data class CastItem(
 	//@SerializedName("gender")
 	val gender: Int? = null,
 
-	@SerializedName("credit_id")
+	//@SerializedName("credit_id")
 	val creditId: String? = null,
 
 	//@SerializedName("known_for_department")

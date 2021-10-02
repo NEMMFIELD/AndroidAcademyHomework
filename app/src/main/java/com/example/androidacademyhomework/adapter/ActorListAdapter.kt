@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.actorUrl
+import com.example.androidacademyhomework.database.ActorsEntity
+import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.network.pojopack.CastItem
 
-class ActorListAdapter(private var listActors: List<CastItem>) :
+class ActorListAdapter(private var listActors: List<ActorsEntity>) :
     RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
     inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
@@ -22,10 +24,14 @@ class ActorListAdapter(private var listActors: List<CastItem>) :
             actorName = itemView.findViewById(R.id.actor_name)
         }
 
-        fun bind(actor: CastItem) {
+        fun bind(actor: ActorsEntity) {
             actorImage?.load(actorUrl + actor.profilePath)
             actorName?.text = actor.name
         }
+    }
+    fun bindActors(newActors: List<ActorsEntity>) {
+       listActors = newActors
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
@@ -34,7 +40,7 @@ class ActorListAdapter(private var listActors: List<CastItem>) :
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {
-        val actors: CastItem = listActors[position]
+        val actors: ActorsEntity = listActors[position]
         holder.bind(actors)
     }
 

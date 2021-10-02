@@ -41,6 +41,6 @@ class MovieEntity(
 
     @ColumnInfo(name = "story")
     val storyLine: String
-   // @ColumnInfo(name = "actors")
-   // val actors: List<CastItem>
+   //@ColumnInfo(name = "actors")
+    //val actors: List<ActorsEntity>
 ):Parcelable
