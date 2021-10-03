@@ -18,6 +18,8 @@ import com.example.androidacademyhomework.database.ActorsEntity
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentMoviesDetailsBinding
 import com.example.androidacademyhomework.network.pojopack.CastItem
+import com.example.androidacademyhomework.viewmodel.ActorsViewModel
+import com.example.androidacademyhomework.viewmodel.ActorsViewModelFactory
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -26,6 +28,7 @@ class FragmentMoviesDetails : Fragment() {
     private var _binding: FragmentMoviesDetailsBinding? = null
     private val binding get() = _binding!!
     @ExperimentalSerializationApi
+   // private val actorsViewModel: ActorsViewModel by viewModels { ActorsViewModelFactory((requireActivity() as MainActivity).repository) }
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var actorRecycler: RecyclerView? = null
     private lateinit var adapter: ActorListAdapter
@@ -50,12 +53,13 @@ class FragmentMoviesDetails : Fragment() {
         if (list != null) {
             fetchMovie(list)
         }
+        //adapter = ActorListAdapter(actorsViewModel.allActors.value!!)
         adapter = ActorListAdapter(viewModel.actorList.value!!)
-        Log.d("Adapter=",viewModel.actorList.value.toString())
         actorRecycler?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
            // adapter = viewModel.actorList.value!!.let { ActorListAdapter(it) }
         }
+        actorRecycler!!.adapter = adapter
 
     }
 
@@ -71,7 +75,11 @@ class FragmentMoviesDetails : Fragment() {
         binding.rating.rating = movie.rating * 0.5F
         binding.reviewsNumb.text = movie.reviewCount.toString().plus(" REVIEWS")
 
-        movie.id?.let { viewModel.insertActor(it) }
+      /*  movie.id?.let { actorsViewModel.insertActor(it) }
+        actorsViewModel.allActors.observe(this.viewLifecycleOwner){actors->
+            actors.let { adapter.bindActors(it!!) }
+        }*/
+        movie.id?.let { viewModel.insertActor(it.toInt()) }
         viewModel.actorList.observe(this.viewLifecycleOwner){actors->
             actors.let { adapter.bindActors(it!!) }
         }

@@ -21,11 +21,11 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     fun insert() = viewModelScope.launch {
         repository.addNewAndGetUpdated()
     }
-
     fun insertActor(movieId:Int) = viewModelScope.launch {
-        repository.insertActorsToDb(movieId)
+        repository.insertActorsToDb(movieId.toLong())
         _mutableActorList.value = repository.getActors()
     }
+
 
     fun loadMore() {
         viewModelScope.launch {

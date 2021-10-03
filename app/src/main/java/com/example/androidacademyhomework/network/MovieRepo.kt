@@ -25,7 +25,7 @@ interface MovieRepository {
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-
+    //val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
@@ -68,7 +68,7 @@ class MovieRepo(context: Context) : MovieRepository {
     // override fun getActors(): List<ActorsEntity> = db.actorsDao.getAllActors()
 
     @ExperimentalSerializationApi
-    suspend fun insertActorsToDb(movieId:Int) {
+    suspend fun insertActorsToDb(movieId:Long) {
        // val films = loadMoviesNet()
         val scope = CoroutineScope(Dispatchers.IO)
         val newList = mutableListOf<ActorsEntity>()
@@ -80,7 +80,7 @@ class MovieRepo(context: Context) : MovieRepository {
             val convertedActors = actors.cast?.get(i)?.let {
                 convertToActorsEntity(
                     it,
-                    movieId.toLong()
+                    movieId
                 )
             }
             newList.add(convertedActors!!)
