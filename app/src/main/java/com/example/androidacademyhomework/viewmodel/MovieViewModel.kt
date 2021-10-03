@@ -18,14 +18,14 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     val allMovies: LiveData<List<MovieEntity>> = repository.allMovies.asLiveData()
     private val _mutableActorList = MutableLiveData<List<ActorsEntity>>(emptyList())
     val actorList: LiveData<List<ActorsEntity>?> get() = _mutableActorList
+
     fun insert() = viewModelScope.launch {
         repository.addNewAndGetUpdated()
     }
-    fun insertActor(movieId:Int) = viewModelScope.launch {
-        repository.insertActorsToDb(movieId.toLong())
+    fun insertActor(movieId:Long) = viewModelScope.launch {
+        repository.insertActorsToDb(movieId)
         _mutableActorList.value = repository.getActors()
     }
-
 
     fun loadMore() {
         viewModelScope.launch {

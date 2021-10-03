@@ -20,11 +20,13 @@ interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
     suspend fun addNewAndGetUpdated()
     fun getActors(): List<ActorsEntity>
+    suspend fun insertActorsToDb(movieId: Long)
 }
 
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
+
     //val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
@@ -65,18 +67,14 @@ class MovieRepo(context: Context) : MovieRepository {
         }
     }
 
-    // override fun getActors(): List<ActorsEntity> = db.actorsDao.getAllActors()
-
     @ExperimentalSerializationApi
-    suspend fun insertActorsToDb(movieId:Long) {
-       // val films = loadMoviesNet()
+    override suspend fun insertActorsToDb(movieId: Long) {
         val scope = CoroutineScope(Dispatchers.IO)
         val newList = mutableListOf<ActorsEntity>()
         var actors: ActorsResponse? = null
-        for (i in allMovies.stateIn(scope).value) {
-            actors = i.id?.let { RetrofitModule.moviesApi.getCast(it) }
-        }
-        for (i in actors?.cast?.indices!!) {
+        actors = RetrofitModule.moviesApi.getCast(movieId)
+        println("Result: "+actors)
+        for (i in actors.cast?.indices!!) {
             val convertedActors = actors.cast?.get(i)?.let {
                 convertToActorsEntity(
                     it,
@@ -89,7 +87,8 @@ class MovieRepo(context: Context) : MovieRepository {
         db.actorsDao.getAllActors()
     }
 
-    fun convertToActorsEntity(actor: CastItem, id:Long): ActorsEntity {
+    //Конвертирование в сущность БД "Актеры"
+    fun convertToActorsEntity(actor: CastItem, id: Long): ActorsEntity {
         return ActorsEntity(
             id = actor.id!!.toLong(),
             name = actor.name,

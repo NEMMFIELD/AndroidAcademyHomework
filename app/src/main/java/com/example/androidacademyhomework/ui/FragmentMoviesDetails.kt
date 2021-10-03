@@ -79,7 +79,7 @@ class FragmentMoviesDetails : Fragment() {
         actorsViewModel.allActors.observe(this.viewLifecycleOwner){actors->
             actors.let { adapter.bindActors(it!!) }
         }*/
-        movie.id?.let { viewModel.insertActor(it.toInt()) }
+        movie.id?.let { viewModel.insertActor(it) }
         viewModel.actorList.observe(this.viewLifecycleOwner){actors->
             actors.let { adapter.bindActors(it!!) }
         }

@@ -11,7 +11,7 @@ data class ActorsResponse(
 	@SerializedName("cast")
 	val cast: List<CastItem?>? = null,
 
-	@SerializedName("id")
+	//@SerializedName("id")
 	val id: Int? = null,
 
 	//@SerializedName("crew")
@@ -59,7 +59,7 @@ data class CrewItem(
 @Parcelize
 data class CastItem(
 
-	@SerializedName("cast_id")
+	//@SerializedName("cast_id")
 	val castId: Int? = null,
 
 	//@SerializedName("character")
@@ -74,7 +74,7 @@ data class CastItem(
 	//@SerializedName("known_for_department")
 	val knownForDepartment: String? = null,
 
-	@SerializedName("original_name")
+	//@SerializedName("original_name")
 	val originalName: String? = null,
 
 	//@SerializedName("popularity")
