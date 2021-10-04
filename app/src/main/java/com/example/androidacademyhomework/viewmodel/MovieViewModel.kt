@@ -16,15 +16,15 @@ import com.example.androidacademyhomework.database.ActorsEntity
 @ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     val allMovies: LiveData<List<MovieEntity>> = repository.allMovies.asLiveData()
-    private val _mutableActorList = MutableLiveData<List<ActorsEntity>>(emptyList())
-    val actorList: LiveData<List<ActorsEntity>?> get() = _mutableActorList
+    val allActors: LiveData<List<ActorsEntity>> = repository.allActors.asLiveData()
+   // private val _mutableActorList = MutableLiveData<List<ActorsEntity>>(emptyList())
+    //val actorList: LiveData<List<ActorsEntity>?> get() = _mutableActorList
 
     fun insert() = viewModelScope.launch {
         repository.addNewAndGetUpdated()
     }
     fun insertActor(movieId:Long) = viewModelScope.launch {
         repository.insertActorsToDb(movieId)
-        _mutableActorList.value = repository.getActors()
     }
 
     fun loadMore() {

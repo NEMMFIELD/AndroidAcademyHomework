@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ActorsDao {
-    @Query("SELECT * FROM actorslist")
-    fun getAllActors(): List<ActorsEntity>
+    @Query("SELECT * FROM actorslist WHERE filmId=:filmId")
+    fun getAllActors(filmId:Long): Flow<List<ActorsEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertActors(actors: List<ActorsEntity?>?)

@@ -12,7 +12,7 @@ data class ActorsResponse(
 	val cast: List<CastItem?>? = null,
 
 	//@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	//@SerializedName("crew")
 	val crew: List<CrewItem?>? = null
@@ -44,7 +44,7 @@ data class CrewItem(
 	val profilePath: String? = null,
 
 	//@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	//@SerializedName("adult")
 	val adult: Boolean? = null,
@@ -87,7 +87,7 @@ data class CastItem(
 	val profilePath: String? = null,
 
 	@SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	//@SerializedName("adult")
 	val adult: Boolean? = null,

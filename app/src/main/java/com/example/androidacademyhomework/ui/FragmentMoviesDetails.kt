@@ -53,14 +53,15 @@ class FragmentMoviesDetails : Fragment() {
         if (list != null) {
             fetchMovie(list)
         }
-        //adapter = ActorListAdapter(actorsViewModel.allActors.value!!)
-        adapter = ActorListAdapter(viewModel.actorList.value!!)
+        adapter = ActorListAdapter()
         actorRecycler?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
            // adapter = viewModel.actorList.value!!.let { ActorListAdapter(it) }
         }
         actorRecycler!!.adapter = adapter
-
+        viewModel.allActors.observe(this.viewLifecycleOwner){actors->
+            actors.let { adapter.submitList(it) }
+        }
     }
 
     @ExperimentalSerializationApi
@@ -80,8 +81,5 @@ class FragmentMoviesDetails : Fragment() {
             actors.let { adapter.bindActors(it!!) }
         }*/
         movie.id?.let { viewModel.insertActor(it) }
-        viewModel.actorList.observe(this.viewLifecycleOwner){actors->
-            actors.let { adapter.bindActors(it!!) }
-        }
     }
 }

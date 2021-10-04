@@ -18,8 +18,8 @@ interface MoviesApi {
         suspend fun getNowPlaying(@Query("page")page:Int): Movie
 
         @GET("https://api.themoviedb.org/3/movie/{movie_id}?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
-        suspend fun getMoviesInfo(@Path("movie_id") movieId: Int):MovieInfo
+        suspend fun getMoviesInfo(@Path("movie_id") movieId: Long):MovieInfo
         
         @GET("https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
-        suspend fun getCast(@Path("movie_id")movieId:Int):ActorsResponse
+        suspend fun getCast(@Path("movie_id")movieId:Long):ActorsResponse
 }

@@ -13,21 +13,21 @@ import com.example.androidacademyhomework.network.pojopack.ResultsItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
     suspend fun addNewAndGetUpdated()
-    fun getActors(): List<ActorsEntity>
+   // fun getActors(id:Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
 }
 
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-
-    //val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
+    val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
@@ -42,9 +42,9 @@ class MovieRepo(context: Context) : MovieRepository {
         db.moviesDao.insertMovie(newList)
     }
 
-    override fun getActors(): List<ActorsEntity> {
-        return db.actorsDao.getAllActors()
-    }
+   /* override fun getActors(id:Long): List<ActorsEntity> {
+        return db.actorsDao.getAllActors(id)
+    }*/
 
     suspend fun convertToModel(film: ResultsItem): Model? {
         val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }
@@ -69,22 +69,15 @@ class MovieRepo(context: Context) : MovieRepository {
 
     @ExperimentalSerializationApi
     override suspend fun insertActorsToDb(movieId: Long) {
-        val scope = CoroutineScope(Dispatchers.IO)
         val newList = mutableListOf<ActorsEntity>()
-        var actors: ActorsResponse? = null
-        actors = RetrofitModule.moviesApi.getCast(movieId)
-        println("Result: "+actors)
-        for (i in actors.cast?.indices!!) {
-            val convertedActors = actors.cast?.get(i)?.let {
-                convertToActorsEntity(
-                    it,
-                    movieId
-                )
-            }
-            newList.add(convertedActors!!)
+        val actors: List<CastItem>? =
+            RetrofitModule.moviesApi.getCast(movieId).cast as List<CastItem>?
+        for (i in actors!!.indices) {
+            val convertedActors = convertToActorsEntity(actors[i], movieId)
+            newList.add(convertedActors)
         }
         db.actorsDao.insertActors(newList)
-        db.actorsDao.getAllActors()
+        //db.actorsDao.getAllActors(movieId)
     }
 
     //Конвертирование в сущность БД "Актеры"

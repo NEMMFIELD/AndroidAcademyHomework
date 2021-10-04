@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.actorUrl
 import com.example.androidacademyhomework.database.ActorsEntity
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.model.ActorsDiffUtil
 import com.example.androidacademyhomework.network.pojopack.CastItem
 
-class ActorListAdapter(private var listActors: List<ActorsEntity>) :
-    RecyclerView.Adapter<ActorListAdapter.ActorListViewHolder>() {
+class ActorListAdapter() :
+    ListAdapter<ActorsEntity,ActorListAdapter.ActorListViewHolder>(ActorsDiffUtil()) {
+    private var listActors: MutableList<ActorsEntity> = mutableListOf()
     inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
         private var actorImage: ImageView? = null
@@ -29,10 +32,17 @@ class ActorListAdapter(private var listActors: List<ActorsEntity>) :
             actorName?.text = actor.name
         }
     }
-    fun bindActors(newActors: List<ActorsEntity>) {
-       listActors = newActors
+
+    override fun submitList(list: List<ActorsEntity>?) {
+        super.submitList(list?.let { ArrayList(it) })
+        listActors = list?.toMutableList()?:ArrayList()
+    }
+
+    fun bindActors(newActors: MutableList<ActorsEntity>) {
+        listActors = newActors
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -48,3 +58,5 @@ class ActorListAdapter(private var listActors: List<ActorsEntity>) :
         return listActors.size
     }
 }
+private val RecyclerView.ViewHolder.context
+    get() = this.itemView.context

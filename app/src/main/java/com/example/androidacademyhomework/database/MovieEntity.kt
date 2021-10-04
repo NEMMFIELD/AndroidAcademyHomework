@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 class MovieEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Id")
-    val id: Int?,
+    val id: Long?,
     @ColumnInfo(name = "pgAge")
     val pgAge: Boolean,
     @ColumnInfo(name = "title")

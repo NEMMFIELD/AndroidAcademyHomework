@@ -16,7 +16,6 @@ import com.example.androidacademyhomework.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var repository: MovieRepo
-    private var scope= CoroutineScope(Dispatchers.Main)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +27,5 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.fragment, FragmentMoviesList.newInstance())
                 .commit()
         }
-        //scope.launch { db.moviesDao.getAllMovies() }
     }
 }

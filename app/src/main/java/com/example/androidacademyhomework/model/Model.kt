@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Model(
-    val id: Int?,
+    val id: Long?,
     val pgAge: Boolean,
     val title: String?,
     val genres: List<String>?,
