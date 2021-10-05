@@ -20,14 +20,14 @@ import kotlinx.serialization.ExperimentalSerializationApi
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
     suspend fun addNewAndGetUpdated()
-   // fun getActors(id:Long): List<ActorsEntity>
+    fun getActors(movieId:Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
 }
 
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-    val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
+   // val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
     @ExperimentalSerializationApi
     override suspend fun loadMoviesNet(): List<ResultsItem?> {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
@@ -42,9 +42,9 @@ class MovieRepo(context: Context) : MovieRepository {
         db.moviesDao.insertMovie(newList)
     }
 
-   /* override fun getActors(id:Long): List<ActorsEntity> {
-        return db.actorsDao.getAllActors(id)
-    }*/
+    override fun getActors(movieId:Long): List<ActorsEntity> {
+        return db.actorsDao.getAllActors(movieId)
+    }
 
     suspend fun convertToModel(film: ResultsItem): Model? {
         val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }

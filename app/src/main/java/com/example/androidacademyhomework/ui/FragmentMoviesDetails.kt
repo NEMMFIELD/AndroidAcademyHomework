@@ -59,7 +59,7 @@ class FragmentMoviesDetails : Fragment() {
            // adapter = viewModel.actorList.value!!.let { ActorListAdapter(it) }
         }
         actorRecycler!!.adapter = adapter
-        viewModel.allActors.observe(this.viewLifecycleOwner){actors->
+        viewModel.actorList.observe(this.viewLifecycleOwner){actors->
             actors.let { adapter.submitList(it) }
         }
     }
