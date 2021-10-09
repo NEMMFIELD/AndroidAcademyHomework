@@ -9,26 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.example.androidacademyhomework.MainActivity
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
+import com.example.androidacademyhomework.background.WorkRepository
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import okhttp3.internal.notifyAll
 
 class FragmentMoviesList : Fragment() {
+    private val workRepository = WorkRepository()
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding!!
+
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var movieListRecycler: RecyclerView? = null
@@ -44,7 +44,7 @@ class FragmentMoviesList : Fragment() {
     }
 
     override fun onDestroy() {
-       movieListRecycler = null
+        movieListRecycler = null
         // scope.cancel()
         super.onDestroy()
     }
@@ -65,21 +65,22 @@ class FragmentMoviesList : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                         viewModel.loadMore()
+                        viewModel.loadMore()
                     }
                 }
             }
         })
-        viewModel.allMovies.observe(this.viewLifecycleOwner){films ->
+        viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
         viewModel.insert()
+        WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
     }
 
-  //  private fun updateData(movies: List<MovieEntity>) {
-      // adapter.bindMovies(movies)
-   //     adapter.submitList(movies)
-   // }
+    //  private fun updateData(movies: List<MovieEntity>) {
+    // adapter.bindMovies(movies)
+    //     adapter.submitList(movies)
+    // }
 
     private fun doOnClick(movie: MovieEntity) {
         movieListRecycler?.let { rv ->

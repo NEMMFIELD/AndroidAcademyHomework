@@ -33,6 +33,7 @@ class MovieRepo(context: Context) : MovieRepository {
         return RetrofitModule.moviesApi.getNowPlaying(page).results!!
     }
 
+    @ExperimentalSerializationApi
     override suspend fun addNewAndGetUpdated() {
         val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
