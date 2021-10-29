@@ -13,7 +13,7 @@ interface MoviesDao {
     @Query("SELECT * from Movies")
      fun getAllMovies(): Flow<List<MovieEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movies:List<MovieEntity>)
 
     @Query("DELETE FROM Movies WHERE Id == :id")

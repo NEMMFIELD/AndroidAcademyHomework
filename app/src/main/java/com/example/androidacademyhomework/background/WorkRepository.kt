@@ -14,6 +14,6 @@ class WorkRepository {
     val periodicWork = PeriodicWorkRequest.Builder(
         UploadMovieWorker::class.java,
         WORKER_REPEAT_TIME,
-        TimeUnit.HOURS
+        TimeUnit.MINUTES
     ).setConstraints(constraints).setInitialDelay(WORKER_DELAY_TIME, TimeUnit.SECONDS).build()
 }

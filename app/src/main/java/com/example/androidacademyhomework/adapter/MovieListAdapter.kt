@@ -3,6 +3,7 @@ package com.example.androidacademyhomework.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -78,6 +79,7 @@ class MovieListAdapter(
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         holder.bind(movies[position])
         holder.itemView.setOnClickListener { clickListener.onClick(movies[position]) }
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.alpha)
     }
 
     override fun getItemCount(): Int {

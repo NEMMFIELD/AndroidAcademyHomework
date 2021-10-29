@@ -20,33 +20,21 @@ import kotlinx.serialization.ExperimentalSerializationApi
 interface MovieRepository {
     suspend fun loadMoviesNet(): List<ResultsItem?>?
     suspend fun addNewAndGetUpdated()
-    fun getActors(movieId:Long): List<ActorsEntity>
+    fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
 }
 
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-   // val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
-    @ExperimentalSerializationApi
-    override suspend fun loadMoviesNet(): List<ResultsItem?> {
-        return RetrofitModule.moviesApi.getNowPlaying(page).results!!
-    }
+    // val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
 
-    @ExperimentalSerializationApi
-    override suspend fun addNewAndGetUpdated() {
-        val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
-        val newList = mutableListOf<MovieEntity>()
-        for (i in list.indices) {
-            convertToMovieEntity(list[i]).let { newList.add(it) }
-        }
-        db.moviesDao.insertMovie(newList)
-    }
+    //Загружаем через Retrofit2 список фильмов.
+    override suspend fun loadMoviesNet(): List<ResultsItem?>
+        = RetrofitModule.moviesApi.getNowPlaying(page).results!!
 
-    override fun getActors(movieId:Long): List<ActorsEntity> {
-        return db.actorsDao.getAllActors(movieId)
-    }
 
+    //Конвертируем ResultsItem в Model
     suspend fun convertToModel(film: ResultsItem): Model? {
         val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }
         val actors = film.id?.let { RetrofitModule.moviesApi.getCast(it) }
@@ -68,19 +56,6 @@ class MovieRepo(context: Context) : MovieRepository {
         }
     }
 
-    @ExperimentalSerializationApi
-    override suspend fun insertActorsToDb(movieId: Long) {
-        val newList = mutableListOf<ActorsEntity>()
-        val actors: List<CastItem>? =
-            RetrofitModule.moviesApi.getCast(movieId).cast as List<CastItem>?
-        for (i in actors!!.indices) {
-            val convertedActors = convertToActorsEntity(actors[i], movieId)
-            newList.add(convertedActors)
-        }
-        db.actorsDao.insertActors(newList)
-        //db.actorsDao.getAllActors(movieId)
-    }
-
     //Конвертирование в сущность БД "Актеры"
     fun convertToActorsEntity(actor: CastItem, id: Long): ActorsEntity {
         return ActorsEntity(
@@ -91,6 +66,7 @@ class MovieRepo(context: Context) : MovieRepository {
         )
     }
 
+    //Конвертирование Model в MovieEntity, для БД.
     fun convertToMovieEntity(movie: Model): MovieEntity = MovieEntity(
         id = movie.id,
         pgAge = movie.pgAge,
@@ -106,11 +82,38 @@ class MovieRepo(context: Context) : MovieRepository {
         // actors = movie.actors as List<ActorsEntity>
     )
 
+    //from List to List<Model>
     suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
         val listMovies: MutableList<Model> = mutableListOf()
         for (i in list.indices) {
             convertToModel(list[i])?.let { listMovies.add(it) }
         }
         return listMovies
+    }
+
+    @ExperimentalSerializationApi
+    override suspend fun addNewAndGetUpdated() {
+        val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
+        val newList = mutableListOf<MovieEntity>()
+        for (i in list.indices) {
+            convertToMovieEntity(list[i]).let { newList.add(it) }
+        }
+        db.moviesDao.insertMovie(newList)
+    }
+
+    override fun getActors(movieId: Long): List<ActorsEntity> {
+        return db.actorsDao.getAllActors(movieId)
+    }
+
+    override suspend fun insertActorsToDb(movieId: Long) {
+        val newList = mutableListOf<ActorsEntity>()
+        val actors: List<CastItem>? =
+            RetrofitModule.moviesApi.getCast(movieId).cast as List<CastItem>?
+        for (i in actors!!.indices) {
+            val convertedActors = convertToActorsEntity(actors[i], movieId)
+            newList.add(convertedActors)
+        }
+        db.actorsDao.insertActors(newList)
+        //db.actorsDao.getAllActors(movieId)
     }
 }
