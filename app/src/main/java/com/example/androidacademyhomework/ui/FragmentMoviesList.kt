@@ -63,6 +63,9 @@ class FragmentMoviesList : Fragment() {
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected) {
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -73,9 +76,6 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-        val networkConnection = NetworkConnection(requireContext())
-        networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
-            if (isConnected) {
                 viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
                     films.let { adapter.submitList(it) }
                 }
@@ -94,7 +94,6 @@ class FragmentMoviesList : Fragment() {
          viewModel.insert()
          WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)*/
     }
-
     //  private fun updateData(movies: List<MovieEntity>) {
     // adapter.bindMovies(movies)
     //     adapter.submitList(movies)

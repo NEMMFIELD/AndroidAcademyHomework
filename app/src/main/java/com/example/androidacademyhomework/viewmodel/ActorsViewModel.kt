@@ -15,6 +15,7 @@ class ActorsViewModel(private val repository: MovieRepo):ViewModel() {
     fun insertActor(movieId:Long) = viewModelScope.launch {
         repository.insertActorsToDb(movieId)
     }
+    fun getActors(movieId:Long) = viewModelScope.launch { repository.getActors(movieId) }
 }
 
 class ActorsViewModelFactory(private val repository: MovieRepo) : ViewModelProvider.Factory {

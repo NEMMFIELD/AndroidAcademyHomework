@@ -56,8 +56,7 @@ class FragmentMoviesDetails : Fragment() {
         val list = arguments?.getParcelable<MovieEntity>("key")
         adapter = ActorListAdapter()
         actorRecycler?.apply {
-            layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             // adapter = viewModel.actorList.value!!.let { ActorListAdapter(it) }
         }
         actorRecycler!!.adapter = adapter
@@ -71,6 +70,10 @@ class FragmentMoviesDetails : Fragment() {
                     actors.let { adapter.submitList(it) }
                 }
             } else {
+                if (list != null) {
+                    fetchMovie(list)
+                }
+                println(list?.id)
                 viewModel.actorList.observe(this.viewLifecycleOwner) { actors ->
                     actors.let { adapter.submitList(it) }
                 }
@@ -98,6 +101,13 @@ class FragmentMoviesDetails : Fragment() {
           actorsViewModel.allActors.observe(this.viewLifecycleOwner){actors->
               actors.let { adapter.bindActors(it!!) }
           }*/
-        movie.id?.let { viewModel.insertActor(it) }
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected) {
+                movie.id?.let { viewModel.insertActor(it) }
+            } else {
+                movie.id?.let { viewModel.getActors(it) }
+            }
+        })
     }
 }

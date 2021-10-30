@@ -27,6 +27,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
         repository.insertActorsToDb(movieId)
         _mutableActorList.value = repository.getActors(movieId)
     }
+    fun getActors(movieId:Long) = viewModelScope.launch { _mutableActorList.value = repository.getActors(movieId) }
 
     fun loadMore() {
         viewModelScope.launch {
