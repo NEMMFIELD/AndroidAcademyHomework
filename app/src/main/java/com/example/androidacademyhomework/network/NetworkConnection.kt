@@ -92,7 +92,7 @@ class NetworkConnection(private val context: Context): LiveData<Boolean>() {
           updateConnection()
         }
     }
-    private fun  updateConnection()
+    private fun updateConnection()
     {
         val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
         postValue(activeNetwork?.isConnected==true)

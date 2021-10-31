@@ -32,7 +32,6 @@ class FragmentMoviesDetails : Fragment() {
     private val binding get() = _binding!!
 
     @ExperimentalSerializationApi
-    // private val actorsViewModel: ActorsViewModel by viewModels { ActorsViewModelFactory((requireActivity() as MainActivity).repository) }
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory((requireActivity() as MainActivity).repository) }
     private var actorRecycler: RecyclerView? = null
     private lateinit var adapter: ActorListAdapter
@@ -69,11 +68,11 @@ class FragmentMoviesDetails : Fragment() {
                 viewModel.actorList.observe(this.viewLifecycleOwner) { actors ->
                     actors.let { adapter.submitList(it) }
                 }
-            } else {
+            }
+            else {
                 if (list != null) {
                     fetchMovie(list)
                 }
-                println(list?.id)
                 viewModel.actorList.observe(this.viewLifecycleOwner) { actors ->
                     actors.let { adapter.submitList(it) }
                 }

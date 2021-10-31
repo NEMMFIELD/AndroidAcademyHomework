@@ -3,50 +3,42 @@ package com.example.androidacademyhomework.background
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.androidacademyhomework.database.MovieDataBase
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.model.Model
 import com.example.androidacademyhomework.network.MovieRepo
 import com.example.androidacademyhomework.notifications.MoviesNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
+import java.util.*
 
 
 class UploadMovieWorker(private val context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
+    @ExperimentalSerializationApi
     override suspend fun doWork(): Result {
-        return withContext(Dispatchers.IO) {
+        Log.d("uploadWork", "It is working")
+        return withContext(Dispatchers.Main) {
             try {
                 val repository = MovieRepo(context = applicationContext)
-                val oldMovies = repository.allMovies.asLiveData().value
-                repository.allMovies.asLiveData().value?.let { writeToDb(movies = it) }
-                val newMovies = repository.allMovies.asLiveData().value
-                //repository.addNewAndGetUpdated() 2 вариант
-                Log.d("do work success", "doWork: Success function called")
-                if (!oldMovies.isNullOrEmpty() || !newMovies.isNullOrEmpty()) {
-                    oldMovies?.let {
-                        newMovies?.let { it1 ->
-                            checkNewMovies(
-                                oldMovies = it,
-                                newMovies = it1
-                            )
-                        }
-                    }
-                }
+                repository.addNewAndGetUpdated()
+                repository.allMovies.asLiveData().value
+                //val movieDao = MovieDataBase.create(applicationContext).moviesDao
+              //  movieDao.getAllMovies()
+                Log.d("work", "doWork: Success function called")
+                val dateNow = Calendar.getInstance().time
+                println("Work Manager works! $dateNow")
+                Toast.makeText(context,"Filmed",Toast.LENGTH_LONG).show()
                 Result.success()
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 Result.failure()
             }
         }
-    }
-
-    private suspend fun writeToDb(movies: List<MovieEntity>) {
-        val movieDao = MovieDataBase.create(applicationContext).moviesDao
-        movieDao.insertMovie(movies)
     }
 
     private fun checkNewMovies(oldMovies: List<MovieEntity>, newMovies: List<MovieEntity>) {

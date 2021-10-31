@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_combined_shape"/>
     <TextView
+        android:id="@+id/titletext"
         android:paddingStart="@dimen/padd_left_movie_list_text"
         android:textAppearance="@style/warszawa_po"
         android:layout_marginTop="-2dp"

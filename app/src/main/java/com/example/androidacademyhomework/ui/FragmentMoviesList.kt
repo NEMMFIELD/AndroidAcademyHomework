@@ -63,9 +63,7 @@ class FragmentMoviesList : Fragment() {
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
-        val networkConnection = NetworkConnection(requireContext())
-        networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
-            if (isConnected) {
+
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -76,28 +74,31 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-                viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                    films.let { adapter.submitList(it) }
-                }
-                viewModel.insert()
-                WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
-            } else {
-                viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                    films.let { adapter.submitList(it) }
-                }
-                Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
-            }
-        })
-        /* viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-             films.let { adapter.submitList(it) }
-         }
-         viewModel.insert()
-         WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)*/
+        val networkConnection = NetworkConnection(requireContext())
+         networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
+             if (isConnected) {
+                 viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+                     films.let { adapter.submitList(it) }
+                 }
+                // viewModel.insert()
+                 WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
+             }
+             else {
+                 viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+                     films.let { adapter.submitList(it) }
+                 }
+                 Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
+             }
+         })
+       //  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
+
+      /*  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+            films.let { adapter.submitList(it) }
+        }
+        WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)*/
+        // viewModel.insert()
+      //  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
     }
-    //  private fun updateData(movies: List<MovieEntity>) {
-    // adapter.bindMovies(movies)
-    //     adapter.submitList(movies)
-    // }
 
     private fun doOnClick(movie: MovieEntity) {
         movieListRecycler?.let { rv ->

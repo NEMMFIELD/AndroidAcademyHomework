@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
@@ -27,14 +28,13 @@ interface MovieRepository {
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
-    // val allActors: Flow<List<ActorsEntity>> = db.actorsDao.getAllActors()
 
     //Загружаем через Retrofit2 список фильмов.
-    override suspend fun loadMoviesNet(): List<ResultsItem?>
-        = RetrofitModule.moviesApi.getNowPlaying(page).results!!
+    override suspend fun loadMoviesNet(): List<ResultsItem?> = RetrofitModule.moviesApi.getNowPlaying(page).results!!
 
 
     //Конвертируем ResultsItem в Model
+    @ExperimentalSerializationApi
     suspend fun convertToModel(film: ResultsItem): Model? {
         val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }
         val actors = film.id?.let { RetrofitModule.moviesApi.getCast(it) }
@@ -100,6 +100,11 @@ class MovieRepo(context: Context) : MovieRepository {
         }
         db.moviesDao.insertMovie(newList)
     }
+     suspend fun rewriteMoviesListIntoDB() =
+        withContext(Dispatchers.IO) {
+           db.moviesDao.deleteAll()
+            addNewAndGetUpdated()
+        }
 
     override fun getActors(movieId: Long): List<ActorsEntity> {
         return db.actorsDao.getAllActors(movieId)
