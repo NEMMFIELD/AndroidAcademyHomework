@@ -67,8 +67,8 @@ class MovieListAdapter(
         notifyDataSetChanged()
     }
     override fun submitList(list: List<MovieEntity>?) {
+        movies = list?.toMutableList() ?: ArrayList()
         super.submitList(list?.let { ArrayList(it) })
-       movies= list?.toMutableList() ?: ArrayList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {

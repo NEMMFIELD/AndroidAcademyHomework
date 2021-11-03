@@ -30,7 +30,8 @@ class MovieRepo(context: Context) : MovieRepository {
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
 
     //Загружаем через Retrofit2 список фильмов.
-    override suspend fun loadMoviesNet(): List<ResultsItem?> = RetrofitModule.moviesApi.getNowPlaying(page).results!!
+    override suspend fun loadMoviesNet(): List<ResultsItem?> = withContext(Dispatchers.IO){
+        RetrofitModule.moviesApi.getNowPlaying(page).results!!}
 
 
     //Конвертируем ResultsItem в Model
@@ -99,6 +100,7 @@ class MovieRepo(context: Context) : MovieRepository {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
+        db.moviesDao.getAllMovies()
     }
      suspend fun rewriteMoviesListIntoDB() =
         withContext(Dispatchers.IO) {

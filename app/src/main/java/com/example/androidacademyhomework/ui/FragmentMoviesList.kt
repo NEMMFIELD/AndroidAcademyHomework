@@ -1,6 +1,7 @@
 package com.example.androidacademyhomework.ui
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,7 @@ class FragmentMoviesList : Fragment() {
         super.onDestroy()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,7 +65,9 @@ class FragmentMoviesList : Fragment() {
         adapter = MovieListAdapter(clickListener = listener)
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.adapter = adapter
-
+        viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+            films.let { adapter.submitList(it) }
+        }
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -74,7 +78,8 @@ class FragmentMoviesList : Fragment() {
                 }
             }
         })
-        val networkConnection = NetworkConnection(requireContext())
+        WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
+       /* val networkConnection = NetworkConnection(requireContext())
          networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
              if (isConnected) {
                  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
@@ -89,15 +94,9 @@ class FragmentMoviesList : Fragment() {
                  }
                  Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
              }
-         })
-       //  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
+         })*/
 
-      /*  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-            films.let { adapter.submitList(it) }
-        }
-        WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)*/
         // viewModel.insert()
-      //  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
     }
 
     private fun doOnClick(movie: MovieEntity) {
