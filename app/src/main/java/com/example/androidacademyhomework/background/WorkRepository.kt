@@ -9,8 +9,7 @@ import java.util.concurrent.TimeUnit
 
 class WorkRepository {
     private val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED)
-        .setRequiresCharging(false).build()
-    @SuppressLint("InvalidPeriodicWorkRequestInterval")
+        .build()
     @ExperimentalSerializationApi
     val periodicWork = PeriodicWorkRequest.Builder(
         UploadMovieWorker::class.java,

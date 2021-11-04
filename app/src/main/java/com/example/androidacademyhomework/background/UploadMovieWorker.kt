@@ -30,7 +30,7 @@ class UploadMovieWorker(private val context: Context, workerParameters: WorkerPa
        return@withContext  runCatching {
             val repository = MovieRepo(context = applicationContext)
             repository.addNewAndGetUpdated()
-            repository.allMovies.asLiveData().value
+            //repository.allMovies.asLiveData().value
             //val movieDao = MovieDataBase.create(applicationContext).moviesDao
             //  movieDao.getAllMovies()
             Log.d("work", "doWork: Success function called")

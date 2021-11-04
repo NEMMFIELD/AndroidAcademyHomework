@@ -15,6 +15,7 @@ import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.posterUrl
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.MovieDiffUtil
+import com.example.androidacademyhomework.network.pojopack.Movie
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked
@@ -61,15 +62,16 @@ class MovieListAdapter(
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+   /* @SuppressLint("NotifyDataSetChanged")
     fun bindMovies(newMovies: List<MovieEntity>) {
         movies.addAll(newMovies)
         notifyDataSetChanged()
-    }
-    override fun submitList(list: List<MovieEntity>?) {
-        movies = list?.toMutableList() ?: ArrayList()
+    }*/
+   override fun submitList(list: List<MovieEntity>?) {
+       movies = list?.toMutableList() ?: ArrayList()
         super.submitList(list?.let { ArrayList(it) })
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
