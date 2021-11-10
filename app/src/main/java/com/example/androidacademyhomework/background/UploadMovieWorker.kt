@@ -6,17 +6,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.asLiveData
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.androidacademyhomework.database.MovieDataBase
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.network.MovieRepo
 import com.example.androidacademyhomework.notifications.MoviesNotification
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
 
 
@@ -28,25 +24,22 @@ class UploadMovieWorker(private val context: Context, workerParameters: WorkerPa
     {
         Log.d("uploadWork", "It is working")
        return@withContext  runCatching {
-            val repository = MovieRepo(context = applicationContext)
-            repository.addNewAndGetUpdated()
-            //repository.allMovies.asLiveData().value
-            //val movieDao = MovieDataBase.create(applicationContext).moviesDao
-            //  movieDao.getAllMovies()
+           val repository = MovieRepo(context = applicationContext)
+          // val movies = repository.addNewAndGetUpdated() as? List<MovieEntity>
+           repository.addNewAndGetUpdated()
             Log.d("work", "doWork: Success function called")
             val dateNow = Calendar.getInstance().time
             println("Work Manager works! $dateNow")
-            Toast.makeText(context, "Filmed", Toast.LENGTH_LONG).show()
+           val movies = repository.getMovies()
+           checkNewMovies(movies = movies)
             Result.success()
-        }.getOrElse { Result.failure() }
+        }.getOrElse {
+           Result.failure() }
     }
 
-    private fun checkNewMovies(oldMovies: List<MovieEntity>, newMovies: List<MovieEntity>) {
-        val movie = newMovies.subtract(oldMovies).maxByOrNull { it.rating }
-            ?: oldMovies.maxByOrNull { it.rating }
-        if (movie != null) {
-            sayNotification(movie)
-        }
+    private fun checkNewMovies(movies: List<MovieEntity>) {
+        val movie = movies.maxByOrNull { it.rating }
+            sayNotification(movie!!)
     }
 
     private fun sayNotification(movie: MovieEntity) {

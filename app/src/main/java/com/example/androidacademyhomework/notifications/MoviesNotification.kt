@@ -55,15 +55,14 @@ class MoviesNotification(private val context: Context) : Notifications {
             }
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     @WorkerThread
     override fun showNotification(movie:MovieEntity) {
         val contentUri = "com.example.androidacademyhomework/${movie.id}".toUri()
         val builder  = NotificationCompat.Builder(context, CHANNEL_NEW_MOVIES)
-            .setContentTitle("New")
-            .setContentText("Movie")
+            .setContentTitle("New added movie")
+            .setContentText(movie.title +" with "+ movie.rating + " rating")
             .setSmallIcon(R.drawable.ic_star_icon)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setOnlyAlertOnce(true)
             .setContentIntent(
                 PendingIntent.getActivity(

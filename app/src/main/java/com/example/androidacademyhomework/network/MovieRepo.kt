@@ -23,6 +23,7 @@ interface MovieRepository {
     suspend fun addNewAndGetUpdated()
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
+    fun getMovies():List<MovieEntity>
 }
 
 class MovieRepo(context: Context) : MovieRepository {
@@ -33,6 +34,7 @@ class MovieRepo(context: Context) : MovieRepository {
     override suspend fun loadMoviesNet(): List<ResultsItem?> = withContext(Dispatchers.IO){
         RetrofitModule.moviesApi.getNowPlaying(page).results!!}
 
+   override fun getMovies() = db.moviesDao.getMovies()
 
     //Конвертируем ResultsItem в Model
     @ExperimentalSerializationApi
@@ -100,7 +102,7 @@ class MovieRepo(context: Context) : MovieRepository {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
-        db.moviesDao.getAllMovies()
+       // db.moviesDao.getAllMovies()
     }
      suspend fun rewriteMoviesListIntoDB() =
         withContext(Dispatchers.IO) {

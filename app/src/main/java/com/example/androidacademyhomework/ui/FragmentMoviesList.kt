@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -24,9 +25,11 @@ import com.example.androidacademyhomework.background.WorkRepository
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-
-
 
 
 class FragmentMoviesList : Fragment() {
@@ -82,24 +85,26 @@ class FragmentMoviesList : Fragment() {
         viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
+
+
         WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
 
-       /* val networkConnection = NetworkConnection(requireContext())
-         networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
-             if (isConnected) {
-                 viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                     films.let { adapter.submitList(it) }
-                 }
-                // viewModel.insert()
-                 WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
-             }
-             else {
-                 viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                     films.let { adapter.submitList(it) }
-                 }
-                 Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
-             }
-         })*/
+        /* val networkConnection = NetworkConnection(requireContext())
+          networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
+              if (isConnected) {
+                  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+                      films.let { adapter.submitList(it) }
+                  }
+                 // viewModel.insert()
+                  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
+              }
+              else {
+                  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+                      films.let { adapter.submitList(it) }
+                  }
+                  Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
+              }
+          })*/
 
         // viewModel.insert()
     }
