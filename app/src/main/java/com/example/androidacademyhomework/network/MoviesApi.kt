@@ -9,7 +9,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-
 interface MoviesApi {
         @GET("configuration?")
         suspend fun getConfig(@Query("api_key") apiKey: String): Configuration

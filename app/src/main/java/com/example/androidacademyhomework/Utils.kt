@@ -6,6 +6,7 @@ class Utils:Application() {
     companion object
     {
         //global var:
+        const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w300"
         var page = 1
         const val posterUrl = "https://image.tmdb.org/t/p/w780"
         const val backdropUrl = "https://image.tmdb.org/t/p/w1280"
