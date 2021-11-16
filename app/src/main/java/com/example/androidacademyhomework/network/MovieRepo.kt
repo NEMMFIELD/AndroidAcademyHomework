@@ -24,6 +24,7 @@ interface MovieRepository {
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
     fun getMovies():List<MovieEntity>
+    fun getMovieById(Id:Long):MovieEntity
 }
 
 class MovieRepo(context: Context) : MovieRepository {
@@ -35,6 +36,10 @@ class MovieRepo(context: Context) : MovieRepository {
         RetrofitModule.moviesApi.getNowPlaying(page).results!!}
 
    override fun getMovies() = db.moviesDao.getMovies()
+
+    override fun getMovieById(id:Long): MovieEntity = db.moviesDao.getMoviebyId(id)
+
+
 
     //Конвертируем ResultsItem в Model
     @ExperimentalSerializationApi

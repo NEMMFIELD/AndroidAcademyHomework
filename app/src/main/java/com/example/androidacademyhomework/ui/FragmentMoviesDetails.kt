@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -17,7 +15,6 @@ import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentMoviesDetailsBinding
-import com.example.androidacademyhomework.network.NetworkConnection
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -26,6 +23,7 @@ class FragmentMoviesDetails : Fragment() {
     private var _binding: FragmentMoviesDetailsBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
+    private var movieId :Long = 0
 
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
@@ -49,14 +47,20 @@ class FragmentMoviesDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         actorRecycler = binding?.actorRecyclerView
         val list = arguments?.getParcelable<MovieEntity>("key")
-        val filmId = arguments?.getLong("keyId")
-        println("MovieId=$filmId")
+        //val filmId = arguments?.getLong("keyId")
+        movieId = arguments?.getLong("ID")!!
+        println("MovieId=$movieId")
+        val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
+        println("Selected movie's title = ${selectedMovie.title}")
         adapter = ActorListAdapter()
+        fetchMovie(selectedMovie)
         actorRecycler?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         }
         actorRecycler!!.adapter = adapter
-        val networkConnection = NetworkConnection(requireContext())
+
+
+       /* val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner, { isConnected ->
             if (isConnected) {
                 if (list != null) {
@@ -74,10 +78,11 @@ class FragmentMoviesDetails : Fragment() {
                 }
                 Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
             }
-        })
-        /* viewModel.actorList.observe(this.viewLifecycleOwner){actors->
+        })*/
+
+         viewModel.actorList.observe(this.viewLifecycleOwner){actors->
              actors.let { adapter.submitList(it) }
-         }*/
+         }
     }
 
     @SuppressLint("SetTextI18n")
@@ -93,26 +98,24 @@ class FragmentMoviesDetails : Fragment() {
         binding?.rating?.rating = movie.rating * 0.5F
         binding?.reviewsNumb?.text = movie.reviewCount.toString().plus(" REVIEWS")
 
-        /*  movie.id?.let { actorsViewModel.insertActor(it) }
-          actorsViewModel.allActors.observe(this.viewLifecycleOwner){actors->
-              actors.let { adapter.bindActors(it!!) }
-          }*/
-        val networkConnection = NetworkConnection(requireContext())
+        movie.id?.let{viewModel.insertActor(it)}
+        /*val networkConnection = NetworkConnection(requireContext())
         networkConnection.observe(viewLifecycleOwner, { isConnected ->
             if (isConnected) {
                 movie.id?.let { viewModel.insertActor(it) }
             } else {
                 movie.id?.let { viewModel.getActors(it) }
             }
-        })
+        })*/
     }
-   /* companion object {
+    companion object {
+        private const val  ID = "ID"
         fun newInstance(movieId: Long): FragmentMoviesDetails {
-            val args = Bundle()
-            args.putLong("movie", movieId)
             val fragment = FragmentMoviesDetails()
+            val args = Bundle()
+            args.putLong(ID, movieId)
             fragment.arguments = args
             return fragment
         }
-    }*/
+    }
 }

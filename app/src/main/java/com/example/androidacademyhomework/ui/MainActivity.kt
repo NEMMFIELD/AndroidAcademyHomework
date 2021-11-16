@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
-import com.example.androidacademyhomework.network.MovieRepo
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +21,6 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.fragment, FragmentMoviesList.newInstance())
                 .commit()
         }
-
         intent?.let(::handleIntent)
     }
 
@@ -39,9 +35,8 @@ class MainActivity : AppCompatActivity() {
         when (intent.action) {
             Intent.ACTION_VIEW -> {
                 val movieId = intent.data?.lastPathSegment?.toLongOrNull()
-
                 if (movieId != null) {
-                    val fragment: Fragment = FragmentMoviesDetails()
+                  /*  val fragment: Fragment = FragmentMoviesDetails()
                     val fragmentManager: FragmentManager = this.supportFragmentManager
                     val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
                     val args = Bundle()
@@ -49,7 +44,11 @@ class MainActivity : AppCompatActivity() {
                     fragment.arguments = args
                     fragmentTransaction.add(R.id.fragment, fragment)
                     fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.commit()
+                    fragmentTransaction.commit()*/
+                   supportFragmentManager.beginTransaction()
+                        .add(R.id.fragment, FragmentMoviesDetails.newInstance(movieId))
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }

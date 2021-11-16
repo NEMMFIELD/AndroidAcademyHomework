@@ -16,6 +16,9 @@ interface MoviesDao {
      @Query("SELECT * from Movies")
      fun getMovies():List<MovieEntity>
 
+     @Query("SELECT * from Movies WHERE Id == :id")
+     fun getMoviebyId(id:Long):MovieEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movies:List<MovieEntity>)
 

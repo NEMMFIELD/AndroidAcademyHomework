@@ -120,17 +120,21 @@ class FragmentMoviesList : Fragment() {
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-            val fragment: Fragment = FragmentMoviesDetails()
+           /* val fragment: Fragment = FragmentMoviesDetails.newInstance(movie.id!!)
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            val args = Bundle()
-            args.putParcelable("key", movie)
+           // val args = Bundle()
+            //args.putParcelable("key", movie)
 
-            fragment.arguments = args
+            //fragment.arguments = args
             fragmentTransaction.add(R.id.fragment, fragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
-            // doOnClick(movie)
+            // doOnClick(movie)*/
+            parentFragmentManager.beginTransaction()
+                .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
+                .addToBackStack(null)
+                .commit()
         }
     }
 
