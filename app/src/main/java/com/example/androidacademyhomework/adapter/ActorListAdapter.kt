@@ -38,12 +38,6 @@ class ActorListAdapter() :
         listActors = list?.toMutableList()?:ArrayList()
     }
 
-    fun bindActors(newActors: MutableList<ActorsEntity>) {
-        listActors = newActors
-        notifyDataSetChanged()
-    }
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ActorListViewHolder(inflater, parent)

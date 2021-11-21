@@ -3,6 +3,7 @@ package com.example.androidacademyhomework
 import android.app.Application
 import com.example.androidacademyhomework.di.AppModule
 
+
 class MyApp:Application() {
     override fun onCreate() {
         super.onCreate()
@@ -13,3 +14,4 @@ class MyApp:Application() {
         lateinit var container:AppModule
     }
 }
+

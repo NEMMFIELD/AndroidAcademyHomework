@@ -1,20 +1,15 @@
 package com.example.androidacademyhomework.network
 
-import android.content.Context
-import androidx.lifecycle.asLiveData
+ import android.content.Context
 import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.database.ActorsEntity
 import com.example.androidacademyhomework.database.MovieDataBase
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.Model
-import com.example.androidacademyhomework.network.pojopack.ActorsResponse
 import com.example.androidacademyhomework.network.pojopack.CastItem
 import com.example.androidacademyhomework.network.pojopack.ResultsItem
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -23,8 +18,8 @@ interface MovieRepository {
     suspend fun addNewAndGetUpdated()
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
-    fun getMovies():List<MovieEntity>
-    fun getMovieById(Id:Long):MovieEntity
+    fun getMovies(): List<MovieEntity>
+    fun getMovieById(id: Long): MovieEntity
 }
 
 class MovieRepo(context: Context) : MovieRepository {
@@ -32,14 +27,12 @@ class MovieRepo(context: Context) : MovieRepository {
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
 
     //Загружаем через Retrofit2 список фильмов.
-    override suspend fun loadMoviesNet(): List<ResultsItem?> = withContext(Dispatchers.IO){
-        RetrofitModule.moviesApi.getNowPlaying(page).results!!}
+    override suspend fun loadMoviesNet(): List<ResultsItem?> = withContext(Dispatchers.IO) {
+        RetrofitModule.moviesApi.getNowPlaying(page).results!!
+    }
 
-   override fun getMovies() = db.moviesDao.getMovies()
-
-    override fun getMovieById(id:Long): MovieEntity = db.moviesDao.getMoviebyId(id)
-
-
+    override fun getMovies() = db.moviesDao.getMovies()
+    override fun getMovieById(id: Long): MovieEntity = db.moviesDao.getMoviebyId(id)
 
     //Конвертируем ResultsItem в Model
     @ExperimentalSerializationApi
@@ -107,13 +100,7 @@ class MovieRepo(context: Context) : MovieRepository {
             convertToMovieEntity(list[i]).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
-       // db.moviesDao.getAllMovies()
     }
-     suspend fun rewriteMoviesListIntoDB() =
-        withContext(Dispatchers.IO) {
-           db.moviesDao.deleteAll()
-            addNewAndGetUpdated()
-        }
 
     override fun getActors(movieId: Long): List<ActorsEntity> {
         return db.actorsDao.getAllActors(movieId)
@@ -128,6 +115,6 @@ class MovieRepo(context: Context) : MovieRepository {
             newList.add(convertedActors)
         }
         db.actorsDao.insertActors(newList)
-        //db.actorsDao.getAllActors(movieId)
+       // db.actorsDao.getAllActors(movieId)
     }
 }

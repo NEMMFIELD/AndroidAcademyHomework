@@ -79,7 +79,7 @@ class MoviesNotification(private val context: Context) : Notifications {
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
-        movie.id?.toInt()?.let { notificationManagerCompat.notify(TAG, it, builder.build()) }
+        movie.id?.toInt()?.let { notificationManagerCompat.notify(MOVIE_TAG, it, builder.build()) }
     }
 
     private fun getBitmapFromURL(movie: MovieEntity): Bitmap? {

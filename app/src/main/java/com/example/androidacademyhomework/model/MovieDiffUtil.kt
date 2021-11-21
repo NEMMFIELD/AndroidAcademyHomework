@@ -13,4 +13,5 @@ class MovieDiffUtil():DiffUtil.ItemCallback<MovieEntity>() {
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
         oldItem == newItem
+
 }

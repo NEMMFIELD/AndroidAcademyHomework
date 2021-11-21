@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ActorsDao {
     @Query("SELECT * FROM actorslist WHERE filmId=:movieId")
-    fun getAllActors(movieId:Long): List<ActorsEntity>
+    fun getAllActors(movieId:Long): List<ActorsEntity> //Список актеров фильма
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertActors(actors: List<ActorsEntity?>?)

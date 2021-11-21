@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.WorkManager
 import com.example.androidacademyhomework.MyApp
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
@@ -23,7 +19,6 @@ import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.serialization.ExperimentalSerializationApi
 
 
@@ -50,7 +45,6 @@ class FragmentMoviesList : Fragment() {
     override fun onDestroy() {
         movieListRecycler = null
         appContainer.workManager.cancelAllWork()
-        // scope.cancel()
         super.onDestroy()
     }
 
@@ -62,7 +56,6 @@ class FragmentMoviesList : Fragment() {
         //    this,
         //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
         // ).get(MovieViewModel::class.java)
-
         movieListRecycler = binding?.listRecyclerView
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         adapter = MovieListAdapter(clickListener = listener)
@@ -87,50 +80,12 @@ class FragmentMoviesList : Fragment() {
              ExistingPeriodicWorkPolicy.KEEP,
              workRepository.periodicWork
          )*/
-
-        /* val networkConnection = NetworkConnection(requireContext())
-          networkConnection.observe(viewLifecycleOwner, Observer { isConnected ->
-              if (isConnected) {
-                  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                      films.let { adapter.submitList(it) }
-                  }
-                 // viewModel.insert()
-                  WorkManager.getInstance(requireContext()).enqueue(workRepository.periodicWork)
-              }
-              else {
-                  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-                      films.let { adapter.submitList(it) }
-                  }
-                  Toast.makeText(requireContext(), "Turn on internet", Toast.LENGTH_LONG).show()
-              }
-          })*/
-
-        // viewModel.insert()
+        //  viewModel.insert()
     }
 
-    /* private fun doOnClick(movie: MovieEntity) {
-         movieListRecycler?.let { rv ->
-             Snackbar.make(
-                 rv,
-                 "You chose: {${movie.title}}",
-                 Snackbar.LENGTH_SHORT
-             ).show()
-         }
-     }*/
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-           /* val fragment: Fragment = FragmentMoviesDetails.newInstance(movie.id!!)
-            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-           // val args = Bundle()
-            //args.putParcelable("key", movie)
-
-            //fragment.arguments = args
-            fragmentTransaction.add(R.id.fragment, fragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-            // doOnClick(movie)*/
             parentFragmentManager.beginTransaction()
                 .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
                 .addToBackStack(null)

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.androidacademyhomework.MyApp
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.databinding.ActivityMainBinding
 
@@ -36,20 +37,12 @@ class MainActivity : AppCompatActivity() {
             Intent.ACTION_VIEW -> {
                 val movieId = intent.data?.lastPathSegment?.toLongOrNull()
                 if (movieId != null) {
-                  /*  val fragment: Fragment = FragmentMoviesDetails()
-                    val fragmentManager: FragmentManager = this.supportFragmentManager
-                    val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                    val args = Bundle()
-                    args.putLong("keyId", movieId)
-                    fragment.arguments = args
-                    fragmentTransaction.add(R.id.fragment, fragment)
-                    fragmentTransaction.addToBackStack(null)
-                    fragmentTransaction.commit()*/
                    supportFragmentManager.beginTransaction()
                         .add(R.id.fragment, FragmentMoviesDetails.newInstance(movieId))
                         .addToBackStack(null)
                         .commit()
                 }
+                MyApp.container.moviesNotification.dismissNotification(movieId = movieId!!)
             }
         }
     }

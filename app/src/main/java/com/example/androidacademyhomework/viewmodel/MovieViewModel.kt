@@ -1,5 +1,7 @@
 package com.example.androidacademyhomework.viewmodel
 
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import androidx.lifecycle.*
 import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.database.MovieEntity
@@ -20,14 +22,25 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     val actorList: LiveData<List<ActorsEntity>?> get() = _mutableActorList
 
     fun insert() = viewModelScope.launch {
-        repository.addNewAndGetUpdated()
+        try {
+            repository.addNewAndGetUpdated()
+        } catch (e: Exception) {
+        }
     }
 
-    fun insertActor(movieId:Long) = viewModelScope.launch {
-        repository.insertActorsToDb(movieId)
+    fun insertActor(movieId: Long) = viewModelScope.launch {
+        try { //_mutableActorList.value = repository.getActors(movieId)
+            if (_mutableActorList.value.isNullOrEmpty())
+            {
+                repository.insertActorsToDb(movieId)
+            }
+
+        } catch (e: Exception) {
+            println(e)
+        }
         _mutableActorList.value = repository.getActors(movieId)
     }
-    fun getActors(movieId:Long) = viewModelScope.launch { _mutableActorList.value = repository.getActors(movieId) }
+
 
     fun loadMore() {
         viewModelScope.launch {

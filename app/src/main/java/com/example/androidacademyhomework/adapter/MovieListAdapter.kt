@@ -14,6 +14,8 @@ import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.posterUrl
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
+import com.example.androidacademyhomework.databinding.ViewHolderMovieBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import com.example.androidacademyhomework.network.pojopack.Movie
 
@@ -22,60 +24,36 @@ class MovieListAdapter(
 ) : ListAdapter<MovieEntity, MovieListAdapter.MovieListViewHolder>(MovieDiffUtil()) {
     private var movies: MutableList<MovieEntity> = mutableListOf()
 
-    inner class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_movie, parent, false)) {
-        private var imageMain: ImageView? = null
-        private var titleName: TextView? = null
-        private var duration: TextView? = null
-        private var numbReviews: TextView? = null
-        private var age: TextView? = null
-        private var genre: TextView? = null
-        private var like: ImageView? = null
-        private var rating: RatingBar? = null
-
-        init {
-            imageMain = itemView.findViewById(R.id.movie_img)
-            titleName = itemView.findViewById(R.id.cinema_title)
-            duration = itemView.findViewById(R.id.duration)
-            numbReviews = itemView.findViewById(R.id.name)
-            age = itemView.findViewById(R.id.some_id)
-            genre = itemView.findViewById(R.id.tag)
-            like = itemView.findViewById(R.id.toLike)
-            rating = itemView.findViewById(R.id.redstar_rating)
-        }
-
+    inner class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(model: MovieEntity) {
-            imageMain?.load(posterUrl + model.imageUrl)
-            titleName?.text = model.title
-            duration?.text = model.runningTime.toString().plus(" MIN")
-            numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
+        fun bind(model: MovieEntity) = with(binding)
+        {
+           movieImg.load(posterUrl + model.imageUrl)
+           cinemaTitle.text = model.title
+           duration.text = model.runningTime.toString().plus(" MIN")
+            name.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-                age?.text = "16"
+                someId.text = "16"
             } else {
-                age?.text = "13"
+                someId.text = "13"
             }
-            genre?.text = model.genres?.joinToString { it }
-            if (model.isLiked) like?.setImageResource(R.drawable.ic_liked)
-            else like?.setImageResource(R.drawable.ic_like)
-            rating?.rating = model.rating * 0.5F
+           tag.text = model.genres?.joinToString { it }
+            if (model.isLiked) toLike?.setImageResource(R.drawable.ic_liked)
+            else toLike.setImageResource(R.drawable.ic_like)
+            redstarRating.rating = model.rating * 0.5F
         }
     }
 
-   /* @SuppressLint("NotifyDataSetChanged")
-    fun bindMovies(newMovies: List<MovieEntity>) {
-        movies.addAll(newMovies)
-        notifyDataSetChanged()
-    }*/
+
    override fun submitList(list: List<MovieEntity>?) {
        movies = list?.toMutableList() ?: ArrayList()
         super.submitList(list?.let { ArrayList(it) })
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MovieListViewHolder(inflater, parent)
+        val binding = ViewHolderMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
