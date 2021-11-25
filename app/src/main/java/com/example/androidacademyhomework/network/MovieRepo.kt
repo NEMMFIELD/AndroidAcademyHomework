@@ -1,6 +1,6 @@
 package com.example.androidacademyhomework.network
 
- import android.content.Context
+import android.content.Context
 import com.example.androidacademyhomework.Utils.Companion.page
 import com.example.androidacademyhomework.database.ActorsEntity
 import com.example.androidacademyhomework.database.MovieDataBase
@@ -20,6 +20,7 @@ interface MovieRepository {
     suspend fun insertActorsToDb(movieId: Long)
     fun getMovies(): List<MovieEntity>
     fun getMovieById(id: Long): MovieEntity
+    suspend fun  updateMovieLike(movie: MovieEntity)
 }
 
 class MovieRepo(context: Context) : MovieRepository {
@@ -32,7 +33,17 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     override fun getMovies() = db.moviesDao.getMovies()
+
     override fun getMovieById(id: Long): MovieEntity = db.moviesDao.getMoviebyId(id)
+
+    override suspend fun updateMovieLike(movie: MovieEntity) = if (movie.isLiked)
+    {
+        db.moviesDao.updateLike(movie)
+    }
+    else
+    {
+        db.moviesDao.updateLike(movie)
+    }
 
     //Конвертируем ResultsItem в Model
     @ExperimentalSerializationApi
@@ -115,6 +126,6 @@ class MovieRepo(context: Context) : MovieRepository {
             newList.add(convertedActors)
         }
         db.actorsDao.insertActors(newList)
-       // db.actorsDao.getAllActors(movieId)
+        // db.actorsDao.getAllActors(movieId)
     }
 }

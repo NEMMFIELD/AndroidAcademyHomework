@@ -122,13 +122,21 @@
         app:layout_constraintStart_toStartOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
         />
-    <ImageView
-        android:id="@+id/toLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_like"
-        android:layout_marginEnd="@dimen/margin_end_like"
+    <xyz.hanks.library.bang.SmallBangView
+        android:id="@+id/like_heart"
+        android:layout_width="29dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="29dp"
         app:layout_constraintEnd_toEndOf="@+id/bg"
-        app:layout_constraintTop_toTopOf="@+id/bg"
-        app:srcCompat="@drawable/ic_like" />
+        app:layout_constraintTop_toTopOf="@+id/bg">
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:src="@drawable/heart_selector"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintTop_toTopOf="@+id/bg"
+            android:text="Hello World!"/>
+    </xyz.hanks.library.bang.SmallBangView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

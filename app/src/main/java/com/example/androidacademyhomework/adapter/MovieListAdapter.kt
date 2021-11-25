@@ -1,12 +1,17 @@
 package com.example.androidacademyhomework.adapter
 
 import android.annotation.SuppressLint
+import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,52 +23,90 @@ import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
 import com.example.androidacademyhomework.databinding.ViewHolderMovieBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import com.example.androidacademyhomework.network.pojopack.Movie
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import okhttp3.internal.addHeaderLenient
+import xyz.hanks.library.bang.SmallBangView
 
 class MovieListAdapter(
-    private val clickListener: OnRecyclerItemClicked
+    private val clickListener: OnRecyclerItemClicked,private val likeListener: ((MovieEntity) -> Unit)
 ) : ListAdapter<MovieEntity, MovieListAdapter.MovieListViewHolder>(MovieDiffUtil()) {
     private var movies: MutableList<MovieEntity> = mutableListOf()
-
-    inner class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
-        fun bind(model: MovieEntity) = with(binding)
-        {
-           movieImg.load(posterUrl + model.imageUrl)
-           cinemaTitle.text = model.title
-           duration.text = model.runningTime.toString().plus(" MIN")
-            name.text = model.reviewCount.toString().plus(" REVIEWS")
-            if (model.pgAge) {
-                someId.text = "16"
-            } else {
-                someId.text = "13"
-            }
-           tag.text = model.genres?.joinToString { it }
-            if (model.isLiked) toLike?.setImageResource(R.drawable.ic_liked)
-            else toLike.setImageResource(R.drawable.ic_like)
-            redstarRating.rating = model.rating * 0.5F
-        }
-    }
-
-
-   override fun submitList(list: List<MovieEntity>?) {
-       movies = list?.toMutableList() ?: ArrayList()
+    override fun submitList(list: List<MovieEntity>?) {
+        movies = list?.toMutableList() ?: ArrayList()
         super.submitList(list?.let { ArrayList(it) })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        val binding = ViewHolderMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieListViewHolder(binding)
+        val itemView =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_holder_movie, parent, false)
+        return MovieListViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         holder.bind(movies[position])
-        holder.itemView.setOnClickListener { clickListener.onClick(movies[position]) }
-        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.alpha)
+        holder.itemView.setOnClickListener {
+            clickListener.onClick(movies[position])
+        }
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.alpha)
+
     }
 
     override fun getItemCount(): Int {
         return movies.size
+    }
+
+    inner class MovieListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var imageMain: ImageView? = null
+        private var titleName: TextView? = null
+        private var duration: TextView? = null
+        private var numbReviews: TextView? = null
+        private var age: TextView? = null
+        private var genre: TextView? = null
+        private var like: SmallBangView? = null
+        private var rating: RatingBar? = null
+        var count = 0
+
+        init {
+            imageMain = itemView.findViewById(R.id.movie_img)
+            titleName = itemView.findViewById(R.id.cinema_title)
+            duration = itemView.findViewById(R.id.duration)
+            numbReviews = itemView.findViewById(R.id.name)
+            age = itemView.findViewById(R.id.some_id)
+            genre = itemView.findViewById(R.id.tag)
+            like = itemView.findViewById(R.id.like_heart)
+            rating = itemView.findViewById(R.id.redstar_rating)
+        }
+
+        fun bind(model: MovieEntity) {
+
+            imageMain?.load(posterUrl + model.imageUrl)
+            titleName?.text = model.title
+            duration?.text = model.runningTime.toString().plus(" MIN")
+            numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
+            if (model.pgAge) {
+                age?.text = "16"
+            } else {
+                age?.text = "13"
+            }
+            genre?.text = model.genres?.joinToString { it }
+            rating?.rating = model.rating * 0.5F
+            like?.apply {
+                isSelected = model.isLiked
+                setOnClickListener {
+                    isSelected = if (isSelected) {
+                        false
+                    } else {
+                        likeAnimation()
+                        true
+                    }
+                    model.isLiked = isSelected
+                    likeListener?.invoke(model)
+                }
+            }
+        }
     }
 }
 
@@ -73,4 +116,6 @@ private val RecyclerView.ViewHolder.context
 interface OnRecyclerItemClicked {
     fun onClick(movie: MovieEntity)
 }
+
+
 

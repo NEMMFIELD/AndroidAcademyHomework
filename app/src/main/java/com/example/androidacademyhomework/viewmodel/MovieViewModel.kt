@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.androidacademyhomework.database.ActorsEntity
+import kotlinx.coroutines.Dispatchers
 
 @ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
@@ -30,8 +31,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
 
     fun insertActor(movieId: Long) = viewModelScope.launch {
         try { //_mutableActorList.value = repository.getActors(movieId)
-            if (_mutableActorList.value.isNullOrEmpty())
-            {
+            if (_mutableActorList.value.isNullOrEmpty()) {
                 repository.insertActorsToDb(movieId)
             }
 
@@ -46,6 +46,12 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
         viewModelScope.launch {
             page++
             insert()
+        }
+    }
+
+    fun updateLike(movie: MovieEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateMovieLike(movie)
         }
     }
 }

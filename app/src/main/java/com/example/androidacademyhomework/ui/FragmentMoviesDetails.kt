@@ -10,7 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.androidacademyhomework.MyApp
+import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.adapter.ActorListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
@@ -68,15 +73,22 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     private fun fetchMovie(movie: MovieEntity) = with(binding)
     {
-        this?.orig?.load(Utils.backdropUrl + movie.detailImageUrl)
-        this?.afterTheD?.text = movie.storyLine
-        this?.name?.text = movie.title
-        if (movie.pgAge) this?.someId2?.text = "16".plus("+")
-        else this?.someId2?.text = "13".plus("+")
-        this?.tag?.text = movie.genres?.joinToString { it }
-        this?.rating?.stepSize = 0.5F
-        this?.rating?.rating = movie.rating * 0.5F
-        this?.reviewsNumb?.text = movie.reviewCount.toString().plus(" REVIEWS")
+       /* this?.orig?.load(Utils.backdropUrl + movie.detailImageUrl)
+        {
+            memoryCachePolicy(CachePolicy.ENABLED)
+        }*/
+        Glide.with(requireContext())
+            .load(Utils.backdropUrl + movie.detailImageUrl)
+            .apply(imageOption)
+            .into(this!!.orig)
+        this.afterTheD.text = movie.storyLine
+        this.name.text = movie.title
+        if (movie.pgAge) this.someId2.text = "16".plus("+")
+        else this.someId2.text = "13".plus("+")
+        this.tag.text = movie.genres?.joinToString { it }
+        this.rating.stepSize = 0.5F
+        this.rating.rating = movie.rating * 0.5F
+        this.reviewsNumb.text = movie.reviewCount.toString().plus(" REVIEWS")
         movie.id?.let { viewModel.insertActor(it) }
     }
 
@@ -89,5 +101,9 @@ class FragmentMoviesDetails : Fragment() {
             fragment.arguments = args
             return fragment
         }
+        private val imageOption = RequestOptions()
+            .placeholder(R.drawable.ic_combined_shape)
+            .fallback(R.drawable.ic_combined_shape)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     }
 }

@@ -1,10 +1,7 @@
 package com.example.androidacademyhomework.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -27,4 +24,7 @@ interface MoviesDao {
 
     @Query("DELETE FROM Movies")
     suspend fun deleteAll()
+
+   @Update
+    suspend fun updateLike(movie:MovieEntity)
 }

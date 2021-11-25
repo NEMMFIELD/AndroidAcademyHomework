@@ -22,16 +22,14 @@ class UploadMovieWorker(private val context: Context, workerParameters: WorkerPa
     @Suppress("EXPERIMENTAL_API_USAGE")
     override suspend fun doWork(): Result = withContext(Dispatchers.IO)
     {
-        Log.d("uploadWork", "It is working")
+       // Log.d("uploadWork", "It is working")
         return@withContext runCatching {
             val repository = MovieRepo(context = applicationContext)
-            // val movies = repository.addNewAndGetUpdated() as? List<MovieEntity>
             val oldMovies = repository.getMovies()
             val movies = repository.addNewAndGetUpdated() as? List<MovieEntity>
             Log.d("work", "doWork: Success function called")
             val dateNow = Calendar.getInstance().time
             println("Work Manager works! $dateNow")
-            //   val movies = repository.getMovies()
             checkNewMovies(oldMovies, movies)
             Result.success()
         }.getOrElse {
@@ -40,13 +38,10 @@ class UploadMovieWorker(private val context: Context, workerParameters: WorkerPa
     }
 
     private fun checkNewMovies(oldMovies: List<MovieEntity>, movies: List<MovieEntity>?) {
-        /* val movie = movies.maxByOrNull { it.rating }
-            sayNotification(movie!!)*/
         val movie = movies?.subtract(oldMovies)?.maxByOrNull { it.rating }
             ?: oldMovies.maxByOrNull { it.rating }
         if (movie!=null) sayNotification(movie)
     }
-
 
     private fun sayNotification(movie: MovieEntity) {
         val notifications = MoviesNotification(context =context)

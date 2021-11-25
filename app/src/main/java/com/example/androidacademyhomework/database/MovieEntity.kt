@@ -28,7 +28,7 @@ class MovieEntity(
     val reviewCount: Int,
 
     @ColumnInfo(name = "liked")
-    val isLiked: Boolean,
+    var isLiked: Boolean,
 
     @ColumnInfo(name = "rating")
     val rating: Float,
