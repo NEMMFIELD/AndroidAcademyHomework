@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.request.CachePolicy
 import com.bumptech.glide.Glide
@@ -67,6 +69,9 @@ class FragmentMoviesDetails : Fragment() {
                 adapter.submitList(it)
             }
         }
+        binding?.calendarBtn?.setOnClickListener {
+            Toast.makeText(requireContext(),"You click on calendar",Toast.LENGTH_SHORT).show()
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -77,8 +82,13 @@ class FragmentMoviesDetails : Fragment() {
         {
             memoryCachePolicy(CachePolicy.ENABLED)
         }*/
+        val circularProgressDrawable = CircularProgressDrawable(requireContext())
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
         Glide.with(requireContext())
             .load(Utils.backdropUrl + movie.detailImageUrl)
+            .placeholder(circularProgressDrawable)
             .apply(imageOption)
             .into(this!!.orig)
         this.afterTheD.text = movie.storyLine
@@ -101,9 +111,9 @@ class FragmentMoviesDetails : Fragment() {
             fragment.arguments = args
             return fragment
         }
+
         private val imageOption = RequestOptions()
-            .placeholder(R.drawable.ic_combined_shape)
-            .fallback(R.drawable.ic_combined_shape)
+            .fallback(R.drawable.err)
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
     }
 }

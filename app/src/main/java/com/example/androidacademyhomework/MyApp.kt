@@ -12,6 +12,7 @@ class MyApp:Application() {
     companion object
     {
         lateinit var container:AppModule
+
     }
 }
 
