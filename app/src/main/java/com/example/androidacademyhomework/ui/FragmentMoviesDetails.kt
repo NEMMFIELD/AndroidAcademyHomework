@@ -42,20 +42,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
 
-class FragmentMoviesDetails : Fragment(), DatePickerDialog.OnDateSetListener,
+class FragmentMoviesDetails : Fragment(),
     TimePickerDialog.OnTimeSetListener {
     private var _binding: FragmentMoviesDetailsBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
     private var movieId: Long = 0
-    private var day = 0
-    private var month = 0
-    private var year = 0
-    private var hour = 0
-    private var minute = 0
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private var dateAndTime = Calendar.getInstance()
-
 
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
@@ -88,7 +81,6 @@ class FragmentMoviesDetails : Fragment(), DatePickerDialog.OnDateSetListener,
 
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val scope = CoroutineScope(Dispatchers.Main)
         super.onViewCreated(view, savedInstanceState)
         actorRecycler = binding?.actorRecyclerView
         movieId = arguments?.getLong("ID")!!
@@ -107,9 +99,16 @@ class FragmentMoviesDetails : Fragment(), DatePickerDialog.OnDateSetListener,
                 adapter.submitList(it)
             }
         }
+
+        viewModel.calendarIntent.observe(viewLifecycleOwner, { calendarIntent ->
+            if (calendarIntent != null) {
+                startActivity(calendarIntent)
+                viewModel.scheduleMovieDone()
+            }
+        })
+
         binding?.calendarBtn?.setOnClickListener {
             Toast.makeText(requireContext(), "You click on calendar", Toast.LENGTH_SHORT).show()
-            //showDateTimePicker()
             scheduleIntoCalendar()
         }
     }
@@ -178,50 +177,34 @@ class FragmentMoviesDetails : Fragment(), DatePickerDialog.OnDateSetListener,
         }
     }
 
-    private fun getDateTimeCalendar() {
-        val cal: Calendar = Calendar.getInstance()
-        day = cal.get(Calendar.DAY_OF_MONTH)
-        month = cal.get(Calendar.MONTH)
-        year = cal.get(Calendar.YEAR)
-        hour = cal.get(Calendar.HOUR)
-        minute = cal.get(Calendar.MINUTE)
-    }
-
     private fun showDateTimePicker() {
-        getDateTimeCalendar()
         //Запросить разрешение, и в случае "Да" - показать
-        DatePickerDialog(requireContext(), this, year, month, day).show()
+        DatePickerDialog(
+            requireContext(),
+            { _, year, monthOfYear, dayOfMonth ->
+                appContainer.dateAndTime.set(year, monthOfYear, dayOfMonth)
+                TimePickerDialog(
+                    requireContext(),
+                    this,
+                    appContainer.dateAndTime.get(Calendar.HOUR),
+                    appContainer.dateAndTime.get(Calendar.MINUTE),
+                    true
+                ).show()
+            },
+            appContainer.dateAndTime.get(Calendar.YEAR),
+            appContainer.dateAndTime.get(Calendar.MONTH),
+            appContainer.dateAndTime.get(Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
-    override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-        getDateTimeCalendar()
-        //Запросить разрешение, и в случае "Да" - показать
-        TimePickerDialog(requireContext(), this, hour, minute, true).show()
-    }
-
+    @ExperimentalSerializationApi
     override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
         Log.d("TAG", "Got the time")
         //Тут по сути надо прокинуть в реальный календарь на девайсе.
         movieId = arguments?.getLong("ID")!!
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         println("The Movie is: $selectedMovie")
-        scheduleMovieInCalendar(selectedMovie.title!!, dateAndTime)
-    }
-
-    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar) {
-
-        val intent = Intent(Intent.ACTION_INSERT)
-        with(intent)
-        {
-            type = "vnd.android.cursor.item/event"
-            putExtra(CalendarContract.Events.TITLE, movieTitle)
-            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateAndTime.timeInMillis)
-            putExtra(CalendarContract.Events.ALL_DAY, true)
-            putExtra(CalendarContract.Events.STATUS, 1)
-            putExtra(CalendarContract.Events.VISIBLE, 1)
-            putExtra(CalendarContract.Events.HAS_ALARM, 1)
-        }
-        startActivity(intent)
+        selectedMovie.title?.let { viewModel.scheduleMovieInCalendar(it, appContainer.dateAndTime) }
     }
 
     companion object {
