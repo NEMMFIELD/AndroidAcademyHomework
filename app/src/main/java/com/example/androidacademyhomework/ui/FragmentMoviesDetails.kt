@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -41,6 +43,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
+import android.content.ContentUris
+import android.net.Uri
+
 
 class FragmentMoviesDetails : Fragment(),
     TimePickerDialog.OnTimeSetListener {
@@ -196,6 +201,30 @@ class FragmentMoviesDetails : Fragment(),
             appContainer.dateAndTime.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
+   /* fun writeIn()
+    {
+        movieId = arguments?.getLong("ID")!!
+        val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
+        val calID: Long = 3
+        val tz = TimeZone.getDefault()
+        val cr: ContentResolver = requireContext().contentResolver
+        val values = ContentValues()
+        values.put(CalendarContract.Events.DTSTART, appContainer.dateAndTime.timeInMillis)
+        values.put(CalendarContract.Events.DTEND, appContainer.dateAndTime.timeInMillis+60*60*1000)
+        values.put(CalendarContract.Events.TITLE, selectedMovie.title)
+       // values.put(CalendarContract.Events.DESCRIPTION, "Group workout")
+        values.put(CalendarContract.Events.CALENDAR_ID, calID)
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
+        val uri: Uri? = cr.insert(CalendarContract.Events.CONTENT_URI, values)
+        // get the event ID that is the last element in the Uri
+        // get the event ID that is the last element in the Uri
+        val eventID: Long = uri!!.getLastPathSegment()!!.toLong()
+        val builder: Uri.Builder = CalendarContract.CONTENT_URI.buildUpon()
+        builder.appendPath("time")
+        ContentUris.appendId(builder,appContainer.dateAndTime.timeInMillis)
+        val intent = Intent(Intent.ACTION_VIEW).setData(builder.build())
+        startActivity(intent)
+    }*/
 
     @ExperimentalSerializationApi
     override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
@@ -204,7 +233,7 @@ class FragmentMoviesDetails : Fragment(),
         movieId = arguments?.getLong("ID")!!
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         println("The Movie is: $selectedMovie")
-        selectedMovie.title?.let { viewModel.scheduleMovieInCalendar(it, appContainer.dateAndTime) }
+        selectedMovie.title?.let { viewModel.scheduleMovieInCalendar(it, appContainer.dateAndTime,requireContext()) }
     }
 
     companion object {

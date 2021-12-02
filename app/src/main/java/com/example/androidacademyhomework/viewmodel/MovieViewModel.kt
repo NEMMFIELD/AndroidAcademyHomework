@@ -1,6 +1,6 @@
 package com.example.androidacademyhomework.viewmodel
 
-import android.content.Intent
+import android.content.*
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.provider.CalendarContract
@@ -18,6 +18,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidacademyhomework.database.ActorsEntity
 import kotlinx.coroutines.Dispatchers
 import java.util.*
+import kotlin.coroutines.coroutineContext
+import android.net.Uri
+import androidx.core.content.ContentProviderCompat.requireContext
+
 
 @ExperimentalSerializationApi
 class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
@@ -59,8 +63,9 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
             repository.updateMovieLike(movie)
         }
     }
-    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar) {
-        val intent = Intent(Intent.ACTION_INSERT)
+    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar,context: Context) {
+        //1 Вариант
+      /*  val intent = Intent(Intent.ACTION_INSERT)
         with(intent)
         {
             type = "vnd.android.cursor.item/event"
@@ -75,7 +80,24 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
             putExtra(CalendarContract.Events.VISIBLE, 1)
             putExtra(CalendarContract.Events.HAS_ALARM, 1)
         }
+        _calendarIntent.value = intent*/
+        val cr: ContentResolver = context.contentResolver
+        val tz = TimeZone.getDefault()
+        val calID: Long = 1
+        val values = ContentValues().apply {
+            put(CalendarContract.Events.DTSTART,dateAndTime.timeInMillis)
+            put(CalendarContract.Events.DTEND,dateAndTime.timeInMillis + 60*60*1000)
+            put(CalendarContract.Events.TITLE,movieTitle)
+            put(CalendarContract.Events.CALENDAR_ID, calID)
+            put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Moscow")
+        }
+        val uri: Uri? = cr.insert(CalendarContract.Events.CONTENT_URI, values)
+        val builder: Uri.Builder = CalendarContract.CONTENT_URI.buildUpon()
+        builder.appendPath("time")
+        ContentUris.appendId(builder,dateAndTime.timeInMillis)
+        val intent = Intent(Intent.ACTION_VIEW).setData(builder.build())
         _calendarIntent.value = intent
+    //---
     }
 
     fun scheduleMovieDone()
