@@ -21,6 +21,9 @@ import java.util.*
 import kotlin.coroutines.coroutineContext
 import android.net.Uri
 import androidx.core.content.ContentProviderCompat.requireContext
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.days
 
 
 @ExperimentalSerializationApi
@@ -63,7 +66,8 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
             repository.updateMovieLike(movie)
         }
     }
-    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar,context: Context) {
+    @ExperimentalTime
+    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar, context: Context) {
         //1 Вариант
       /*  val intent = Intent(Intent.ACTION_INSERT)
         with(intent)
@@ -82,11 +86,14 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
         }
         _calendarIntent.value = intent*/
         val cr: ContentResolver = context.contentResolver
-        val tz = TimeZone.getDefault()
+       // val tz = TimeZone.getDefault()
         val calID: Long = 1
+        var fornight: Duration = Duration.hours(1)
+        println("DURATION = "+fornight.inWholeMinutes)
         val values = ContentValues().apply {
             put(CalendarContract.Events.DTSTART,dateAndTime.timeInMillis)
             put(CalendarContract.Events.DTEND,dateAndTime.timeInMillis + 60*60*1000)
+          //  put(CalendarContract.Events.DURATION,fornight.inWholeMinutes)
             put(CalendarContract.Events.TITLE,movieTitle)
             put(CalendarContract.Events.CALENDAR_ID, calID)
             put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Moscow")

@@ -45,10 +45,10 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
 import android.content.ContentUris
 import android.net.Uri
+import kotlin.time.ExperimentalTime
 
 
-class FragmentMoviesDetails : Fragment(),
-    TimePickerDialog.OnTimeSetListener {
+class FragmentMoviesDetails : Fragment() {
     private var _binding: FragmentMoviesDetailsBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
@@ -72,6 +72,7 @@ class FragmentMoviesDetails : Fragment(),
         return view!!
     }
 
+    @ExperimentalTime
     @SuppressLint("MissingPermission")
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -84,6 +85,7 @@ class FragmentMoviesDetails : Fragment(),
             }
     }
 
+    @ExperimentalTime
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -142,20 +144,21 @@ class FragmentMoviesDetails : Fragment(),
         movie.id?.let { viewModel.insertActor(it) }
     }
 
+    @ExperimentalTime
     private fun scheduleIntoCalendar() {
         activity?.let {
-            if (ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.WRITE_CALENDAR
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+            if (ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)
+            {
                 onWriteCalendarPermissionGranted()
-            } else {
+            }
+            else
+            {
                 showPermissionExplanationDialog()
             }
         }
     }
 
+    @ExperimentalTime
     @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
     private fun onWriteCalendarPermissionGranted() {
         showDateTimePicker()
@@ -182,58 +185,45 @@ class FragmentMoviesDetails : Fragment(),
         }
     }
 
+    @ExperimentalTime
     private fun showDateTimePicker() {
         //Запросить разрешение, и в случае "Да" - показать
         DatePickerDialog(
             requireContext(),
             { _, year, monthOfYear, dayOfMonth ->
                 appContainer.dateAndTime.set(year, monthOfYear, dayOfMonth)
-                TimePickerDialog(
-                    requireContext(),
-                    this,
-                    appContainer.dateAndTime.get(Calendar.HOUR),
-                    appContainer.dateAndTime.get(Calendar.MINUTE),
-                    true
-                ).show()
+                launchTimePicker()
             },
             appContainer.dateAndTime.get(Calendar.YEAR),
             appContainer.dateAndTime.get(Calendar.MONTH),
             appContainer.dateAndTime.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-   /* fun writeIn()
-    {
-        movieId = arguments?.getLong("ID")!!
-        val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
-        val calID: Long = 3
-        val tz = TimeZone.getDefault()
-        val cr: ContentResolver = requireContext().contentResolver
-        val values = ContentValues()
-        values.put(CalendarContract.Events.DTSTART, appContainer.dateAndTime.timeInMillis)
-        values.put(CalendarContract.Events.DTEND, appContainer.dateAndTime.timeInMillis+60*60*1000)
-        values.put(CalendarContract.Events.TITLE, selectedMovie.title)
-       // values.put(CalendarContract.Events.DESCRIPTION, "Group workout")
-        values.put(CalendarContract.Events.CALENDAR_ID, calID)
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
-        val uri: Uri? = cr.insert(CalendarContract.Events.CONTENT_URI, values)
-        // get the event ID that is the last element in the Uri
-        // get the event ID that is the last element in the Uri
-        val eventID: Long = uri!!.getLastPathSegment()!!.toLong()
-        val builder: Uri.Builder = CalendarContract.CONTENT_URI.buildUpon()
-        builder.appendPath("time")
-        ContentUris.appendId(builder,appContainer.dateAndTime.timeInMillis)
-        val intent = Intent(Intent.ACTION_VIEW).setData(builder.build())
-        startActivity(intent)
-    }*/
 
-    @ExperimentalSerializationApi
-    override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
-        Log.d("TAG", "Got the time")
-        //Тут по сути надо прокинуть в реальный календарь на девайсе.
-        movieId = arguments?.getLong("ID")!!
-        val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
-        println("The Movie is: $selectedMovie")
-        selectedMovie.title?.let { viewModel.scheduleMovieInCalendar(it, appContainer.dateAndTime,requireContext()) }
+    @ExperimentalTime
+    private fun launchTimePicker() {
+        TimePickerDialog(
+            requireContext(), { _, hour, minute ->
+                // fix time
+                appContainer.dateAndTime.set(
+                    appContainer.dateAndTime.get(Calendar.YEAR),
+                    appContainer.dateAndTime.get(Calendar.MONTH),
+                    appContainer.dateAndTime.get(Calendar.DAY_OF_MONTH),
+                    hour,
+                    minute
+                )
+                // start calendar intent
+
+                viewModel.scheduleMovieInCalendar(
+                    binding?.name?.text.toString(),
+                    appContainer.dateAndTime,
+                    requireContext()
+                )
+            },
+            appContainer.dateAndTime.get(Calendar.HOUR),
+            appContainer.dateAndTime.get(Calendar.MINUTE),
+            true
+        ).show()
     }
 
     companion object {
