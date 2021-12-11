@@ -23,6 +23,10 @@
             android:id="@+id/action_fragmentMoviesDetails_to_fragmentMoviesList"
             app:destination="@id/fragmentMoviesList"
             app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/fragmentMoviesList"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true"
+            />
     </fragment>
 </navigation>

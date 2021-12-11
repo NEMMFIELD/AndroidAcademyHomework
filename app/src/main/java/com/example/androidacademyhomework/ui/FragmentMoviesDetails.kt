@@ -46,7 +46,10 @@ import java.util.*
 import android.content.ContentUris
 import android.net.Uri
 import android.opengl.Visibility
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.example.androidacademyhomework.viewmodel.SharedViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.time.ExperimentalTime
 
@@ -57,6 +60,7 @@ class FragmentMoviesDetails : Fragment() {
     private val appContainer = MyApp.container
     private var movieId: Long = 0
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var viewModelShared: SharedViewModel
 
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
@@ -69,11 +73,16 @@ class FragmentMoviesDetails : Fragment() {
     ): View {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
         val view = binding?.root
+        viewModelShared = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         binding?.back?.setOnClickListener {
-            //parentFragmentManager.popBackStack()
-            if (view != null) {
-                Navigation.findNavController(view).navigate(R.id.action_fragmentMoviesDetails_to_fragmentMoviesList)
-            }
+            // parentFragmentManager.popBackStack()
+           /* if (view != null) {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_fragmentMoviesDetails_to_fragmentMoviesList)
+            }*/
+            val data = Bundle().apply { putString("ARGUMENT_MESSAGE", "Hello from FragmentB") }
+            viewModelShared.bundleFromFragmentBToFragmentA.value = data
+            requireActivity().onBackPressed()
         }
         return view!!
     }
@@ -101,7 +110,7 @@ class FragmentMoviesDetails : Fragment() {
         println("MovieId=$movieId")
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         println("Selected movie's title = ${selectedMovie.title}")
-       println("Selected movie's backdrop = ${selectedMovie.detailImageUrl}")
+        println("Selected movie's backdrop = ${selectedMovie.detailImageUrl}")
         adapter = ActorListAdapter()
         fetchMovie(selectedMovie)
         actorRecycler?.apply {
@@ -154,12 +163,13 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalTime
     private fun scheduleIntoCalendar() {
         activity?.let {
-            if (ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)
-            {
+            if (ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.WRITE_CALENDAR
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 onWriteCalendarPermissionGranted()
-            }
-            else
-            {
+            } else {
                 showPermissionExplanationDialog()
             }
         }
