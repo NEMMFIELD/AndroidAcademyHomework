@@ -45,6 +45,9 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import java.util.*
 import android.content.ContentUris
 import android.net.Uri
+import android.opengl.Visibility
+import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.time.ExperimentalTime
 
 
@@ -67,7 +70,10 @@ class FragmentMoviesDetails : Fragment() {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
         val view = binding?.root
         binding?.back?.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            //parentFragmentManager.popBackStack()
+            if (view != null) {
+                Navigation.findNavController(view).navigate(R.id.action_fragmentMoviesDetails_to_fragmentMoviesList)
+            }
         }
         return view!!
     }
@@ -89,12 +95,13 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         actorRecycler = binding?.actorRecyclerView
-        movieId = arguments?.getLong("ID")!!
+        movieId = arguments?.getLong("arg1")!!
         println("MovieId=$movieId")
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         println("Selected movie's title = ${selectedMovie.title}")
-        println("Selected movie's backdrop = ${selectedMovie.detailImageUrl}")
+       println("Selected movie's backdrop = ${selectedMovie.detailImageUrl}")
         adapter = ActorListAdapter()
         fetchMovie(selectedMovie)
         actorRecycler?.apply {

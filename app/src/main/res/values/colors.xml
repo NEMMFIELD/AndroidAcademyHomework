@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#191926</color>
     <color name="gradient">#ECECEC</color>
+    <color name="design_bottom_navigation_shadow_color">#14000000</color>
 </resources>

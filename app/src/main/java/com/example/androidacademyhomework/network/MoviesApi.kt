@@ -13,8 +13,8 @@ interface MoviesApi {
         @GET("configuration?")
         suspend fun getConfig(@Query("api_key") apiKey: String): Configuration
 
-        @GET("https://api.themoviedb.org/3/movie/now_playing?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page")
-        suspend fun getNowPlaying(@Query("page")page:Int): Movie
+        @GET("https://api.themoviedb.org/3/movie/{path}?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US&page")
+        suspend fun getNowPlaying(@Path("path")path:String, @Query("page")page:Int): Movie
 
         @GET("https://api.themoviedb.org/3/movie/{movie_id}?api_key=56b9fc3e2f7cf0c570b8d7dc71de180e&language=en-US")
         suspend fun getMoviesInfo(@Path("movie_id") movieId: Long):MovieInfo

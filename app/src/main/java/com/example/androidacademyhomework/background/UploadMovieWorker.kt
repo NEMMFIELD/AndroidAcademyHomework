@@ -26,7 +26,7 @@ class UploadMovieWorker(private val context: Context, workerParameters: WorkerPa
         return@withContext runCatching {
             val repository = MovieRepo(context = applicationContext)
             val oldMovies = repository.getMovies()
-            val movies = repository.addNewAndGetUpdated() as? List<MovieEntity>
+            val movies = repository.addNewAndGetUpdated("now_playing","now_playing") as List<MovieEntity>
             Log.d("work", "doWork: Success function called")
             val dateNow = Calendar.getInstance().time
             println("Work Manager works! $dateNow")

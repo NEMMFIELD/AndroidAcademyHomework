@@ -1,14 +1,14 @@
 package com.example.androidacademyhomework.database
 
-import androidx.lifecycle.LiveData
+
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
 
-    @Query("SELECT * from Movies")
-     fun getAllMovies(): Flow<List<MovieEntity>>
+    @Query("SELECT * from Movies WHERE type LIKE :listType")
+     fun getAllMovies(listType:String): Flow<List<MovieEntity>>
 
      @Query("SELECT * from Movies")
      fun getMovies():List<MovieEntity>

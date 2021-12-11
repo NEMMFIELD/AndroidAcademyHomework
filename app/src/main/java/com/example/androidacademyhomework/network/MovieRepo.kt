@@ -14,8 +14,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
-    suspend fun loadMoviesNet(): List<ResultsItem?>?
-    suspend fun addNewAndGetUpdated()
+    suspend fun loadMoviesNet(path:String): List<ResultsItem?>?
+    suspend fun addNewAndGetUpdated(path:String,type:String)
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
     fun getMovies(): List<MovieEntity>
@@ -23,13 +23,14 @@ interface MovieRepository {
     suspend fun  updateMovieLike(movie: MovieEntity)
 }
 
+@ExperimentalSerializationApi
 class MovieRepo(context: Context) : MovieRepository {
     private val db: MovieDataBase = MovieDataBase.create(context)
-    val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies()
+    val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("now_playing")
 
     //Загружаем через Retrofit2 список фильмов.
-    override suspend fun loadMoviesNet(): List<ResultsItem?> = withContext(Dispatchers.IO) {
-        RetrofitModule.moviesApi.getNowPlaying(page).results!!
+    override suspend fun loadMoviesNet(path:String): List<ResultsItem?> = withContext(Dispatchers.IO) {
+        RetrofitModule.moviesApi.getNowPlaying(path,page).results!!
     }
 
     override fun getMovies() = db.moviesDao.getMovies()
@@ -79,7 +80,7 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     //Конвертирование Model в MovieEntity, для БД.
-    fun convertToMovieEntity(movie: Model): MovieEntity = MovieEntity(
+    fun convertToMovieEntity(movie: Model,type:String): MovieEntity = MovieEntity(
         id = movie.id,
         pgAge = movie.pgAge,
         title = movie.title,
@@ -90,7 +91,8 @@ class MovieRepo(context: Context) : MovieRepository {
         rating = movie.rating,
         imageUrl = movie.imageUrl,
         detailImageUrl = movie.detailImageUrl,
-        storyLine = movie.storyLine
+        storyLine = movie.storyLine,
+        listType = type
         // actors = movie.actors as List<ActorsEntity>
     )
 
@@ -104,11 +106,11 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     @ExperimentalSerializationApi
-    override suspend fun addNewAndGetUpdated() {
-        val list = parseMovie(loadMoviesNet() as List<ResultsItem>)
+    override suspend fun addNewAndGetUpdated(path:String,type:String) {
+        val list = parseMovie(loadMoviesNet(path) as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
         for (i in list.indices) {
-            convertToMovieEntity(list[i]).let { newList.add(it) }
+            convertToMovieEntity(list[i],type).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
     }

@@ -1,110 +1,77 @@
 package com.example.androidacademyhomework.ui
 
-
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MyApp
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
-import com.example.androidacademyhomework.background.WorkRepository
+import com.example.androidacademyhomework.adapter.PopularListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
+import com.example.androidacademyhomework.databinding.FragmentPopularMoviesBinding
 import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import kotlinx.serialization.ExperimentalSerializationApi
 
 
-class FragmentMoviesList : Fragment() {
-    private val workRepository = WorkRepository()
-    private var _binding: FragmentMoviesListBinding? = null
+class PopularMovies : Fragment() {
+    private var _binding: FragmentPopularMoviesBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
-
-    @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
     private var movieListRecycler: RecyclerView? = null
-    private lateinit var adapter: MovieListAdapter
+    private lateinit var adapter: PopularListAdapter
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentPopularMoviesBinding.inflate(inflater, container, false)
         val view = binding?.root
         return view!!
     }
 
-
-    override fun onDestroy() {
-        movieListRecycler = null
-        appContainer.workManager.cancelAllWork()
-        super.onDestroy()
-    }
-
     @ExperimentalSerializationApi
-    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // viewModel = ViewModelProvider(
-        //    this,
-        //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
-        // ).get(MovieViewModel::class.java)
-        movieListRecycler = binding?.listRecyclerView
+        movieListRecycler = binding?.listRecyclerViewPopular
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
-        adapter = MovieListAdapter(
+        adapter = PopularListAdapter(
             clickListener = listener
         ) { movieEntity -> viewModel.updateLike(movieEntity) }
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
         movieListRecycler?.adapter = adapter
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        viewModel.loadMore("now_playing","now_playing")
+                        viewModel.loadMore(path = "popular",type ="popular")
                     }
                 }
             }
         })
-
-        viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
-            films.let { adapter.submitList(it) }
-        }
-       // appContainer.workManager.enqueue(workRepository.periodicWork)
-        /* WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-             "Send data",
-             ExistingPeriodicWorkPolicy.KEEP,
-             workRepository.periodicWork
-         )*/
-          viewModel.insert("now_playing","now_playing")
-
+      //  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
+       //     films.let { adapter.submitList(it) }
+       // }
+      //  viewModel.insert(path = "popular",type = "popular")
     }
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-          /*  parentFragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
                 .addToBackStack(null)
-                .commit()*/
-            val bundle = Bundle()
-            movie.id?.let { bundle.putLong("arg1", it) }
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_fragmentMoviesList_to_fragmentMoviesDetails,bundle) }
+                .commit()
         }
     }
 
     companion object {
-        fun newInstance() = FragmentMoviesList()
+        fun newInstance() = PopularMovies()
     }
 }

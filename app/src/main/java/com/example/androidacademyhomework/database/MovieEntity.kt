@@ -40,7 +40,10 @@ class MovieEntity(
     val detailImageUrl: String,
 
     @ColumnInfo(name = "story")
-    val storyLine: String
+    val storyLine: String,
+
+    @ColumnInfo(name ="type")
+    val listType:String
    //@ColumnInfo(name = "actors")
     //val actors: List<ActorsEntity>
 ):Parcelable

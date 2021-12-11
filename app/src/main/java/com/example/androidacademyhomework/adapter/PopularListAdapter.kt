@@ -1,50 +1,36 @@
 package com.example.androidacademyhomework.adapter
 
-import android.annotation.SuppressLint
-import android.media.Image
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.Utils.Companion.posterUrl
+import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
-import com.example.androidacademyhomework.databinding.ViewHolderMovieBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
-import com.example.androidacademyhomework.network.pojopack.Movie
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import okhttp3.internal.addHeaderLenient
 import xyz.hanks.library.bang.SmallBangView
 
-class MovieListAdapter(
+class PopularListAdapter (
     private val clickListener: OnRecyclerItemClicked,private val likeListener: ((MovieEntity) -> Unit)
-) : ListAdapter<MovieEntity, MovieListAdapter.MovieListViewHolder>(MovieDiffUtil()) {
+) : ListAdapter<MovieEntity, PopularListAdapter.PopularListViewHolder>(MovieDiffUtil()) {
     private var movies: MutableList<MovieEntity> = mutableListOf()
     override fun submitList(list: List<MovieEntity>?) {
         movies = list?.toMutableList() ?: ArrayList()
         super.submitList(list?.let { ArrayList(it) })
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.view_holder_movie, parent, false)
-        return MovieListViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularListViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_popular, parent, false)
+        return PopularListViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PopularListViewHolder, position: Int) {
         holder.bind(movies[position])
         holder.itemView.setOnClickListener {
             clickListener.onClick(movies[position])
@@ -58,7 +44,7 @@ class MovieListAdapter(
         return movies.size
     }
 
-    inner class MovieListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class PopularListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var imageMain: ImageView? = null
         private var titleName: TextView? = null
         private var duration: TextView? = null
@@ -67,22 +53,21 @@ class MovieListAdapter(
         private var genre: TextView? = null
         private var like: SmallBangView? = null
         private var rating: RatingBar? = null
-        var count = 0
 
         init {
-            imageMain = itemView.findViewById(R.id.movie_img)
-            titleName = itemView.findViewById(R.id.cinema_title)
-            duration = itemView.findViewById(R.id.duration)
-            numbReviews = itemView.findViewById(R.id.name)
-            age = itemView.findViewById(R.id.some_id)
-            genre = itemView.findViewById(R.id.tag)
-            like = itemView.findViewById(R.id.like_heart)
-            rating = itemView.findViewById(R.id.redstar_rating)
+            imageMain = itemView.findViewById(R.id.movie_img_popular)
+            titleName = itemView.findViewById(R.id.cinema_title_popular)
+            duration = itemView.findViewById(R.id.duration_popular)
+            numbReviews = itemView.findViewById(R.id.name_popular)
+            age = itemView.findViewById(R.id.some_id_popular)
+            genre = itemView.findViewById(R.id.tag_popular)
+            like = itemView.findViewById(R.id.like_heart_popular)
+            rating = itemView.findViewById(R.id.redstar_rating_popular)
         }
 
         fun bind(model: MovieEntity) {
 
-            imageMain?.load(posterUrl + model.imageUrl)
+            imageMain?.load(Utils.posterUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
             numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
@@ -103,7 +88,7 @@ class MovieListAdapter(
                         true
                     }
                     model.isLiked = isSelected
-                    with(likeListener) { invoke(model) }
+                    likeListener.invoke(model)
                 }
             }
         }
@@ -113,9 +98,6 @@ class MovieListAdapter(
 private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
 
-interface OnRecyclerItemClicked {
+/*interface OnRecyclerItemClicked {
     fun onClick(movie: MovieEntity)
-}
-
-
-
+}*/
