@@ -37,7 +37,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 
 class FragmentMoviesList : Fragment() {
-    private val workRepository = WorkRepository()
     private var _binding: FragmentMoviesListBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
@@ -57,9 +56,6 @@ class FragmentMoviesList : Fragment() {
         return view!!
     }
 
-
-
-
     @ExperimentalSerializationApi
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,21 +70,22 @@ class FragmentMoviesList : Fragment() {
         //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
         // ).get(MovieViewModel::class.java)
         movieListRecycler = binding?.listRecyclerView
-        val layoutManager:GridLayoutManager = GridLayoutManager(context,2)
+        val layoutManager: GridLayoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.layoutManager = layoutManager
 
 
         adapter = MovieListAdapter(
             clickListener = listener
         ) { movieEntity -> viewModel.updateLike(movieEntity) }
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        adapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         movieListRecycler?.adapter = adapter
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        viewModel.loadMore("now_playing","now_playing")
+                        viewModel.loadMore("now_playing", "now_playing")
                     }
                 }
             }
@@ -97,13 +94,13 @@ class FragmentMoviesList : Fragment() {
         viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-       // appContainer.workManager.enqueue(workRepository.periodicWork)
+        // appContainer.workManager.enqueue(workRepository.periodicWork)
         /* WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
              "Send data",
              ExistingPeriodicWorkPolicy.KEEP,
              workRepository.periodicWork
          )*/
-          viewModel.insert("now_playing","now_playing")
+        viewModel.insert("now_playing", "now_playing")
 
     }
 
@@ -116,13 +113,16 @@ class FragmentMoviesList : Fragment() {
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-           /* parentFragmentManager.beginTransaction()
-                .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
-                .addToBackStack(null)
-                .commit()*/
+            /* parentFragmentManager.beginTransaction()
+                 .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
+                 .addToBackStack(null)
+                 .commit()*/
             val bundle = Bundle()
             movie.id?.let { bundle.putLong("arg1", it) }
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_fragmentMoviesList_to_fragmentMoviesDetails,bundle) }
+            view?.let {
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_fragmentMoviesList_to_fragmentMoviesDetails, bundle)
+            }
         }
     }
 

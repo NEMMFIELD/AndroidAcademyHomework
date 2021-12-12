@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_now"
+        android:id="@+id/fragmentMoviesList"
         android:enabled="true"
         android:icon="@drawable/ic_now_playing"
         android:title="Now play"/>
     <item
-        android:id="@+id/page_popular"
+        android:id="@+id/popularMovies"
         android:enabled="true"
         android:icon="@drawable/ic_popular_star"
         android:title="Popular"/>

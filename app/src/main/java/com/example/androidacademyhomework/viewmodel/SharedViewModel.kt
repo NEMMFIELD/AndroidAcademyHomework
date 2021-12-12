@@ -5,5 +5,5 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel:ViewModel() {
-    val bundleFromFragmentBToFragmentA=MutableLiveData<Bundle>()
+    val bundleFromFragmentBToFragmentA = MutableLiveData<Bundle>()
 }

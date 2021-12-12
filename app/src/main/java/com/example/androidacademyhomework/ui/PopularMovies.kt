@@ -40,7 +40,7 @@ class PopularMovies : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieListRecycler = binding?.listRecyclerViewPopular
+       /* movieListRecycler = binding?.listRecyclerViewPopular
         movieListRecycler?.layoutManager = GridLayoutManager(context, 2)
         adapter = PopularListAdapter(
             clickListener = listener
@@ -55,7 +55,7 @@ class PopularMovies : Fragment() {
                     }
                 }
             }
-        })
+        })*/
       //  viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
        //     films.let { adapter.submitList(it) }
        // }
@@ -71,7 +71,4 @@ class PopularMovies : Fragment() {
         }
     }
 
-    companion object {
-        fun newInstance() = PopularMovies()
-    }
 }
