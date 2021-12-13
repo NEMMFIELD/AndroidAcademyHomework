@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MyApp
@@ -48,7 +49,7 @@ class TopMovies : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        viewPopularModel.loadMore(path = "popular", type = "popular")
+                        viewPopularModel.loadMore(path = "top_rated", type = "top_rated")
                     }
                 }
             }
@@ -56,12 +57,17 @@ class TopMovies : Fragment() {
         viewPopularModel.topAllMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-        viewPopularModel.insert(path = "popular", type = "popular")
+        viewPopularModel.insert(path = "top_rated", type = "top_rated")
     }
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-
+            val bundle = Bundle()
+            movie.id?.let { bundle.putLong("arg1", it) }
+            view?.let {
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_topMovies_to_fragmentMoviesDetails, bundle)
+            }
         }
     }
 }
