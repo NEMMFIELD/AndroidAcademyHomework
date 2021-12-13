@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:id="@+id/test_click_popular"
+            android:id="@+id/test_click_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_combined_shape"/>
         <TextView
-            android:id="@+id/titletext_popular"
+            android:id="@+id/titletext_top"
             android:paddingStart="@dimen/padd_left_movie_list_text"
             android:textAppearance="@style/warszawa_po"
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_recycler_view_popular"
+        android:id="@+id/list_recycler_view_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true"
@@ -38,7 +38,3 @@
         tools:ignore="MissingConstraints" />
 
 </LinearLayout>
-
-
-
-

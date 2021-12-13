@@ -1,33 +1,28 @@
 package com.example.androidacademyhomework.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MyApp
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.adapter.PopularListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.databinding.FragmentPopularMoviesBinding
-import com.example.androidacademyhomework.viewmodel.MovieViewModel
-import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
-import com.example.androidacademyhomework.viewmodel.PopularViewModel
-import com.example.androidacademyhomework.viewmodel.PopularViewModelFactory
-import kotlinx.serialization.ExperimentalSerializationApi
+import com.example.androidacademyhomework.databinding.FragmentTopMoviesBinding
+import com.example.androidacademyhomework.viewmodel.TopViewModel
+import com.example.androidacademyhomework.viewmodel.TopViewModelFactory
 
 
-@ExperimentalSerializationApi
-class PopularMovies : Fragment() {
-    private var _binding: FragmentPopularMoviesBinding? = null
+class TopMovies : Fragment() {
+    private var _binding: FragmentTopMoviesBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
-    private val viewPopularModel: PopularViewModel by viewModels { PopularViewModelFactory(appContainer.moviesRepository) }
+    private val viewPopularModel: TopViewModel by viewModels { TopViewModelFactory(appContainer.moviesRepository) }
     private var popularListRecycler: RecyclerView? = null
     private lateinit var adapter: PopularListAdapter
 
@@ -35,16 +30,14 @@ class PopularMovies : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPopularMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentTopMoviesBinding.inflate(inflater, container, false)
         val view = binding?.root
         return view!!
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        popularListRecycler = binding?.listRecyclerViewPopular
+        popularListRecycler = binding?.listRecyclerViewTop
         popularListRecycler?.layoutManager = GridLayoutManager(context, 2)
         adapter = PopularListAdapter(
             clickListener = listener
@@ -55,15 +48,15 @@ class PopularMovies : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        viewPopularModel.loadMore(path = "popular",type ="popular")
+                        viewPopularModel.loadMore(path = "popular", type = "popular")
                     }
                 }
             }
         })
-        viewPopularModel.PopularAllMovies.observe(this.viewLifecycleOwner) { films ->
+        viewPopularModel.topAllMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-        viewPopularModel.insert(path = "popular",type = "popular")
+        viewPopularModel.insert(path = "popular", type = "popular")
     }
 
     private val listener = object : OnRecyclerItemClicked {
@@ -71,5 +64,4 @@ class PopularMovies : Fragment() {
 
         }
     }
-
 }

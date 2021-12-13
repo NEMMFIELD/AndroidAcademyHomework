@@ -29,9 +29,28 @@
             app:popUpToInclusive="true"
             app:popUpToSaveState="true"
             />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_popularMovies"
+            app:destination="@id/popularMovies" />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_topMovies"
+            app:destination="@id/topMovies" />
     </fragment>
     <fragment
         android:id="@+id/popularMovies"
         android:name="com.example.androidacademyhomework.ui.PopularMovies"
-        android:label="PopularMovies" />
+        android:label="PopularMovies" >
+        <action
+            android:id="@+id/action_popularMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/topMovies"
+        android:name="com.example.androidacademyhomework.ui.TopMovies"
+        android:label="fragment_top_movies"
+        tools:layout="@layout/fragment_top_movies" >
+        <action
+            android:id="@+id/action_topMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
 </navigation>

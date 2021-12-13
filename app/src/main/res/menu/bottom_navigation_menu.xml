@@ -4,26 +4,26 @@
         android:id="@+id/fragmentMoviesList"
         android:enabled="true"
         android:icon="@drawable/ic_now_playing"
-        android:title="Now play"/>
+        android:title="@string/now_play"/>
     <item
         android:id="@+id/popularMovies"
         android:enabled="true"
         android:icon="@drawable/ic_popular_star"
-        android:title="Popular"/>
+        android:title="@string/popular"/>
     <item
         android:id="@+id/page_favor"
         android:enabled="true"
         android:icon="@drawable/ic_liked"
         android:visible="true"
-        android:title="Favourite"/>
+        android:title="@string/favourite"/>
     <item
-        android:id="@+id/page_top"
+        android:id="@+id/topMovies"
         android:enabled="true"
         android:icon="@drawable/ic_vertical_top"
-        android:title="Top rated"/>
+        android:title="@string/top_rated"/>
     <item
         android:id="@+id/page_upcoming"
         android:enabled="true"
         android:icon="@drawable/ic_film_upcoming"
-        android:title="Upcoming"/>
+        android:title="@string/upcoming"/>
 </menu>

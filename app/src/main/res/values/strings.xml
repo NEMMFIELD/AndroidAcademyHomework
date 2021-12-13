@@ -16,4 +16,9 @@
     <string name="movies_list">Movies List</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="now_play">Now play</string>
+    <string name="popular">Popular</string>
+    <string name="favourite">Favourite</string>
+    <string name="top_rated">Top rated</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

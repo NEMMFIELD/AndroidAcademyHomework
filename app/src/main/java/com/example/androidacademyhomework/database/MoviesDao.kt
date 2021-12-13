@@ -16,7 +16,7 @@ interface MoviesDao {
      @Query("SELECT * from Movies WHERE Id == :id")
      fun getMoviebyId(id:Long):MovieEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMovie(movies:List<MovieEntity>)
 
     @Query("DELETE FROM Movies WHERE Id == :id")

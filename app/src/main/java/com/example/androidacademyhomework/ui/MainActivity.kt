@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bottomNavigationView:BottomNavigationView
+    private lateinit var bottomNavigationView: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,10 +27,7 @@ class MainActivity : AppCompatActivity() {
                  .add(R.id.fragment, FragmentMoviesList.newInstance())
                  .commit()
          }*/
-
-
         intent?.let(::handleIntent)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -61,13 +58,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-   /*private fun setUpNavigation() {
-        bottomNavigationView = binding.activityMainBottomNavigationView!!
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment?
-       NavigationUI.setupWithNavController(
-              bottomNavigationView,
-              navHostFragment!!.navController
-          )
-    }*/
 }

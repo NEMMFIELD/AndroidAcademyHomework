@@ -1,6 +1,5 @@
 package com.example.androidacademyhomework.viewmodel
 
-import android.content.Intent
 import androidx.lifecycle.*
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.ActorsEntity
@@ -11,8 +10,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
-class PopularViewModel(private val repository: MovieRepo):ViewModel() {
-    val PopularAllMovies: LiveData<List<MovieEntity>> = repository.allPopularMovies.asLiveData()
+class TopViewModel(private val repository: MovieRepo): ViewModel() {
+    val topAllMovies: LiveData<List<MovieEntity>> = repository.allTopMovies.asLiveData()
     private val _mutableActorList = MutableLiveData<List<ActorsEntity>>(emptyList())
     val actorList: LiveData<List<ActorsEntity>?> get() = _mutableActorList
 
@@ -51,11 +50,11 @@ class PopularViewModel(private val repository: MovieRepo):ViewModel() {
     }
 }
 @ExperimentalSerializationApi
-class PopularViewModelFactory(private val repository: MovieRepo) : ViewModelProvider.Factory {
+class TopViewModelFactory(private val repository: MovieRepo) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PopularViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(TopViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PopularViewModel(repository = repository) as T
+            return TopViewModel(repository = repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
