@@ -22,7 +22,7 @@
         android:icon="@drawable/ic_vertical_top"
         android:title="@string/top_rated"/>
     <item
-        android:id="@+id/page_upcoming"
+        android:id="@+id/upcomingMovies"
         android:enabled="true"
         android:icon="@drawable/ic_film_upcoming"
         android:title="@string/upcoming"/>

@@ -29,6 +29,7 @@ class MovieRepo(context: Context) : MovieRepository {
     val allMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("now_playing")
     val allPopularMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("popular")
     val allTopMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("top_rated")
+    val allUpcomingMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("upcoming")
     //Загружаем через Retrofit2 список фильмов.
     override suspend fun loadMoviesNet(path:String): List<ResultsItem?> = withContext(Dispatchers.IO) {
         RetrofitModule.moviesApi.getNowPlaying(path,page).results!!
