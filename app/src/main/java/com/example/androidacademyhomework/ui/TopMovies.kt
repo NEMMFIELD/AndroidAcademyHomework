@@ -66,7 +66,7 @@ class TopMovies : Fragment() {
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
             val bundle = Bundle()
-            movie.id?.let { bundle.putLong("arg1", it) }
+            movie.id?.let { bundle.putLong("arg", it) }
             view?.let {
                 Navigation.findNavController(it)
                     .navigate(R.id.action_topMovies_to_fragmentMoviesDetails, bundle)

@@ -117,7 +117,7 @@ class FragmentMoviesList : Fragment() {
                  .addToBackStack(null)
                  .commit()*/
             val bundle = Bundle()
-            movie.id?.let { bundle.putLong("arg1", it) }
+            movie.id?.let { bundle.putLong("arg", it) }
             view?.let {
                 Navigation.findNavController(it)
                     .navigate(R.id.action_fragmentMoviesList_to_fragmentMoviesDetails, bundle)

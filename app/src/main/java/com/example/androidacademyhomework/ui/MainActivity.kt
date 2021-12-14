@@ -22,17 +22,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        /* if (savedInstanceState == null) {
-             supportFragmentManager.beginTransaction()
-                 .add(R.id.fragment, FragmentMoviesList.newInstance())
-                 .commit()
-         }*/
         intent?.let(::handleIntent)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.activity_main_bottom_navigation_view)
-            .setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.activity_main_bottom_navigation_view).setupWithNavController(
+            navController
+        )
     }
 
     override fun onNewIntent(intent: Intent?) {

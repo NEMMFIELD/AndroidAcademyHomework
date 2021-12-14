@@ -15,12 +15,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
     suspend fun loadMoviesNet(path:String): List<ResultsItem?>?
-    suspend fun addNewAndGetUpdated(path:String,type:String)
+     suspend fun addNewAndGetUpdated(path:String,type:String)
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
     fun getMovies(): List<MovieEntity>
     fun getMovieById(id: Long): MovieEntity
     suspend fun  updateMovieLike(movie: MovieEntity)
+    fun getFavouriteMovies(isLiked:Boolean):List<MovieEntity>
 }
 
 @ExperimentalSerializationApi
@@ -30,8 +31,9 @@ class MovieRepo(context: Context) : MovieRepository {
     val allPopularMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("popular")
     val allTopMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("top_rated")
     val allUpcomingMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("upcoming")
+
     //Загружаем через Retrofit2 список фильмов.
-    override suspend fun loadMoviesNet(path:String): List<ResultsItem?> = withContext(Dispatchers.IO) {
+   override suspend fun loadMoviesNet(path:String): List<ResultsItem?> = withContext(Dispatchers.IO) {
         RetrofitModule.moviesApi.getNowPlaying(path,page).results!!
     }
 
@@ -47,6 +49,18 @@ class MovieRepo(context: Context) : MovieRepository {
     {
         db.moviesDao.updateLike(movie)
     }
+
+    override fun getFavouriteMovies(isLiked: Boolean): List<MovieEntity>
+    {
+        if (isLiked)
+        {
+             return db.moviesDao.getFavouritesMovies(isLiked)
+        }
+        return emptyList()
+    }
+
+
+
 
     //Конвертируем ResultsItem в Model
     @ExperimentalSerializationApi

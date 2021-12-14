@@ -73,15 +73,10 @@ class FragmentMoviesDetails : Fragment() {
     ): View {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
         val view = binding?.root
-        viewModelShared = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+       // viewModelShared = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         binding?.back?.setOnClickListener {
-            // parentFragmentManager.popBackStack()
-           /* if (view != null) {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_fragmentMoviesDetails_to_fragmentMoviesList)
-            }*/
-            val data = Bundle().apply { putString("ARGUMENT_MESSAGE", "Hello from FragmentB") }
-            viewModelShared.bundleFromFragmentBToFragmentA.value = data
+           // val data = Bundle().apply { putString("ARGUMENT_MESSAGE", "Hello from FragmentB") }
+            //viewModelShared.bundleFromFragmentBToFragmentA.value = data
             requireActivity().onBackPressed()
         }
         return view!!
@@ -104,9 +99,9 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val bundle=Bundle()
         actorRecycler = binding?.actorRecyclerView
-        movieId = arguments?.getLong("arg1")!!
+        movieId = arguments?.getLong("arg")!!
         println("MovieId=$movieId")
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         println("Selected movie's title = ${selectedMovie.title}")
