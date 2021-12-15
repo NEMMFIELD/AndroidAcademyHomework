@@ -2,25 +2,16 @@ package com.example.androidacademyhomework.ui
 
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Parcelable
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MyApp
@@ -41,6 +32,7 @@ class FragmentMoviesList : Fragment() {
     private val binding get() = _binding
     private val appContainer = MyApp.container
     private lateinit var viewModelShared: SharedViewModel
+    private val workRepository = WorkRepository()
 
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
@@ -56,6 +48,7 @@ class FragmentMoviesList : Fragment() {
         return view!!
     }
 
+    @ExperimentalSerializationApi
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,15 +57,10 @@ class FragmentMoviesList : Fragment() {
             val message = it.getString("ARGUMENT_MESSAGE", "")
             Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
         })
-        // viewModel = ViewModelProvider(
-        //    this,
-        //     MovieViewModelFactory((requireActivity() as MainActivity).repository)
-        // ).get(MovieViewModel::class.java)
+        // viewModel = ViewModelProvider(this, MovieViewModelFactory((requireActivity() as MainActivity).repository)).get(MovieViewModel::class.java)
         movieListRecycler = binding?.listRecyclerView
         val layoutManager: GridLayoutManager = GridLayoutManager(context, 2)
         movieListRecycler?.layoutManager = layoutManager
-
-
         adapter = MovieListAdapter(
             clickListener = listener
         ) { movieEntity -> viewModel.updateLike(movieEntity) }
@@ -93,14 +81,12 @@ class FragmentMoviesList : Fragment() {
         viewModel.allMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-        // appContainer.workManager.enqueue(workRepository.periodicWork)
+        appContainer.workManager.enqueue(workRepository.periodicWork)
         /* WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
              "Send data",
              ExistingPeriodicWorkPolicy.KEEP,
              workRepository.periodicWork
          )*/
-        viewModel.insert("now_playing", "now_playing")
-
     }
 
     override fun onDestroy() {
@@ -112,10 +98,6 @@ class FragmentMoviesList : Fragment() {
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {
-            /* parentFragmentManager.beginTransaction()
-                 .add(R.id.fragment, FragmentMoviesDetails.newInstance(movie.id!!))
-                 .addToBackStack(null)
-                 .commit()*/
             val bundle = Bundle()
             movie.id?.let { bundle.putLong("arg", it) }
             view?.let {
@@ -125,7 +107,4 @@ class FragmentMoviesList : Fragment() {
         }
     }
 
-    companion object {
-        fun newInstance() = FragmentMoviesList()
-    }
 }

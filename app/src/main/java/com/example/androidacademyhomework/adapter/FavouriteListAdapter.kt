@@ -64,12 +64,10 @@ class FavouriteListAdapter(
             numbReviews = itemView.findViewById(R.id.name_favourite)
             age = itemView.findViewById(R.id.some_id_favourite)
             genre = itemView.findViewById(R.id.tag_favourite)
-            like = itemView.findViewById(R.id.like_heart_favourite)
             rating = itemView.findViewById(R.id.redstar_rating_favourite)
         }
 
         fun bind(model: MovieEntity) {
-
             imageMain?.load(Utils.posterUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
@@ -81,21 +79,9 @@ class FavouriteListAdapter(
             }
             genre?.text = model.genres?.joinToString { it }
             rating?.rating = model.rating * 0.5F
-            like?.apply {
-                isSelected = model.isLiked
-                setOnClickListener {
-                    isSelected = if (isSelected) {
-                        false
-                    } else {
-                        likeAnimation()
-                        true
-                    }
-                    model.isLiked = isSelected
-                }
-            }
+
         }
     }
-
     private val RecyclerView.ViewHolder.context
         get() = this.itemView.context
 }

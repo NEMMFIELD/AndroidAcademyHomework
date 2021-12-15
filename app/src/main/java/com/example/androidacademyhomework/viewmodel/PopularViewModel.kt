@@ -1,6 +1,5 @@
 package com.example.androidacademyhomework.viewmodel
 
-import android.content.Intent
 import androidx.lifecycle.*
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.ActorsEntity

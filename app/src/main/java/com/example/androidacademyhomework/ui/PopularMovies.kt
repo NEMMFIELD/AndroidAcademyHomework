@@ -1,23 +1,20 @@
 package com.example.androidacademyhomework.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidacademyhomework.MyApp
 import com.example.androidacademyhomework.R
-import com.example.androidacademyhomework.adapter.MovieListAdapter
 import com.example.androidacademyhomework.adapter.OnRecyclerItemClicked
 import com.example.androidacademyhomework.adapter.PopularListAdapter
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.databinding.FragmentPopularMoviesBinding
-import com.example.androidacademyhomework.viewmodel.MovieViewModel
-import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.example.androidacademyhomework.viewmodel.PopularViewModel
 import com.example.androidacademyhomework.viewmodel.PopularViewModelFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -28,7 +25,11 @@ class PopularMovies : Fragment() {
     private var _binding: FragmentPopularMoviesBinding? = null
     private val binding get() = _binding
     private val appContainer = MyApp.container
-    private val viewPopularModel: PopularViewModel by viewModels { PopularViewModelFactory(appContainer.moviesRepository) }
+    private val viewPopularModel: PopularViewModel by viewModels {
+        PopularViewModelFactory(
+            appContainer.moviesRepository
+        )
+    }
     private var popularListRecycler: RecyclerView? = null
     private lateinit var adapter: PopularListAdapter
 
@@ -40,7 +41,6 @@ class PopularMovies : Fragment() {
         val view = binding?.root
         return view!!
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class PopularMovies : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
                 when {
                     !recyclerView.canScrollVertically(1) -> { //1 for down
-                        viewPopularModel.loadMore(path = "popular",type ="popular")
+                        viewPopularModel.loadMore(path = "popular", type = "popular")
                     }
                 }
             }
@@ -64,7 +64,7 @@ class PopularMovies : Fragment() {
         viewPopularModel.PopularAllMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-        viewPopularModel.insert(path = "popular",type = "popular")
+        viewPopularModel.insert(path = "popular", type = "popular")
     }
 
     private val listener = object : OnRecyclerItemClicked {

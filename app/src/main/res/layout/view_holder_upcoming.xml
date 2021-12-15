@@ -135,8 +135,7 @@
             android:layout_gravity="center"
             android:src="@drawable/heart_selector"
             app:layout_constraintEnd_toEndOf="@+id/bg_upcoming"
-            app:layout_constraintTop_toTopOf="@+id/bg_upcoming"
-            android:text="Hello World!"/>
+            app:layout_constraintTop_toTopOf="@+id/bg_upcoming" />
     </xyz.hanks.library.bang.SmallBangView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,14 +14,14 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 
 interface MovieRepository {
-    suspend fun loadMoviesNet(path:String): List<ResultsItem?>?
-     suspend fun addNewAndGetUpdated(path:String,type:String)
+    suspend fun loadMoviesNet(path: String): List<ResultsItem?>?
+    suspend fun addNewAndGetUpdated(path: String, type: String)
     fun getActors(movieId: Long): List<ActorsEntity>
     suspend fun insertActorsToDb(movieId: Long)
     fun getMovies(): List<MovieEntity>
     fun getMovieById(id: Long): MovieEntity
-    suspend fun  updateMovieLike(movie: MovieEntity)
-    fun getFavouriteMovies(isLiked:Boolean):List<MovieEntity>
+    suspend fun updateMovieLike(movie: MovieEntity)
+    // fun getFavouriteMovies(isLiked:Boolean):List<MovieEntity>
 }
 
 @ExperimentalSerializationApi
@@ -31,35 +31,32 @@ class MovieRepo(context: Context) : MovieRepository {
     val allPopularMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("popular")
     val allTopMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("top_rated")
     val allUpcomingMovies: Flow<List<MovieEntity>> = db.moviesDao.getAllMovies("upcoming")
+    val allFavouriteMovies: Flow<List<MovieEntity>> = db.moviesDao.getFavouritesMovies(true)
 
     //Загружаем через Retrofit2 список фильмов.
-   override suspend fun loadMoviesNet(path:String): List<ResultsItem?> = withContext(Dispatchers.IO) {
-        RetrofitModule.moviesApi.getNowPlaying(path,page).results!!
-    }
+    override suspend fun loadMoviesNet(path: String): List<ResultsItem?> =
+        withContext(Dispatchers.IO) {
+            RetrofitModule.moviesApi.getNowPlaying(path, page).results!!
+        }
 
     override fun getMovies() = db.moviesDao.getMovies()
 
     override fun getMovieById(id: Long): MovieEntity = db.moviesDao.getMoviebyId(id)
 
-    override suspend fun updateMovieLike(movie: MovieEntity) = if (movie.isLiked)
-    {
+    override suspend fun updateMovieLike(movie: MovieEntity) = if (movie.isLiked) {
         db.moviesDao.updateLike(movie)
-    }
-    else
-    {
+    } else {
         db.moviesDao.updateLike(movie)
     }
 
-    override fun getFavouriteMovies(isLiked: Boolean): List<MovieEntity>
-    {
-        if (isLiked)
-        {
-             return db.moviesDao.getFavouritesMovies(isLiked)
-        }
-        return emptyList()
-    }
-
-
+    /* override fun getFavouriteMovies(isLiked: Boolean): List<MovieEntity>
+     {
+         if (isLiked)
+         {
+              return db.moviesDao.getFavouritesMovies(isLiked)
+         }
+         return emptyList()
+     }*/
 
 
     //Конвертируем ResultsItem в Model
@@ -96,7 +93,7 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     //Конвертирование Model в MovieEntity, для БД.
-    fun convertToMovieEntity(movie: Model,type:String): MovieEntity = MovieEntity(
+    fun convertToMovieEntity(movie: Model, type: String): MovieEntity = MovieEntity(
         id = movie.id,
         pgAge = movie.pgAge,
         title = movie.title,
@@ -122,11 +119,11 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     @ExperimentalSerializationApi
-    override suspend fun addNewAndGetUpdated(path:String,type:String) {
+    override suspend fun addNewAndGetUpdated(path: String, type: String) {
         val list = parseMovie(loadMoviesNet(path) as List<ResultsItem>)
         val newList = mutableListOf<MovieEntity>()
         for (i in list.indices) {
-            convertToMovieEntity(list[i],type).let { newList.add(it) }
+            convertToMovieEntity(list[i], type).let { newList.add(it) }
         }
         db.moviesDao.insertMovie(newList)
     }
