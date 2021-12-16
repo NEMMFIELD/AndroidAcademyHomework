@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/fragmentMoviesDetails"
         android:name="com.example.androidacademyhomework.ui.FragmentMoviesDetails"
-        android:label="FragmentMoviesDetails" >
+        android:label="FragmentMoviesDetails">
         <action
             android:id="@+id/action_fragmentMoviesDetails_to_fragmentMoviesList"
             app:destination="@id/fragmentMoviesList"
@@ -27,8 +27,7 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/fragmentMoviesList"
             app:popUpToInclusive="true"
-            app:popUpToSaveState="true"
-            />
+            app:popUpToSaveState="true" />
         <action
             android:id="@+id/action_fragmentMoviesDetails_to_popularMovies"
             app:destination="@id/popularMovies" />
@@ -41,6 +40,9 @@
         <action
             android:id="@+id/action_fragmentMoviesDetails_to_favouriteMovies"
             app:destination="@id/favouriteMovies" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="com.example.androidacademyhomework/{id}" />
     </fragment>
     <fragment
         android:id="@+id/popularMovies"
@@ -76,4 +78,8 @@
             android:id="@+id/action_favouriteMovies_to_fragmentMoviesDetails"
             app:destination="@id/fragmentMoviesDetails" />
     </fragment>
+    <action
+        android:id="@+id/action_global_fragmentMoviesDetails"
+        app:destination="@id/fragmentMoviesDetails"
+        app:launchSingleTop="false" />
 </navigation>
