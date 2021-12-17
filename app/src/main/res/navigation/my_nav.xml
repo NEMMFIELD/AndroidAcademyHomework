@@ -40,9 +40,6 @@
         <action
             android:id="@+id/action_fragmentMoviesDetails_to_favouriteMovies"
             app:destination="@id/favouriteMovies" />
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="com.example.androidacademyhomework/{id}" />
     </fragment>
     <fragment
         android:id="@+id/popularMovies"

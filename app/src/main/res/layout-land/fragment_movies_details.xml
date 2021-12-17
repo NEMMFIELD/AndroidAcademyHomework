@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -27,14 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_back"
-        android:layout_marginTop="@dimen/margin_top_back"
-        android:alpha="0.5"
+        android:layout_marginTop="54dp"
         android:gravity="center_horizontal|center_vertical"
         android:lineSpacingExtra="2sp"
         android:text="@string/back"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/text_size_back"
-        android:textStyle="normal"
+        android:textColor="#FF8000"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/path"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,7 +88,7 @@
         android:layout_width="@dimen/width_title"
         android:layout_height="@dimen/height_title"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="@dimen/margin_start_title"
+        android:layout_marginTop="10dp"
         android:text="FFF\n"
         android:textColor="#FFFFFF"
         android:textSize="32sp"
@@ -105,7 +103,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="@dimen/margin_top_jenre"
+        android:layout_marginTop="386dp"
         android:gravity="center_vertical"
         android:lineHeight="20sp"
         android:lineSpacingExtra="4sp"
@@ -121,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ratingbarmarginstart"
-        android:layout_marginTop="@dimen/margin_top_rate"
+        android:layout_marginTop="4dp"
         android:numStars="5"
         android:progressBackgroundTint="#00FF00"
         android:progressTint="@color/white"
@@ -133,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_reviews"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="TEST"
@@ -149,7 +147,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="@dimen/margin_top_storyline"
+        android:layout_marginTop="430dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
         android:text="@string/storyline"
@@ -162,11 +160,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="@dimen/margin_top_description"
-        android:alpha="0.75"
+        android:layout_marginTop="450dp"
+
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
-        android:padding="8dp"
+        android:padding="3dp"
         android:text="@string/after_the_d"
         android:textAppearance="@style/after_the_d"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,7 +178,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="2dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="8sp"
         android:text="@string/heading"
@@ -189,12 +186,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/after_the_d" />
 
+    <ImageButton
+        android:id="@+id/calendar_btn"
+        android:layout_width="45dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/calendar50"
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/orig" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/actor_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_recycleractor"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heading" />
 </androidx.constraintlayout.widget.ConstraintLayout>

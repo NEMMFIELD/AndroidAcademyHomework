@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,7 +47,11 @@ class FavouriteMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favouriteListRecycler = binding?.listRecyclerViewFavourite
-        favouriteListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            favouriteListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        } else {
+            favouriteListRecycler?.layoutManager = GridLayoutManager(context, 4)
+        }
         adapter = FavouriteListAdapter(
             clickListener = listener
         )
@@ -55,7 +60,6 @@ class FavouriteMovies : Fragment() {
         viewFavouriteModel.favouriteAllMovies.observe(this.viewLifecycleOwner) { films ->
             films.let { adapter.submitList(it) }
         }
-
     }
 
     private val listener = object : OnRecyclerItemClicked {

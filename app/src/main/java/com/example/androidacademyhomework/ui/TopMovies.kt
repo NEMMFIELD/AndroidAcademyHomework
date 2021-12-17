@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,14 @@ class TopMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         topListRecycler = binding?.listRecyclerViewTop
-        topListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            topListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        }
+        else{
+            topListRecycler?.layoutManager = GridLayoutManager(context, 4)
+        }
+
         adapter = PopularListAdapter(
             clickListener = listener
         ) { movieEntity -> viewTopModel.updateLike(movieEntity) }

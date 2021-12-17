@@ -35,7 +35,8 @@
         android:transitionGroup="true"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        />
 
 </LinearLayout>
 

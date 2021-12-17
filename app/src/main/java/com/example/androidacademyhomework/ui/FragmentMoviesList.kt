@@ -2,6 +2,7 @@ package com.example.androidacademyhomework.ui
 
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,8 +59,17 @@ class FragmentMoviesList : Fragment() {
         })*/
         // viewModel = ViewModelProvider(this, MovieViewModelFactory((requireActivity() as MainActivity).repository)).get(MovieViewModel::class.java)
         movieListRecycler = binding?.listRecyclerView
-        val layoutManager = GridLayoutManager(context, 2)
-        movieListRecycler?.layoutManager = layoutManager
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            val layoutManager = GridLayoutManager(context, 2)
+            movieListRecycler?.layoutManager = layoutManager
+        }
+        else{
+            val layoutManager = GridLayoutManager(context, 4)
+            movieListRecycler?.layoutManager = layoutManager
+        }
+       // val layoutManager = GridLayoutManager(context, 2)
+       // movieListRecycler?.layoutManager = layoutManager
         adapter = MovieListAdapter(
             clickListener = listener
         ) { movieEntity -> viewModel.updateLike(movieEntity) }
@@ -94,6 +104,10 @@ class FragmentMoviesList : Fragment() {
         appContainer.workManager.cancelAllWork()
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        appContainer.workManager.cancelAllWork()
+    }
 
     private val listener = object : OnRecyclerItemClicked {
         override fun onClick(movie: MovieEntity) {

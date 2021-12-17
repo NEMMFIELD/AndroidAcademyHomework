@@ -1,5 +1,6 @@
 package com.example.androidacademyhomework.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +48,15 @@ class UpcomingMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         upcomingListRecycler = binding?.listRecyclerViewUpcoming
-        upcomingListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            upcomingListRecycler?.layoutManager = GridLayoutManager(context, 2)
+        }
+        else
+        {
+            upcomingListRecycler?.layoutManager = GridLayoutManager(context, 4)
+        }
+
         adapter = UpcomingListAdapter(
             clickListener = listener
         ) { movieEntity -> viewUpcomingModel.updateLike(movieEntity) }

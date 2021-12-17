@@ -73,9 +73,9 @@ class FragmentMoviesDetails : Fragment() {
     ): View {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
         val view = binding?.root
-       // viewModelShared = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        // viewModelShared = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         binding?.back?.setOnClickListener {
-           // val data = Bundle().apply { putString("ARGUMENT_MESSAGE", "Hello from FragmentB") }
+            // val data = Bundle().apply { putString("ARGUMENT_MESSAGE", "Hello from FragmentB") }
             //viewModelShared.bundleFromFragmentBToFragmentA.value = data
             requireActivity().onBackPressed()
         }
@@ -99,7 +99,7 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle=Bundle()
+        val bundle = Bundle()
         actorRecycler = binding?.actorRecyclerView
         movieId = arguments?.getLong("arg")!!
         println("MovieId=$movieId")
