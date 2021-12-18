@@ -40,18 +40,16 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-
         android:layout_marginTop="@dimen/marg_top_tag_list"
         android:gravity="center_vertical"
-        android:lineSpacingExtra="1sp"
         android:ellipsize="end"
         android:lines="1"
+        android:lineSpacingExtra="1sp"
         android:text="@string/tag_list"
         android:textAppearance="@style/tag"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        tools:targetApi="o" />
+        app:layout_constraintTop_toTopOf="@+id/movie_img" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
