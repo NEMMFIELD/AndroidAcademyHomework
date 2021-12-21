@@ -1,32 +1,23 @@
 package com.example.androidacademyhomework.adapter
 
-import android.annotation.SuppressLint
-import android.media.Image
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.posterUrl
 import com.example.androidacademyhomework.database.MovieEntity
-import com.example.androidacademyhomework.databinding.FragmentMoviesListBinding
 import com.example.androidacademyhomework.databinding.ViewHolderMovieBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import com.example.androidacademyhomework.network.pojopack.Movie
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import okhttp3.internal.addHeaderLenient
 import xyz.hanks.library.bang.SmallBangView
+
 
 class MovieListAdapter(
     private val clickListener: OnRecyclerItemClicked,private val likeListener: ((MovieEntity) -> Unit)
@@ -41,6 +32,7 @@ class MovieListAdapter(
         val itemView =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.view_holder_movie, parent, false)
+
         return MovieListViewHolder(itemView)
     }
 
@@ -49,8 +41,6 @@ class MovieListAdapter(
         holder.itemView.setOnClickListener {
             clickListener.onClick(movies[position])
         }
-        holder.itemView.animation =
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.alpha)
 
     }
 
@@ -67,7 +57,6 @@ class MovieListAdapter(
         private var genre: TextView? = null
         private var like: SmallBangView? = null
         private var rating: RatingBar? = null
-        var count = 0
 
         init {
             imageMain = itemView.findViewById(R.id.movie_img)
@@ -81,7 +70,6 @@ class MovieListAdapter(
         }
 
         fun bind(model: MovieEntity) {
-
             imageMain?.load(posterUrl + model.imageUrl)
             titleName?.text = model.title
             duration?.text = model.runningTime.toString().plus(" MIN")
@@ -93,18 +81,18 @@ class MovieListAdapter(
             }
             genre?.text = model.genres?.joinToString { it }
             rating?.rating = model.rating * 0.5F
-            like?.apply {
-                isSelected = model.isLiked
-                setOnClickListener {
-                    isSelected = if (isSelected) {
-                        false
-                    } else {
-                        likeAnimation()
-                        true
+                like?.apply {
+                    isSelected = model.isLiked
+                    setOnClickListener {
+                        isSelected = if (isSelected) {
+                            false
+                        } else {
+                            likeAnimation()
+                            true
+                        }
+                        model.isLiked = isSelected
+                        likeListener.apply{invoke(model)}
                     }
-                    model.isLiked = isSelected
-                    with(likeListener) { invoke(model) }
-                }
             }
         }
     }
@@ -116,6 +104,7 @@ private val RecyclerView.ViewHolder.context
 interface OnRecyclerItemClicked {
     fun onClick(movie: MovieEntity)
 }
+
 
 
 

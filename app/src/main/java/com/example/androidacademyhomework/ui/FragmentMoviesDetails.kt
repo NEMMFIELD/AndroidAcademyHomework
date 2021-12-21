@@ -60,7 +60,6 @@ class FragmentMoviesDetails : Fragment() {
     private val appContainer = MyApp.container
     private var movieId: Long = 0
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private lateinit var viewModelShared: SharedViewModel
 
     @ExperimentalSerializationApi
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
@@ -99,7 +98,7 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = Bundle()
+
         actorRecycler = binding?.actorRecyclerView
         movieId = arguments?.getLong("arg")!!
         println("MovieId=$movieId")
@@ -117,14 +116,12 @@ class FragmentMoviesDetails : Fragment() {
                 adapter.submitList(it)
             }
         }
-
         viewModel.calendarIntent.observe(viewLifecycleOwner, { calendarIntent ->
             if (calendarIntent != null) {
                 startActivity(calendarIntent)
                 viewModel.scheduleMovieDone()
             }
         })
-
         binding?.calendarBtn?.setOnClickListener {
             Toast.makeText(requireContext(), "You click on calendar", Toast.LENGTH_SHORT).show()
             scheduleIntoCalendar()
@@ -214,6 +211,7 @@ class FragmentMoviesDetails : Fragment() {
 
     @ExperimentalTime
     private fun launchTimePicker() {
+        val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
         TimePickerDialog(
             requireContext(), { _, hour, minute ->
                 // fix time
@@ -225,12 +223,10 @@ class FragmentMoviesDetails : Fragment() {
                     minute
                 )
                 // start calendar intent
-
                 viewModel.scheduleMovieInCalendar(
                     binding?.name?.text.toString(),
                     appContainer.dateAndTime,
-                    requireContext()
-                )
+                    requireContext(), selectedMovie)
             },
             appContainer.dateAndTime.get(Calendar.HOUR),
             appContainer.dateAndTime.get(Calendar.MINUTE),

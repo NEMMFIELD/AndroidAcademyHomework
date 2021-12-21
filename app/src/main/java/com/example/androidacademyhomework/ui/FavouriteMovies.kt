@@ -47,11 +47,13 @@ class FavouriteMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         favouriteListRecycler = binding?.listRecyclerViewFavourite
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            favouriteListRecycler?.layoutManager = GridLayoutManager(context, 2)
-        } else {
-            favouriteListRecycler?.layoutManager = GridLayoutManager(context, 4)
-        }
+        val spanCount =
+            if (activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_PORTRAIT) {
+                4
+            } else {
+                2
+            }
+        favouriteListRecycler?.layoutManager = GridLayoutManager(context, spanCount)
         adapter = FavouriteListAdapter(
             clickListener = listener
         )

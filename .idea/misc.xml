@@ -8,6 +8,9 @@
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_combined_shape.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_film_upcoming.xml" value="0.3509259259259259" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_launcher_background.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_like.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_liked.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_mask___movie.xml" value="0.25" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_name.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_now_playing.xml" value="0.2657407407407407" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/drawable/ic_path.xml" value="0.37864583333333335" />
@@ -32,7 +35,7 @@
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout-land/view_holder_popular.xml" value="0.44479166666666664" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout-land/view_holder_top.xml" value="0.44479166666666664" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout-land/view_holder_upcoming.xml" value="0.44479166666666664" />
-        <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout-v26/view_holder_movie.xml" value="0.25277777777777777" />
+        <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout-v26/view_holder_movie.xml" value="0.5" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout/activity_movie_details.xml" value="0.3625" />
         <entry key="..\:/Users/Flash/AndroidStudioProjects/AndroidAcademyHomework/app/src/main/res/layout/fragment_favourite_movies.xml" value="0.34861907243355916" />

@@ -57,7 +57,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
     }
 
     @ExperimentalTime
-    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar, context: Context) {
+    fun scheduleMovieInCalendar(movieTitle: String, dateAndTime: Calendar, context: Context,movie: MovieEntity) {
         //1 Вариант
         /*  val intent = Intent(Intent.ACTION_INSERT)
           with(intent)
@@ -75,11 +75,12 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
               putExtra(CalendarContract.Events.HAS_ALARM, 1)
           }
           _calendarIntent.value = intent*/
+
         val cr: ContentResolver = context.contentResolver
         val calID: Long = 1
         val values = ContentValues().apply {
             put(CalendarContract.Events.DTSTART, dateAndTime.timeInMillis)
-            put(CalendarContract.Events.DTEND, dateAndTime.timeInMillis + 60 * 60 * 1000)
+           put(CalendarContract.Events.DTEND, dateAndTime.timeInMillis + ((movie.runningTime/60)*60*60*1000))
             put(CalendarContract.Events.TITLE, movieTitle)
             put(CalendarContract.Events.CALENDAR_ID, calID)
             put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Moscow")

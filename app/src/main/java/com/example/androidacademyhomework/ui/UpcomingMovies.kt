@@ -48,15 +48,13 @@ class UpcomingMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         upcomingListRecycler = binding?.listRecyclerViewUpcoming
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            upcomingListRecycler?.layoutManager = GridLayoutManager(context, 2)
-        }
-        else
-        {
-            upcomingListRecycler?.layoutManager = GridLayoutManager(context, 4)
-        }
-
+        val spanCount =
+            if (activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_PORTRAIT) {
+               4
+            } else {
+                2
+            }
+        upcomingListRecycler?.layoutManager = GridLayoutManager(context, spanCount)
         adapter = UpcomingListAdapter(
             clickListener = listener
         ) { movieEntity -> viewUpcomingModel.updateLike(movieEntity) }

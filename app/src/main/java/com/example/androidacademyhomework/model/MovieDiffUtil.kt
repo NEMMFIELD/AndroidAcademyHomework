@@ -14,4 +14,7 @@ class MovieDiffUtil():DiffUtil.ItemCallback<MovieEntity>() {
     override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
         oldItem == newItem
 
+    override fun getChangePayload(oldItem: MovieEntity, newItem: MovieEntity): Any? {
+        return newItem
+    }
 }

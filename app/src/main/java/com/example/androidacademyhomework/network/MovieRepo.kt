@@ -21,7 +21,6 @@ interface MovieRepository {
     fun getMovies(): List<MovieEntity>
     fun getMovieById(id: Long): MovieEntity
     suspend fun updateMovieLike(movie: MovieEntity)
-    // fun getFavouriteMovies(isLiked:Boolean):List<MovieEntity>
 }
 
 @ExperimentalSerializationApi
@@ -43,20 +42,8 @@ class MovieRepo(context: Context) : MovieRepository {
 
     override fun getMovieById(id: Long): MovieEntity = db.moviesDao.getMoviebyId(id)
 
-    override suspend fun updateMovieLike(movie: MovieEntity) = if (movie.isLiked) {
+    override suspend fun updateMovieLike(movie: MovieEntity) =
         db.moviesDao.updateLike(movie)
-    } else {
-        db.moviesDao.updateLike(movie)
-    }
-
-    /* override fun getFavouriteMovies(isLiked: Boolean): List<MovieEntity>
-     {
-         if (isLiked)
-         {
-              return db.moviesDao.getFavouritesMovies(isLiked)
-         }
-         return emptyList()
-     }*/
 
 
     //Конвертируем ResultsItem в Model
@@ -141,6 +128,5 @@ class MovieRepo(context: Context) : MovieRepository {
             newList.add(convertedActors)
         }
         db.actorsDao.insertActors(newList)
-        // db.actorsDao.getAllActors(movieId)
     }
 }

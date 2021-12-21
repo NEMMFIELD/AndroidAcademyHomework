@@ -25,6 +25,7 @@ import com.example.androidacademyhomework.viewmodel.MovieViewModel
 import com.example.androidacademyhomework.viewmodel.MovieViewModelFactory
 import com.example.androidacademyhomework.viewmodel.SharedViewModel
 import kotlinx.serialization.ExperimentalSerializationApi
+import okhttp3.internal.notify
 
 
 class FragmentMoviesList : Fragment() {
@@ -38,6 +39,7 @@ class FragmentMoviesList : Fragment() {
     private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(appContainer.moviesRepository) }
     private var movieListRecycler: RecyclerView? = null
     private lateinit var adapter: MovieListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,30 +54,18 @@ class FragmentMoviesList : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // viewModelShared = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-       /* viewModelShared.bundleFromFragmentBToFragmentA.observe(viewLifecycleOwner, Observer {
-            val message = it.getString("ARGUMENT_MESSAGE", "")
-            Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
-        })*/
         // viewModel = ViewModelProvider(this, MovieViewModelFactory((requireActivity() as MainActivity).repository)).get(MovieViewModel::class.java)
         movieListRecycler = binding?.listRecyclerView
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            val layoutManager = GridLayoutManager(context, 2)
-            movieListRecycler?.layoutManager = layoutManager
-        }
-        else{
-            val layoutManager = GridLayoutManager(context, 4)
-            movieListRecycler?.layoutManager = layoutManager
-        }
-       // val layoutManager = GridLayoutManager(context, 2)
-       // movieListRecycler?.layoutManager = layoutManager
-        adapter = MovieListAdapter(
-            clickListener = listener
-        ) { movieEntity -> viewModel.updateLike(movieEntity) }
-        adapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        val spanCount =
+            if (activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_PORTRAIT) {
+                4
+            } else {
+                2
+            }
+        movieListRecycler?.layoutManager = GridLayoutManager(context, spanCount)
+        adapter = MovieListAdapter(clickListener = listener){ movieEntity -> viewModel.updateLike(movieEntity) }
         movieListRecycler?.adapter = adapter
+       // movieListRecycler?.itemAnimator=null
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -119,5 +109,4 @@ class FragmentMoviesList : Fragment() {
             }
         }
     }
-
 }

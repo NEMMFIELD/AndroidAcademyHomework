@@ -43,14 +43,13 @@ class TopMovies : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         topListRecycler = binding?.listRecyclerViewTop
-        if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
-            topListRecycler?.layoutManager = GridLayoutManager(context, 2)
-        }
-        else{
-            topListRecycler?.layoutManager = GridLayoutManager(context, 4)
-        }
-
+        val spanCount =
+            if (activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_PORTRAIT) {
+                4
+            } else {
+                2
+            }
+        topListRecycler?.layoutManager = GridLayoutManager(context, spanCount)
         adapter = PopularListAdapter(
             clickListener = listener
         ) { movieEntity -> viewTopModel.updateLike(movieEntity) }

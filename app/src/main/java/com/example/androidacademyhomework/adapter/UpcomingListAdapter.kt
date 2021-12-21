@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -15,6 +16,7 @@ import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import xyz.hanks.library.bang.SmallBangView
+
 
 class UpcomingListAdapter(
     private val clickListener: OnRecyclerItemClicked,
@@ -31,17 +33,19 @@ class UpcomingListAdapter(
         viewType: Int
     ): UpcomingListAdapter.UpcomingListViewHolder {
         val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_upcoming, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_holder_upcoming, parent, false)
         return UpcomingListViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: UpcomingListAdapter.UpcomingListViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: UpcomingListAdapter.UpcomingListViewHolder,
+        position: Int
+    ) {
         holder.bind(movies[position])
         holder.itemView.setOnClickListener {
             clickListener.onClick(movies[position])
         }
-        holder.itemView.animation =
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.alpha)
     }
 
     override fun getItemCount(): Int {

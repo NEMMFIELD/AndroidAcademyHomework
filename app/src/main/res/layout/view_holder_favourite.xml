@@ -15,6 +15,7 @@
         android:elevation="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/movie_img_favourite"
         android:layout_width="@dimen/width_img_list"
@@ -25,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heroes" />
+
     <View
         android:id="@+id/mask_favourite"
         android:layout_width="@dimen/width_msk"
@@ -34,20 +36,36 @@
         android:background="@drawable/ic_mask___movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tag_favourite"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="@dimen/height_tag_list"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/marg_st_tag_list"
         android:layout_marginTop="@dimen/marg_top_tag_list"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="@string/tag_list"
         android:textAppearance="@style/tag"
-        app:layout_constraintStart_toStartOf="@+id/movie_img_favourite"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start_fav"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end_fav"
         app:layout_constraintTop_toTopOf="@+id/movie_img_favourite" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="17dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
     <RatingBar
         android:id="@+id/redstar_rating_favourite"
         android:layout_width="wrap_content"
@@ -74,6 +92,7 @@
         android:textAppearance="@style/name"
         app:layout_constraintStart_toEndOf="@+id/redstar_rating_favourite"
         app:layout_constraintTop_toTopOf="@+id/movie_img_favourite" />
+
     <TextView
         android:id="@+id/cinema_title_favourite"
         android:layout_width="@dimen/width_title_list"
@@ -86,6 +105,7 @@
         android:textAppearance="@style/cinema_title_style"
         app:layout_constraintStart_toStartOf="@+id/movie_img_favourite"
         app:layout_constraintTop_toTopOf="@+id/movie_img_favourite" />
+
     <TextView
         android:id="@+id/duration_favourite"
         android:layout_width="@dimen/widht_duration"

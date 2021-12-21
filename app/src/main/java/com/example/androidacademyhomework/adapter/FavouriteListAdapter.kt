@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -15,6 +16,7 @@ import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.MovieEntity
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import xyz.hanks.library.bang.SmallBangView
+
 
 class FavouriteListAdapter(
     private val clickListener: OnRecyclerItemClicked
@@ -39,8 +41,6 @@ class FavouriteListAdapter(
         holder.itemView.setOnClickListener {
             clickListener.onClick(movies[position])
         }
-        holder.itemView.animation =
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.alpha)
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +54,6 @@ class FavouriteListAdapter(
         private var numbReviews: TextView? = null
         private var age: TextView? = null
         private var genre: TextView? = null
-        private var like: SmallBangView? = null
         private var rating: RatingBar? = null
 
         init {

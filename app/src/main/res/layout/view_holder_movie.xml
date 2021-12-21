@@ -15,6 +15,7 @@
         android:elevation="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/movie_img"
         android:layout_width="@dimen/width_img_list"
@@ -25,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heroes" />
+
     <View
         android:id="@+id/mask"
         android:layout_width="@dimen/width_msk"
@@ -34,13 +36,13 @@
         android:background="@drawable/ic_mask___movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-
         android:layout_marginTop="@dimen/marg_top_tag_list"
         android:gravity="center_vertical"
         android:lineSpacingExtra="1sp"
@@ -52,6 +54,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         tools:targetApi="o" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
@@ -65,6 +68,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="16dp" />
+
     <RatingBar
         android:id="@+id/redstar_rating"
         android:layout_width="wrap_content"
@@ -91,6 +95,7 @@
         android:textAppearance="@style/name"
         app:layout_constraintStart_toEndOf="@+id/redstar_rating"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/cinema_title"
         android:layout_width="@dimen/width_title_list"
@@ -103,6 +108,7 @@
         android:textAppearance="@style/cinema_title_style"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/duration"
         android:layout_width="@dimen/widht_duration"
@@ -139,6 +145,7 @@
         app:layout_constraintStart_toStartOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
         />
+
     <xyz.hanks.library.bang.SmallBangView
         android:id="@+id/like_heart"
         android:layout_width="29dp"
@@ -147,6 +154,7 @@
         app:layout_constraintEnd_toEndOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg">
         <ImageView
+
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_gravity="center"
