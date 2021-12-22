@@ -49,7 +49,6 @@ class FavouriteListAdapter(
     inner class FavouriteListViewHolder(private val binding:  ViewHolderFavouriteBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(model: MovieEntity) = with(binding)
-        {
             {
                movieImgFavourite.load(Utils.posterUrl + model.imageUrl)
                cinemaTitleFavourite.text = model.title
@@ -63,7 +62,6 @@ class FavouriteListAdapter(
                 tagFavourite.text = model.genres?.joinToString { it }
                 redstarRatingFavourite.rating = model.rating * 0.5F
             }
-        }
     }
     private val RecyclerView.ViewHolder.context
         get() = this.itemView.context
