@@ -47,7 +47,7 @@ data class MovieInfo(
 	val originalTitle: String? = null,
 
 	@field:SerializedName("runtime")
-	val runtime: Int? = null,
+	val runtime: Long? = null,
 
 	@field:SerializedName("poster_path")
 	val posterPath: String? = null,

@@ -12,7 +12,7 @@ data class Model(
     val pgAge: Boolean,
     val title: String?,
     val genres: List<String>?,
-    val runningTime: Int,
+    val runningTime: Long,
     val reviewCount: Int,
     val isLiked: Boolean,
     val rating: Float,

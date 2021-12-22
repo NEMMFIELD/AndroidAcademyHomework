@@ -1,19 +1,18 @@
 package com.example.androidacademyhomework.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.ToggleButton
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.ViewHolderTopBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import xyz.hanks.library.bang.SmallBangView
 
@@ -32,9 +31,9 @@ class TopListAdapter(
         parent: ViewGroup,
         viewType: Int
     ): TopListAdapter.TopListViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.view_holder_top, parent, false)
-        return TopListViewHolder(itemView)
+        val binding = ViewHolderTopBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return TopListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TopListAdapter.TopListViewHolder, position: Int) {
@@ -48,41 +47,22 @@ class TopListAdapter(
         return movies.size
     }
 
-    inner class TopListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var imageMain: ImageView? = null
-        private var titleName: TextView? = null
-        private var duration: TextView? = null
-        private var numbReviews: TextView? = null
-        private var age: TextView? = null
-        private var genre: TextView? = null
-        private var like: SmallBangView? = null
-        private var rating: RatingBar? = null
+    inner class TopListViewHolder(private val binding: ViewHolderTopBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            imageMain = itemView.findViewById(R.id.movie_img_top)
-            titleName = itemView.findViewById(R.id.cinema_title_top)
-            duration = itemView.findViewById(R.id.duration_top)
-            numbReviews = itemView.findViewById(R.id.name_top)
-            age = itemView.findViewById(R.id.some_id_top)
-            genre = itemView.findViewById(R.id.tag_top)
-            like = itemView.findViewById(R.id.like_heart_top)
-            rating = itemView.findViewById(R.id.redstar_rating_top)
-        }
+        fun bind(model: MovieEntity) = with (binding){
 
-        fun bind(model: MovieEntity) {
-
-            imageMain?.load(Utils.posterUrl + model.imageUrl)
-            titleName?.text = model.title
-            duration?.text = model.runningTime.toString().plus(" MIN")
-            numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
+          movieImgTop.load(Utils.posterUrl + model.imageUrl)
+            cinemaTitleTop.text = model.title
+            durationTop.text = model.runningTime.toString().plus(" MIN")
+            nameTop.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-                age?.text = "16"
+                someIdTop.text = "16"
             } else {
-                age?.text = "13"
+                someIdTop.text = "13"
             }
-            genre?.text = model.genres?.joinToString { it }
-            rating?.rating = model.rating * 0.5F
-            like?.apply {
+            tagTop.text = model.genres?.joinToString { it }
+            redstarRatingTop.rating = model.rating * 0.5F
+            likeHeartTop.apply {
                 isSelected = model.isLiked
                 setOnClickListener {
                     isSelected = if (isSelected) {

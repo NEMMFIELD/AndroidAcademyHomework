@@ -4,32 +4,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils.Companion.actorUrl
 import com.example.androidacademyhomework.database.ActorsEntity
-import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.ViewHolderActorBinding
 import com.example.androidacademyhomework.model.ActorsDiffUtil
-import com.example.androidacademyhomework.network.pojopack.CastItem
 
 class ActorListAdapter() :
     ListAdapter<ActorsEntity,ActorListAdapter.ActorListViewHolder>(ActorsDiffUtil()) {
     private var listActors: MutableList<ActorsEntity> = mutableListOf()
-    inner class ActorListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.view_holder_actor, parent, false)) {
-        private var actorImage: ImageView? = null
-        private var actorName: TextView? = null
-
-        init {
-            actorImage = itemView.findViewById(R.id.actor_image)
-            actorName = itemView.findViewById(R.id.actor_name)
-        }
+    inner class ActorListViewHolder(private val binding: ViewHolderActorBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(actor: ActorsEntity) {
-            actorImage?.load(actorUrl + actor.profilePath)
-            actorName?.text = actor.name
+            binding.apply {
+           actorImage.load(actorUrl + actor.profilePath)
+            actorName.text = actor.name
+            }
         }
     }
 
@@ -39,8 +34,8 @@ class ActorListAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return ActorListViewHolder(inflater, parent)
+        val binding = ViewHolderActorBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ActorListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ActorListViewHolder, position: Int) {

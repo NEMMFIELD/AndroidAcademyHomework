@@ -80,7 +80,7 @@ class MovieViewModel(private val repository: MovieRepo) : ViewModel() {
         val calID: Long = 1
         val values = ContentValues().apply {
             put(CalendarContract.Events.DTSTART, dateAndTime.timeInMillis)
-           put(CalendarContract.Events.DTEND, dateAndTime.timeInMillis + ((movie.runningTime/60)*60*60*1000))
+           put(CalendarContract.Events.DTEND, dateAndTime.timeInMillis + ((movie.runningTime/60.0)*60*60*1000))
             put(CalendarContract.Events.TITLE, movieTitle)
             put(CalendarContract.Events.CALENDAR_ID, calID)
             put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Moscow")

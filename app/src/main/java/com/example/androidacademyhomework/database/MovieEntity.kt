@@ -22,7 +22,7 @@ class MovieEntity(
     val genres: List<String>?,
 
     @ColumnInfo(name = "duration")
-    val runningTime: Int,
+    val runningTime: Long,
 
     @ColumnInfo(name = "reviews")
     val reviewCount: Int,

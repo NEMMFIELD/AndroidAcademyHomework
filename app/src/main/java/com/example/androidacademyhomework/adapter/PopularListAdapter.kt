@@ -1,19 +1,18 @@
 package com.example.androidacademyhomework.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.ToggleButton
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.androidacademyhomework.R
 import com.example.androidacademyhomework.Utils
 import com.example.androidacademyhomework.database.MovieEntity
+import com.example.androidacademyhomework.databinding.ViewHolderPopularBinding
 import com.example.androidacademyhomework.model.MovieDiffUtil
 import xyz.hanks.library.bang.SmallBangView
 
@@ -28,8 +27,9 @@ class PopularListAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularListViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_popular, parent, false)
-        return PopularListViewHolder(itemView)
+        val binding = ViewHolderPopularBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return PopularListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PopularListViewHolder, position: Int) {
@@ -43,41 +43,22 @@ class PopularListAdapter (
         return movies.size
     }
 
-    inner class PopularListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var imageMain: ImageView? = null
-        private var titleName: TextView? = null
-        private var duration: TextView? = null
-        private var numbReviews: TextView? = null
-        private var age: TextView? = null
-        private var genre: TextView? = null
-        private var like: SmallBangView? = null
-        private var rating: RatingBar? = null
+    inner class PopularListViewHolder(private val binding: ViewHolderPopularBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(model: MovieEntity) = with(binding)
+        {
 
-        init {
-            imageMain = itemView.findViewById(R.id.movie_img_popular)
-            titleName = itemView.findViewById(R.id.cinema_title_popular)
-            duration = itemView.findViewById(R.id.duration_popular)
-            numbReviews = itemView.findViewById(R.id.name_popular)
-            age = itemView.findViewById(R.id.some_id_popular)
-            genre = itemView.findViewById(R.id.tag_popular)
-            like = itemView.findViewById(R.id.like_heart_popular)
-            rating = itemView.findViewById(R.id.redstar_rating_popular)
-        }
-
-        fun bind(model: MovieEntity) {
-
-            imageMain?.load(Utils.posterUrl + model.imageUrl)
-            titleName?.text = model.title
-            duration?.text = model.runningTime.toString().plus(" MIN")
-            numbReviews?.text = model.reviewCount.toString().plus(" REVIEWS")
+           movieImgPopular.load(Utils.posterUrl + model.imageUrl)
+           cinemaTitlePopular.text = model.title
+           durationPopular.text = model.runningTime.toString().plus(" MIN")
+           namePopular.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-                age?.text = "16"
+              someIdPopular.text = "16"
             } else {
-                age?.text = "13"
+               someIdPopular.text = "13"
             }
-            genre?.text = model.genres?.joinToString { it }
-            rating?.rating = model.rating * 0.5F
-            like?.apply {
+            tagPopular.text = model.genres?.joinToString { it }
+           redstarRatingPopular.rating = model.rating * 0.5F
+           likeHeartPopular.apply {
                 isSelected = model.isLiked
                 setOnClickListener {
                     isSelected = if (isSelected) {
@@ -91,8 +72,8 @@ class PopularListAdapter (
                 }
             }
         }
+        }
     }
-}
 
 private val RecyclerView.ViewHolder.context
     get() = this.itemView.context
