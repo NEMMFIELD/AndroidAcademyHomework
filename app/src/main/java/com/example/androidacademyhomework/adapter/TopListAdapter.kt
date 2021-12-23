@@ -56,12 +56,12 @@ class TopListAdapter(
             durationTop.text = model.runningTime.toString().plus(" MIN")
             nameTop.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-                someIdTop.text = "16"
+                ageTop?.text = "16"
             } else {
-                someIdTop.text = "13"
+                ageTop?.text = "13"
             }
-            tagTop.text = model.genres?.joinToString { it }
-            redstarRatingTop.rating = model.rating * 0.5F
+           genresTop?.text = model.genres?.joinToString { it }
+           ratingsTop?.rating = model.rating * 0.5F
             likeHeartTop.apply {
                 isSelected = model.isLiked
                 setOnClickListener {

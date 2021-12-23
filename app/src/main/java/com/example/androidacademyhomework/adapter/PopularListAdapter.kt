@@ -52,12 +52,12 @@ class PopularListAdapter (
            durationPopular.text = model.runningTime.toString().plus(" MIN")
            namePopular.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-              someIdPopular.text = "16"
+              agePopular?.text = "16"
             } else {
-               someIdPopular.text = "13"
+               agePopular?.text = "13"
             }
-            tagPopular.text = model.genres?.joinToString { it }
-           redstarRatingPopular.rating = model.rating * 0.5F
+            genresPopular?.text = model.genres?.joinToString { it }
+           ratingsPopular?.rating = model.rating * 0.5F
            likeHeartPopular.apply {
                 isSelected = model.isLiked
                 setOnClickListener {

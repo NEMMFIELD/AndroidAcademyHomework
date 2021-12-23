@@ -53,12 +53,12 @@ class MovieListAdapter(
             duration.text = model.runningTime.toString().plus(" MIN")
             name.text = model.reviewCount.toString().plus(" REVIEWS")
             if (model.pgAge) {
-                someId.text = "16"
+                age?.text = "16"
             } else {
-                someId.text = "13"
+                age?.text = "13"
             }
-            tag.text = model.genres?.joinToString { it }
-            redstarRating.rating = model.rating * 0.5F
+            genres?.text = model.genres?.joinToString { it }
+            ratings?.rating = model.rating * 0.5F
                 likeHeart.apply {
                     isSelected = model.isLiked
                     setOnClickListener {

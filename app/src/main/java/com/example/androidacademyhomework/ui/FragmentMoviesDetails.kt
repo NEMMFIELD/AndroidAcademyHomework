@@ -98,7 +98,6 @@ class FragmentMoviesDetails : Fragment() {
     @ExperimentalSerializationApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         actorRecycler = binding?.actorRecyclerView
         movieId = arguments?.getLong("arg")!!
         println("MovieId=$movieId")
@@ -142,10 +141,10 @@ class FragmentMoviesDetails : Fragment() {
             .apply(imageOption)
             .into(this!!.orig)
         this.afterTheD.text = movie.storyLine
-        this.name.text = movie.title
+        this.titleFilm?.text = movie.title
         if (movie.pgAge) this.someId2.text = "16".plus("+")
         else this.someId2.text = "13".plus("+")
-        this.tag.text = movie.genres?.joinToString { it }
+        this.genres?.text = movie.genres?.joinToString { it }
         this.rating.stepSize = 0.5F
         this.rating.rating = movie.rating * 0.5F
         this.reviewsNumb.text = movie.reviewCount.toString().plus(" REVIEWS")

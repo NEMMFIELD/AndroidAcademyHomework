@@ -59,12 +59,12 @@ class UpcomingListAdapter(
                 durationUpcoming.text = model.runningTime.toString().plus(" MIN")
                 nameUpcoming.text = model.reviewCount.toString().plus(" REVIEWS")
                 if (model.pgAge) {
-                    someIdUpcoming.text = "16"
+                   ageUpcoming?.text = "16"
                 } else {
-                    someIdUpcoming.text = "13"
+                   ageUpcoming?.text = "13"
                 }
-                tagUpcoming.text = model.genres?.joinToString { it }
-                redstarRatingUpcoming.rating = model.rating * 0.5F
+               genresUpcoming?.text = model.genres?.joinToString { it }
+               ratingsUpcoming?.rating = model.rating * 0.5F
                 likeHeartUpcoming.apply {
                     isSelected = model.isLiked
                     setOnClickListener {

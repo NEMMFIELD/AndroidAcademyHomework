@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tag_popular"
+        android:id="@+id/genres_popular"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_tag_list"
         android:layout_centerHorizontal="true"
@@ -67,7 +67,7 @@
         app:layout_constraintGuide_end="16dp" />
 
     <RatingBar
-        android:id="@+id/redstar_rating_popular"
+        android:id="@+id/ratings_popular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
@@ -90,7 +90,7 @@
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:textAppearance="@style/name"
-        app:layout_constraintStart_toEndOf="@+id/redstar_rating_popular"
+        app:layout_constraintStart_toEndOf="@+id/ratings_popular"
         app:layout_constraintTop_toTopOf="@+id/movie_img_popular" />
 
     <TextView
@@ -130,7 +130,7 @@
         app:srcCompat="@drawable/ic_phone" />
 
     <TextView
-        android:id="@+id/some_id_popular"
+        android:id="@+id/age_popular"
         android:layout_width="24dp"
         android:layout_height="16dp"
         android:layout_centerVertical="true"

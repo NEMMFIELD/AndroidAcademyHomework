@@ -84,7 +84,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/title_Film"
         android:layout_width="@dimen/width_title"
         android:layout_height="@dimen/height_title"
         android:layout_marginStart="@dimen/margin_start"
@@ -97,13 +97,13 @@
         app:layout_constraintTop_toBottomOf="@+id/some_id" />
 
     <TextView
-        android:id="@+id/tag"
+        android:id="@+id/genres"
         android:layout_width="@dimen/width_genre"
         android:layout_height="@dimen/height_genre"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="386dp"
+        android:layout_marginTop="380dp"
         android:gravity="center_vertical"
         android:lineHeight="20sp"
         android:lineSpacingExtra="4sp"
@@ -119,26 +119,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/ratingbarmarginstart"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:numStars="5"
         android:progressBackgroundTint="#00FF00"
         android:progressTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tag" />
+        app:layout_constraintTop_toBottomOf="@+id/genres" />
 
     <TextView
         android:id="@+id/reviewsNumb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_reviews"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="22dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
         android:text="TEST"
         android:textAppearance="@style/name"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/rating"
-        app:layout_constraintTop_toTopOf="@+id/tag" />
+        app:layout_constraintTop_toTopOf="@+id/genres" />
 
     <TextView
         android:id="@+id/storyline"
@@ -147,7 +147,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/margin_start"
-        android:layout_marginTop="430dp"
+        android:layout_marginTop="423dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
         android:text="@string/storyline"
@@ -160,8 +160,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="450dp"
-
+        android:layout_marginTop="443dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
         android:padding="3dp"
@@ -192,7 +191,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="25dp"
         android:src="@drawable/calendar50"
-        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintStart_toEndOf="@+id/title_Film"
         app:layout_constraintTop_toBottomOf="@+id/orig" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -200,7 +199,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_start_recycleractor"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heading" />
 </androidx.constraintlayout.widget.ConstraintLayout>

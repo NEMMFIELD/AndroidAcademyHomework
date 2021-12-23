@@ -55,12 +55,12 @@ class FavouriteListAdapter(
                durationFavourite.text = model.runningTime.toString().plus(" MIN")
                nameFavourite.text = model.reviewCount.toString().plus(" REVIEWS")
                 if (model.pgAge) {
-                    someIdFavourite.text = "16"
+                    ageFavourite?.text = "16"
                 } else {
-                    someIdFavourite.text = "13"
+                   ageFavourite?.text = "13"
                 }
-                tagFavourite.text = model.genres?.joinToString { it }
-                redstarRatingFavourite.rating = model.rating * 0.5F
+               genresFavourite?.text = model.genres?.joinToString { it }
+                ratingsFavourite?.rating = model.rating * 0.5F
             }
     }
     private val RecyclerView.ViewHolder.context

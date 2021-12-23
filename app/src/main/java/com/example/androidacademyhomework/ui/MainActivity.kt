@@ -2,6 +2,7 @@ package com.example.androidacademyhomework.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -27,6 +28,17 @@ class MainActivity : AppCompatActivity() {
             navController
         )
         intent?.let(::handleIntent)
+    navController.addOnDestinationChangedListener { _, destionation, _ ->
+        when (destionation.id)
+        {
+            R.id.fragmentMoviesList -> showBottomNavigation()
+            R.id.popularMovies -> showBottomNavigation()
+            R.id.topMovies -> showBottomNavigation()
+            R.id.favouriteMovies -> showBottomNavigation()
+            R.id.upcomingMovies -> showBottomNavigation()
+            else -> hideBottomNavigation()
+        }
+    }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -54,5 +66,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun showBottomNavigation()
+    {
+        binding.activityMainBottomNavigationView.visibility = View.VISIBLE
+    }
+
+    private fun hideBottomNavigation()
+    {
+        binding.activityMainBottomNavigationView.visibility = View.GONE
     }
 }
