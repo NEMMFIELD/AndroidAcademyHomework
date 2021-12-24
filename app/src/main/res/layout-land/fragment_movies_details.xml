@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/details"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
     <ImageView
         android:id="@+id/orig"
-        android:layout_width="@dimen/width_of_main"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/height_of_main"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -84,7 +87,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/title_Film"
         android:layout_width="@dimen/width_title"
         android:layout_height="@dimen/height_title"
         android:layout_marginStart="@dimen/margin_start"
@@ -97,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/some_id" />
 
     <TextView
-        android:id="@+id/tag"
+        android:id="@+id/genres"
         android:layout_width="@dimen/width_genre"
         android:layout_height="@dimen/height_genre"
         android:layout_centerHorizontal="true"
@@ -124,7 +127,7 @@
         android:progressBackgroundTint="#00FF00"
         android:progressTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tag" />
+        app:layout_constraintTop_toBottomOf="@+id/genres" />
 
     <TextView
         android:id="@+id/reviewsNumb"
@@ -138,7 +141,7 @@
         android:textAppearance="@style/name"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/rating"
-        app:layout_constraintTop_toTopOf="@+id/tag" />
+        app:layout_constraintTop_toTopOf="@+id/genres" />
 
     <TextView
         android:id="@+id/storyline"
@@ -190,9 +193,9 @@
         android:id="@+id/calendar_btn"
         android:layout_width="45dp"
         android:layout_height="48dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/calendar50"
-        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintStart_toEndOf="@+id/title_Film"
         app:layout_constraintTop_toBottomOf="@+id/orig" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -204,3 +207,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heading" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -63,9 +63,11 @@ class FragmentMoviesList : Fragment() {
                 2
             }
         movieListRecycler?.layoutManager = GridLayoutManager(context, spanCount)
-        adapter = MovieListAdapter(clickListener = listener){ movieEntity -> viewModel.updateLike(movieEntity) }
+        adapter = MovieListAdapter(clickListener = listener) { movieEntity ->
+            viewModel.updateLike(movieEntity)
+        }
         movieListRecycler?.adapter = adapter
-       // movieListRecycler?.itemAnimator=null
+        // movieListRecycler?.itemAnimator=null
         movieListRecycler?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

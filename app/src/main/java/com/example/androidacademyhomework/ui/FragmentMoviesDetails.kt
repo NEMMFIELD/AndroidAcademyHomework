@@ -122,7 +122,7 @@ class FragmentMoviesDetails : Fragment() {
             }
         })
         binding?.calendarBtn?.setOnClickListener {
-            Toast.makeText(requireContext(), "You click on calendar", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "You click on calendar", Toast.LENGTH_SHORT).show()
             scheduleIntoCalendar()
         }
     }
@@ -141,10 +141,10 @@ class FragmentMoviesDetails : Fragment() {
             .apply(imageOption)
             .into(this!!.orig)
         this.afterTheD.text = movie.storyLine
-        this.titleFilm?.text = movie.title
+        this.titleFilm.text = movie.title
         if (movie.pgAge) this.someId2.text = "16".plus("+")
         else this.someId2.text = "13".plus("+")
-        this.genres?.text = movie.genres?.joinToString { it }
+        this.genres.text = movie.genres?.joinToString { it }
         this.rating.stepSize = 0.5F
         this.rating.rating = movie.rating * 0.5F
         this.reviewsNumb.text = movie.reviewCount.toString().plus(" REVIEWS")
@@ -208,6 +208,7 @@ class FragmentMoviesDetails : Fragment() {
         ).show()
     }
 
+    @ExperimentalSerializationApi
     @ExperimentalTime
     private fun launchTimePicker() {
         val selectedMovie = appContainer.moviesRepository.getMovieById(movieId)
@@ -223,7 +224,7 @@ class FragmentMoviesDetails : Fragment() {
                 )
                 // start calendar intent
                 viewModel.scheduleMovieInCalendar(
-                    binding?.name?.text.toString(),
+                    binding?.titleFilm?.text.toString(),
                     appContainer.dateAndTime,
                     requireContext(), selectedMovie)
             },

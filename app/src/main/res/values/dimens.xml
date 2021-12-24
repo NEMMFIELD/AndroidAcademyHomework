@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="width_of_main">530dp</dimen>
-    <dimen name="height_of_main">298dp</dimen>
+    <dimen name="height_of_main">302dp</dimen>
     <dimen name="widht_of_back">6dp</dimen>
     <dimen name="height_of_back">10dp</dimen>
     <dimen name="widht_of_age">24dp</dimen>

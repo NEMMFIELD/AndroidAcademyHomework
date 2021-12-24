@@ -51,7 +51,7 @@ class MovieRepo(context: Context) : MovieRepository {
     suspend fun convertToModel(film: ResultsItem): Model? {
         val movieInfo = film.id?.let { RetrofitModule.moviesApi.getMoviesInfo(it) }
         val actors = film.id?.let { RetrofitModule.moviesApi.getCast(it) }
-        return film.backdropPath?.let {
+        return film.backdropPath?.let { it ->
             Model(
                 id = film.id,
                 pgAge = film.adult!!,
@@ -70,7 +70,7 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     //Конвертирование в сущность БД "Актеры"
-    fun convertToActorsEntity(actor: CastItem, id: Long): ActorsEntity {
+    private fun convertToActorsEntity(actor: CastItem, id: Long): ActorsEntity {
         return ActorsEntity(
             id = actor.id!!.toLong(),
             name = actor.name,
@@ -80,7 +80,7 @@ class MovieRepo(context: Context) : MovieRepository {
     }
 
     //Конвертирование Model в MovieEntity, для БД.
-    fun convertToMovieEntity(movie: Model, type: String): MovieEntity = MovieEntity(
+    private fun convertToMovieEntity(movie: Model, type: String): MovieEntity = MovieEntity(
         id = movie.id,
         pgAge = movie.pgAge,
         title = movie.title,
@@ -97,7 +97,7 @@ class MovieRepo(context: Context) : MovieRepository {
     )
 
     //from List to List<Model>
-    suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
+    private suspend fun parseMovie(list: List<ResultsItem>): List<Model> {
         val listMovies: MutableList<Model> = mutableListOf()
         for (i in list.indices) {
             convertToModel(list[i])?.let { listMovies.add(it) }
