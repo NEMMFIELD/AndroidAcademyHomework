@@ -193,9 +193,11 @@
         android:id="@+id/calendar_btn"
         android:layout_width="45dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="6dp"
         android:src="@drawable/calendar50"
-        app:layout_constraintStart_toEndOf="@+id/title_Film"
+
+      app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/orig" />
 
     <androidx.recyclerview.widget.RecyclerView
