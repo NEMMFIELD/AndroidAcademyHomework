@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="width_of_main">530dp</dimen>
-    <dimen name="height_of_main">298dp</dimen>
+    <dimen name="height_of_main">302dp</dimen>
     <dimen name="widht_of_back">6dp</dimen>
     <dimen name="height_of_back">10dp</dimen>
     <dimen name="widht_of_age">24dp</dimen>
@@ -61,7 +61,7 @@
     <dimen name="marg_nonstar_st">46dp</dimen>
     <dimen name="width_reviews">53dp</dimen>
     <dimen name="height_reviews">12dp</dimen>
-    <dimen name="margin_start_reviews">58dp</dimen>
+    <dimen name="margin_start_reviews">5dp</dimen>
     <dimen name="margin_top_reviews">226dp</dimen>
     <dimen name="width_title_list">132dp</dimen>
     <dimen name="height_title_list">20dp</dimen>
@@ -75,7 +75,7 @@
     <dimen name="margin_top_age_rate">8dp</dimen>
     <dimen name="margin_top_like">13dp</dimen>
     <dimen name="margin_end_like">6dp</dimen>
-    <dimen name="linear_layout_margintop">50dp</dimen>
+    <dimen name="linear_layout_margintop">40dp</dimen>
     <dimen name="linear_layout_marginstart">27dp</dimen>
     <dimen name="padd_left_movie_list_text">5dp</dimen>
     <dimen name="margin_start_recyclerMovieList">10dp</dimen>
@@ -89,7 +89,8 @@
     <dimen name="margin_top_view">10dp</dimen>
     <dimen name="margin_top_image">12dp</dimen>
     <dimen name="marg_top_mask">11dp</dimen>
-    <dimen name="marginstart_first_star">18dp</dimen>
+    <dimen name="marginstart_first_star">16dp</dimen>
     <dimen name="margin_top_first_star">228dp</dimen>
-    <dimen name="margin_top_numb_reviews">226dp</dimen>
+    <dimen name="margin_top_numb_reviews">230dp</dimen>
+    <dimen name="ratingbarmarginstart">16dp</dimen>
 </resources>

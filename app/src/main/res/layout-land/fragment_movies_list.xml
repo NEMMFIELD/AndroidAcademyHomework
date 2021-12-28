@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent">
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/background_color"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+    android:padding="6dp">
     <LinearLayout
-      android:background="@color/background_color"
-     android:layout_height="match_parent"
-     android:orientation="vertical"
-     android:layout_width="match_parent">
-    <LinearLayout
-        android:layout_marginTop="@dimen/linear_layout_margintop"
-        android:layout_marginStart="@dimen/linear_layout_marginstart"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,22 +18,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_combined_shape"/>
-     <TextView
-       android:paddingLeft="@dimen/padd_left_movie_list_text"
-       android:textAppearance="@style/warszawa_po"
-       android:layout_marginTop="-2dp"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/movies_list"/>
+    <TextView
+        android:id="@+id/titletext"
+        android:paddingStart="@dimen/padd_left_movie_list_text"
+        android:textAppearance="@style/warszawa_po"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/movies_list"
+        tools:ignore="RtlSymmetry" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-     xmlns:app="http://schemas.android.com/apk/res-auto"
-     android:id="@+id/list_recycler_view"
-     android:layout_marginStart="@dimen/margin_start_recyclerMovieList"
-     android:layout_marginTop="@dimen/margin_top_recyclerMoveList"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:orientation="vertical" />
-    </LinearLayout>
-    </ScrollView>
+        android:id="@+id/list_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:transitionGroup="true"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>
+
+
+
 

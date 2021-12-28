@@ -15,6 +15,7 @@
         android:elevation="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/movie_img"
         android:layout_width="@dimen/width_img_list"
@@ -25,6 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/heroes" />
+
     <View
         android:id="@+id/mask"
         android:layout_width="@dimen/width_msk"
@@ -34,77 +36,66 @@
         android:background="@drawable/ic_mask___movie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/tag"
-        android:layout_width="@dimen/widht_tag_list"
-        android:layout_height="@dimen/height_tag_list"
+        android:id="@+id/genres"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/marg_st_tag_list"
         android:layout_marginTop="@dimen/marg_top_tag_list"
         android:gravity="center_vertical"
-        android:lineSpacingExtra="3sp"
+        android:lineSpacingExtra="1sp"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="@string/tag_list"
         android:textAppearance="@style/tag"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img" />
-    <ImageView
-        android:id="@+id/redstar_1"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/movie_img"
+        tools:targetApi="o" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="17dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <RatingBar
+        android:id="@+id/ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/ratingBarStyleSmall"
+        android:numStars="5"
+        android:progressTint="@color/white"
+        android:progressBackgroundTint="#00FF00"
         android:layout_marginStart="@dimen/marginstart_first_star"
         android:layout_marginTop="@dimen/margin_top_first_star"
+        android:stepSize="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/movie_img"
         app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar2"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar3"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/redstar_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_st_redstar4"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_star_icon" />
-    <ImageView
-        android:id="@+id/non_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/marg_nonstar_st"
-        android:layout_marginTop="@dimen/marg_top_redstar2"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
-        app:layout_constraintTop_toTopOf="@+id/movie_img"
-        app:srcCompat="@drawable/ic_non_star" />
+
     <TextView
         android:id="@+id/name"
-        android:layout_width="@dimen/width_reviews"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/height_reviews"
         android:layout_marginStart="@dimen/margin_start_reviews"
         android:layout_marginTop="@dimen/margin_top_numb_reviews"
         android:gravity="center_vertical"
         android:lineSpacingExtra="3sp"
-        android:text="@string/name"
         android:textAppearance="@style/name"
-        app:layout_constraintStart_toStartOf="@+id/movie_img"
+        app:layout_constraintStart_toEndOf="@+id/ratings"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/cinema_title"
         android:layout_width="@dimen/width_title_list"
@@ -117,6 +108,7 @@
         android:textAppearance="@style/cinema_title_style"
         app:layout_constraintStart_toStartOf="@+id/movie_img"
         app:layout_constraintTop_toTopOf="@+id/movie_img" />
+
     <TextView
         android:id="@+id/duration"
         android:layout_width="@dimen/widht_duration"
@@ -138,15 +130,37 @@
         android:layout_marginTop="@dimen/margin_top_age_rate"
         app:layout_constraintStart_toStartOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
-        app:srcCompat="@drawable/ic_pgg" />
+        app:srcCompat="@drawable/ic_phone" />
 
-    <ImageView
-        android:id="@+id/toLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_top_like"
-        android:layout_marginEnd="@dimen/margin_end_like"
-        app:layout_constraintEnd_toEndOf="@+id/bg"
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_centerVertical="true"
+        android:text="13+"
+        android:layout_marginStart="@dimen/margin_st_age_rate"
+        android:layout_marginTop="11dp"
+        android:textAppearance="@style/some_id"
+        android:gravity="center_horizontal|center_vertical"
+        app:layout_constraintStart_toStartOf="@+id/bg"
         app:layout_constraintTop_toTopOf="@+id/bg"
-        app:srcCompat="@drawable/ic_like" />
+        />
+
+    <xyz.hanks.library.bang.SmallBangView
+        android:id="@+id/like_heart"
+        android:layout_width="29dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="29dp"
+        app:layout_constraintEnd_toEndOf="@+id/bg"
+        app:layout_constraintTop_toTopOf="@+id/bg">
+        <ImageView
+
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:src="@drawable/heart_selector"
+            app:layout_constraintEnd_toEndOf="@+id/bg"
+            app:layout_constraintTop_toTopOf="@+id/bg" />
+    </xyz.hanks.library.bang.SmallBangView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

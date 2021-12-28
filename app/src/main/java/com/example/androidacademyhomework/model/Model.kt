@@ -1,7 +1,22 @@
 package com.example.androidacademyhomework.model
 
-import android.widget.ImageView
-import java.util.ArrayList
+import android.os.Parcelable
+import com.example.androidacademyhomework.network.pojopack.ActorsResponse
+import com.example.androidacademyhomework.network.pojopack.CastItem
+import kotlinx.parcelize.Parcelize
 
-data class Model(val imageMain:Int, val titleName:String,val duration:String,val numberReviews:String,val ageRate:Int,
-val genre:String,val liked:Int, val star1:Int,val star2:Int,val star3:Int, val star4:Int, val star5:Int)
+
+@Parcelize
+data class Model(
+    val id: Long?,
+    val pgAge: Boolean,
+    val title: String?,
+    val genres: List<String>?,
+    val runningTime: Long,
+    val reviewCount: Int,
+    val isLiked: Boolean,
+    val rating: Float,
+    val imageUrl: String?,
+    val detailImageUrl: String,
+    val storyLine: String,
+    val actors: List<CastItem>):Parcelable

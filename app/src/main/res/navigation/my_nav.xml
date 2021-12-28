@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/fragmentMoviesList">
+
+    <fragment
+        android:id="@+id/fragmentMoviesList"
+        android:name="com.example.androidacademyhomework.ui.FragmentMoviesList"
+        android:label="FragmentMoviesList" >
+        <action
+            android:id="@+id/action_fragmentMoviesList_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMoviesDetails"
+        android:name="com.example.androidacademyhomework.ui.FragmentMoviesDetails"
+        android:label="FragmentMoviesDetails">
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_fragmentMoviesList"
+            app:destination="@id/fragmentMoviesList"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/fragmentMoviesList"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true" />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_popularMovies"
+            app:destination="@id/popularMovies" />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_topMovies"
+            app:destination="@id/topMovies" />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_upcomingMovies"
+            app:destination="@id/upcomingMovies" />
+        <action
+            android:id="@+id/action_fragmentMoviesDetails_to_favouriteMovies"
+            app:destination="@id/favouriteMovies" />
+    </fragment>
+    <fragment
+        android:id="@+id/popularMovies"
+        android:name="com.example.androidacademyhomework.ui.PopularMovies"
+        android:label="PopularMovies" >
+        <action
+            android:id="@+id/action_popularMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/topMovies"
+        android:name="com.example.androidacademyhomework.ui.TopMovies"
+        android:label="fragment_top_movies"
+        tools:layout="@layout/fragment_top_movies" >
+        <action
+            android:id="@+id/action_topMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingMovies"
+        android:name="com.example.androidacademyhomework.ui.UpcomingMovies"
+        android:label="fragment_upcoming_movies"
+        tools:layout="@layout/fragment_upcoming_movies" >
+        <action
+            android:id="@+id/action_upcomingMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteMovies"
+        android:name="com.example.androidacademyhomework.ui.FavouriteMovies"
+        android:label="FavouriteMovies" >
+        <action
+            android:id="@+id/action_favouriteMovies_to_fragmentMoviesDetails"
+            app:destination="@id/fragmentMoviesDetails" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_fragmentMoviesDetails"
+        app:destination="@id/fragmentMoviesDetails"
+        app:launchSingleTop="false" />
+</navigation>
